@@ -1,7 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
 import { format } from 'timeago.js';
 import Main from '../../components/Main/Main';
+
+// ! ICONS
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
 // ! COMPONENTS
 import Sidenav from '../../components/Sidenav/Sidenav';
 // ! CONTEXTS IMPORTS
@@ -18,6 +23,8 @@ const Profile = () => {
   const [todayText, setTodayText] = useState('');
   const [tomorrowText, setTomorrowText] = useState('');
   const [blockersText, setBlockersText] = useState('');
+
+  const [showOptions, setShowOptions] = useState(false);
 
   //   ! FUNCTIONS
   const handleSubmit = async (e) => {
@@ -96,19 +103,19 @@ const Profile = () => {
           </nav>
           {/* HEREE ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
           <div>
-            <article class="">
-              <div class="bg-white shadow rounded-lg p-10 mb-8">
-                <div class="flex flex-col gap-1 text-center items-center">
+            <article className="">
+              <div className="bg-white shadow rounded-lg p-10 mb-8">
+                <div className="flex flex-col gap-1 text-center items-center">
                   <img
-                    class="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
+                    className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
                     src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
                     alt=""
                   />
-                  <p class="font-semibold">Jhimson Pamisa</p>
-                  <div class="text-sm leading-normal text-gray-400 flex justify-center items-center mb-8">
+                  <p className="font-semibold">Jhimson Pamisa</p>
+                  <div className="text-sm leading-normal text-gray-400 flex justify-center items-center mb-8">
                     <svg
                       viewBox="0 0 24 24"
-                      class="mr-1"
+                      className="mr-1"
                       width="16"
                       height="16"
                       stroke="currentColor"
@@ -123,24 +130,24 @@ const Profile = () => {
                     Endicott, New York
                   </div>
                 </div>
-                <div class="flex justify-center items-center gap-2 my-3">
-                  <div class="font-semibold text-center mx-4">
-                    <p class="text-black">Email Address</p>
-                    <span class="text-gray-400">jhim.pamisa@gmail.com</span>
+                <div className="flex justify-center items-center gap-2 my-3">
+                  <div className="font-semibold text-center mx-4">
+                    <p className="text-black">Email Address</p>
+                    <span className="text-gray-400">jhim.pamisa@gmail.com</span>
                   </div>
-                  <div class="font-semibold text-center mx-4">
-                    <p class="text-black">Github</p>
-                    <span class="text-gray-400">github.com/Jhimson</span>
+                  <div className="font-semibold text-center mx-4">
+                    <p className="text-black">Github</p>
+                    <span className="text-gray-400">github.com/Jhimson</span>
                   </div>
-                  <div class="font-semibold text-center mx-4">
-                    <p class="text-black">LinkedIn</p>
-                    <span class="text-gray-400">LinkedIn.com/Jhimson</span>
+                  <div className="font-semibold text-center mx-4">
+                    <p className="text-black">LinkedIn</p>
+                    <span className="text-gray-400">LinkedIn.com/Jhimson</span>
                   </div>
                 </div>
               </div>
               <form
                 onSubmit={handleSubmit}
-                class="bg-white shadow rounded-lg mb-6 p-4"
+                className="bg-white shadow rounded-lg mb-6 p-4"
               >
                 <div className="flex flex-col space-y-2 mb-8">
                   <label htmlFor="" className="text-gray-500 font-semibold">
@@ -151,7 +158,7 @@ const Profile = () => {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Type something here..."
-                    class="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                    className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
                   ></textarea>
                 </div>
                 <div className="grid grid-cols-3 gap-x-8">
@@ -167,7 +174,7 @@ const Profile = () => {
                       value={todayText}
                       onChange={(e) => setTodayText(e.target.value)}
                       placeholder="Type something here..."
-                      class="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                      className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
                     ></textarea>
                   </div>
                   <div className="flex flex-col space-y-2">
@@ -182,7 +189,7 @@ const Profile = () => {
                       value={tomorrowText}
                       onChange={(e) => setTomorrowText(e.target.value)}
                       placeholder="Type something here..."
-                      class="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                      className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
                     ></textarea>
                   </div>
                   <div className="flex flex-col space-y-2">
@@ -197,7 +204,7 @@ const Profile = () => {
                       value={blockersText}
                       onChange={(e) => setBlockersText(e.target.value)}
                       placeholder="Type something here..."
-                      class="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                      className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
                     ></textarea>
                   </div>
                 </div>
@@ -210,9 +217,9 @@ const Profile = () => {
                     onChange={(e) => setFile(e.target.files[0])}
                   />
                 </div>
-                <footer class="flex justify-between mt-2">
-                  <div class="flex gap-2">
-                    <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                <footer className="flex justify-between mt-2">
+                  <div className="flex gap-2">
+                    <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
                       <svg
                         viewBox="0 0 24 24"
                         width="24"
@@ -222,7 +229,7 @@ const Profile = () => {
                         fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        class="css-i6dzq1"
+                        className="css-i6dzq1"
                       >
                         <rect
                           x="3"
@@ -236,7 +243,7 @@ const Profile = () => {
                         <polyline points="21 15 16 10 5 21"></polyline>
                       </svg>
                     </span>
-                    <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                    <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
                       <svg
                         viewBox="0 0 24 24"
                         width="24"
@@ -246,13 +253,13 @@ const Profile = () => {
                         fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        class="css-i6dzq1"
+                        className="css-i6dzq1"
                       >
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                       </svg>
                     </span>
-                    <span class="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                    <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
                       <svg
                         viewBox="0 0 24 24"
                         width="24"
@@ -262,7 +269,7 @@ const Profile = () => {
                         fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        class="css-i6dzq1"
+                        className="css-i6dzq1"
                       >
                         <polyline points="4 17 10 11 4 5"></polyline>
                         <line x1="12" y1="19" x2="20" y2="19"></line>
@@ -271,11 +278,11 @@ const Profile = () => {
                   </div>
                   <button
                     type="submit"
-                    class="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-600 text-white shadow-lg w-28 justify-center"
+                    className="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-600 text-white shadow-lg w-28 justify-center"
                   >
                     Post
                     <svg
-                      class="ml-1"
+                      className="ml-1"
                       viewBox="0 0 24 24"
                       width="16"
                       height="16"
@@ -292,61 +299,103 @@ const Profile = () => {
                 </footer>
               </form>
 
-              <div class="bg-white shadow rounded-lg">
+              <div className="bg-white shadow rounded-lg">
                 {posts?.map((post) => {
                   return (
                     <>
-                      <div class="flex flex-row px-2 py-3 mx-3">
-                        <div class="w-auto h-auto rounded-full border-2 border-green-500">
-                          <img
-                            class="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
-                            alt="User avatar"
-                            src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200"
-                          />
-                        </div>
-                        <div class="flex flex-col mb-2 ml-4 mt-1">
-                          <div class="text-gray-600 text-sm font-semibold">
-                            {post?.user?.name}
+                      <div className="flex flex-row px-2 py-3 mx-3 justify-between">
+                        <div className="flex">
+                          <div className="w-auto h-auto rounded-full border-2 border-green-500">
+                            <img
+                              className="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
+                              alt="User avatar"
+                              src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200"
+                            />
                           </div>
-                          <div class="flex w-full mt-1">
-                            <div class="text-blue-700 font-base text-xs mr-1 cursor-pointer">
-                              Software Engineer
+                          <div className="flex flex-col mb-2 ml-4 mt-1">
+                            <div className="text-gray-600 text-sm font-semibold">
+                              {post?.user?.name}
                             </div>
-                            <div class="text-gray-400 font-thin text-xs">
-                              • {format(post?.createdAt)}
+                            <div className="flex w-full mt-1">
+                              <div className="text-blue-700 font-base text-xs mr-1 cursor-pointer">
+                                Software Engineer
+                              </div>
+                              <div className="text-gray-400 font-thin text-xs">
+                                • {format(post?.createdAt)}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-center">
+                          <div className="relative inline-block">
+                            <button
+                              className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-gray-400 rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-200 focus:outline-none"
+                              onClick={() => setShowOptions(!showOptions)}
+                            >
+                              <svg
+                                className="w-5 h-5 mx-1 text-gray-500"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
+                                  fill="currentColor"
+                                ></path>
+                              </svg>
+                            </button>
+
+                            <div
+                              className={`absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-200 border-2 border-gray-300 ${
+                                !showOptions && 'hidden'
+                              }`}
+                            >
+                              <a
+                                href="#"
+                                className="block px-4 py-3 text-sm text-gray-400 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold"
+                              >
+                                <FaEdit size={'1.3em'} />
+                                <span>Edit Post</span>
+                              </a>
+
+                              <a className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold cursor-pointer">
+                                <RiDeleteBin6Line size={'1.3em'} />
+                                <span>Move to Trash</span>
+                              </a>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="border-b border-gray-100"></div>
-                      <div class="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2 grid grid-cols-1 grid-row-auto gap-2">
+                      <div className="border-b border-gray-100"></div>
+                      <div className="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2 grid grid-cols-1 grid-row-auto gap-2">
                         <img className="rounded w-full" src={post?.image} />
                       </div>
-                      <div class="text-gray-600 font-bold mb-4 mx-3 px-2 text-2xl">
+                      <div className="text-gray-600 font-bold mb-4 mx-3 px-2 text-2xl">
                         {post?.title}
                       </div>
-                      <div class="text-gray-500 text-lg mb-6 mx-3 px-2">
+                      <div className="text-gray-500 text-lg mb-6 mx-3 px-2">
                         <h1 className="font-semibold">
                           What did you worked on today?
                         </h1>
                         {post?.todayText}
                       </div>
-                      <div class="text-gray-500 text-lg mb-6 mx-3 px-2">
+                      <div className="text-gray-500 text-lg mb-6 mx-3 px-2">
                         <h1 className="font-semibold">
                           What are you planning to work on tonight/tomorrow?
                         </h1>
                         {post?.tomorrowText}
                       </div>
-                      <div class="text-gray-500 text-lg mb-6 mx-3 px-2">
+                      <div className="text-gray-500 text-lg mb-6 mx-3 px-2">
                         <h1 className="font-semibold">
                           What blockers do you have?
                         </h1>
                         {post?.blockersText}
                       </div>
 
-                      <div class="flex justify-start mb-4 border-t border-gray-100">
-                        <div class="flex w-full mt-1 pt-2 pl-5">
-                          <span class="bg-white transition ease-out duration-300 hover:text-red-500 border w-8 h-8 px-2 pt-2 text-center rounded-full text-gray-400 cursor-pointer mr-2">
+                      <div className="flex justify-start mb-4 border-t border-gray-100">
+                        <div className="flex w-full mt-1 pt-2 pl-5">
+                          <span className="bg-white transition ease-out duration-300 hover:text-red-500 border w-8 h-8 px-2 pt-2 text-center rounded-full text-gray-400 cursor-pointer mr-2">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -363,28 +412,28 @@ const Profile = () => {
                             </svg>
                           </span>
                           <img
-                            class="inline-block object-cover w-8 h-8 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
+                            className="inline-block object-cover w-8 h-8 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
                             src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
                             alt=""
                           />
                           <img
-                            class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
+                            className="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
                             src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
                             alt=""
                           />
                           <img
-                            class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
+                            className="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
                             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=634&amp;q=80"
                             alt=""
                           />
                           <img
-                            class="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
+                            className="inline-block object-cover w-8 h-8 -ml-2 text-white border-2 border-white rounded-full shadow-sm cursor-pointer"
                             src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2.25&amp;w=256&amp;h=256&amp;q=80"
                             alt=""
                           />
                         </div>
-                        <div class="flex justify-end w-full mt-1 pt-2 pr-5">
-                          <span class="transition ease-out duration-300 hover:bg-blue-50 bg-blue-100 w-8 h-8 px-2 py-2 text-center rounded-full text-blue-400 cursor-pointer mr-2">
+                        <div className="flex justify-end w-full mt-1 pt-2 pr-5">
+                          <span className="transition ease-out duration-300 hover:bg-blue-50 bg-blue-100 w-8 h-8 px-2 py-2 text-center rounded-full text-blue-400 cursor-pointer mr-2">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -400,9 +449,9 @@ const Profile = () => {
                               ></path>
                             </svg>
                           </span>
-                          <span class="transition ease-out duration-300 hover:bg-gray-50 bg-gray-100 h-8 px-2 py-2 text-center rounded-full text-gray-100 cursor-pointer">
+                          <span className="transition ease-out duration-300 hover:bg-gray-50 bg-gray-100 h-8 px-2 py-2 text-center rounded-full text-gray-100 cursor-pointer">
                             <svg
-                              class="h-4 w-4 text-red-500"
+                              className="h-4 w-4 text-red-500"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -417,37 +466,41 @@ const Profile = () => {
                           </span>
                         </div>
                       </div>
-                      <div class="flex w-full border-t border-gray-100">
-                        <div class="mt-3 mx-5 flex flex-row text-xs">
-                          <div class="flex text-gray-700 font-normal rounded-md mb-2 mr-4 items-center">
+                      <div className="flex w-full border-t border-gray-100">
+                        <div className="mt-3 mx-5 flex flex-row text-xs">
+                          <div className="flex text-gray-700 font-normal rounded-md mb-2 mr-4 items-center">
                             Comments:
-                            <div class="ml-1 text-gray-400 text-ms">30</div>
+                            <div className="ml-1 text-gray-400 text-ms">30</div>
                           </div>
-                          <div class="flex text-gray-700 font-normal rounded-md mb-2 mr-4 items-center">
+                          <div className="flex text-gray-700 font-normal rounded-md mb-2 mr-4 items-center">
                             Views:
-                            <div class="ml-1 text-gray-400 text-ms">60k</div>
+                            <div className="ml-1 text-gray-400 text-ms">
+                              60k
+                            </div>
                           </div>
                         </div>
-                        <div class="mt-3 mx-5 w-full flex justify-end text-xs">
-                          <div class="flex text-gray-700 rounded-md mb-2 mr-4 items-center">
+                        <div className="mt-3 mx-5 w-full flex justify-end text-xs">
+                          <div className="flex text-gray-700 rounded-md mb-2 mr-4 items-center">
                             Likes:
-                            <div class="ml-1 text-gray-400 text-ms">120k</div>
+                            <div className="ml-1 text-gray-400 text-ms">
+                              120k
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <div class="relative flex items-center self-center w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
+                      <div className="relative flex items-center self-center w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
                         <img
-                          class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
+                          className="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
                           alt="User avatar"
                           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
                         />
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-6">
+                        <span className="absolute inset-y-0 right-0 flex items-center pr-6">
                           <button
                             type="submit"
-                            class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500"
+                            className="p-1 focus:outline-none focus:shadow-none hover:text-blue-500"
                           >
                             <svg
-                              class="w-6 h-6 transition ease-out duration-300 hover:text-blue-500 text-gray-400"
+                              className="w-6 h-6 transition ease-out duration-300 hover:text-blue-500 text-gray-400"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
@@ -464,7 +517,7 @@ const Profile = () => {
                         </span>
                         <input
                           type="search"
-                          class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
+                          className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
                           style={{ borderRadius: '25px' }}
                           placeholder="Post a comment..."
                           autoComplete="off"

@@ -46,9 +46,7 @@ const StandUps = () => {
   };
 
   const fetchPosts = async () => {
-    const response = await Axios.get(
-      `http://localhost:8000/api/posts/${user._id}`
-    );
+    const response = await Axios.get(`http://localhost:8000/api/posts/`);
     if (response) {
       setPosts(response.data);
     }
@@ -396,7 +394,7 @@ const StandUps = () => {
                       </div>
                       <div class="relative flex items-center self-center w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
                         <img
-                          class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
+                          class="w-12 h-12 object-cover rounded-full shadow mr-2 cursor-pointer"
                           alt="User avatar"
                           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
                         />
@@ -421,13 +419,22 @@ const StandUps = () => {
                             </svg>
                           </button>
                         </span>
-                        <input
+                        {/* <input
                           type="search"
                           class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
                           style={{ borderRadius: '25px' }}
                           placeholder="Post a comment..."
                           autoComplete="off"
-                        />
+                        /> */}
+                        <textarea
+                          name="blockersText"
+                          value={blockersText}
+                          onChange={(e) => setBlockersText(e.target.value)}
+                          placeholder="Post a comment..."
+                          class="w-full pt-3 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue h-12"
+                          style={{ borderRadius: '30px' }}
+                          autoComplete="off"
+                        ></textarea>
                       </div>
                     </>
                   );
