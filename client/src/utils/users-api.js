@@ -18,3 +18,7 @@ export const Login = async ({ email, password }) => {
   });
   return response;
 };
+
+export const Logout = async () => {
+  localStorage.removeItem('token');
+};
