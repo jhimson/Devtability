@@ -10,3 +10,11 @@ export const Signup = async ({ name, email, password }) => {
   });
   return response;
 };
+
+export const Login = async ({ email, password }) => {
+  const response = await Axios.post(`${BASE_URL}/login`, {
+    email,
+    password,
+  });
+  return response;
+};

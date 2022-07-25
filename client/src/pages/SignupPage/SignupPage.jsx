@@ -1,10 +1,13 @@
 import React, { useState, useContext } from 'react';
+
+// ! API ACTIONS
 import { Signup } from '../../utils/users-api';
 
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
 
 const SignupPage = () => {
+
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
 
@@ -13,13 +16,14 @@ const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // ! FUNCTIONS
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await Signup({ name, email, password });
     console.log(res);
     if (res) {
       const token = JSON.parse(window.atob(res.data.accessToken.split('.')[1]));
-      console.log('wtf', token.user);
+      console.log(token.user);
       localStorage.setItem('token', JSON.stringify(res.data.accessToken));
       setUser(token.user);
     }
