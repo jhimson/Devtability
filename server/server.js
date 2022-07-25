@@ -1,3 +1,4 @@
+require('dotenv').config(); // Load ENV Variables
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
@@ -13,5 +14,11 @@ app.use(express.json());
 app.use(cors());
 
 
+app.get('/', (req, res) => {
+    res.status(200).json({Message: 'Hello, World!'})
+})
 
-app.listen(8000, () => console.log('Backend server is running on port 8000'));
+
+const PORT = process.env.PORT;
+const port = 8000;
+app.listen(PORT || port, () => console.log(`Now Listening on port ${PORT || port}`));
