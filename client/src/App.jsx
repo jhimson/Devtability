@@ -5,9 +5,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
+// import SignupPage from './pages/SignupPage/SignupPage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Layout from './components/Layout/Layout';
-
 
 // ! CONTEXTS
 // import UserContextProvider from './contexts/UserContext';
