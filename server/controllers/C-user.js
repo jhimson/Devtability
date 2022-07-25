@@ -51,9 +51,12 @@ const Login = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    if (!user) res.status(404).json({ Message: "Account doesn't Exist!" });
     const match = await bcrypt.compare(password, user.password);
-    if (!match) res.status(401).json({ Message: 'Email/Password incorrect!' });
+    // if (!user) res.status(404).json({ Message: "Account doesn't Exist!" });
+    // if (!match) res.status(401).json({ Message: 'Email/Password incorrect!' });
+    if(!user || !match){
+      res.status(404).json({ Message: "Email/Password incorrect!" });
+    }
     if (match) {
       //! Generate an access token
       const accessToken = generateAccessToken(user);
