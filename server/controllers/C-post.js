@@ -53,7 +53,9 @@ const uploadImage = async (req, res) => {
 // ? @Access         PUBLIC
 const fetchUserPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ user: req.params.userId }).populate('user');
+    const posts = await Post.find({ user: req.params.userId })
+      .sort({ createdAt: -1 })
+      .populate('user');
     if (posts) {
       res.status(200).json(posts);
     }
@@ -68,7 +70,7 @@ const fetchUserPosts = async (req, res) => {
 // ? @Access         PUBLIC
 const fetchAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find({}).populate('user');
+    const posts = await Post.find({}).sort({ createdAt: -1 }).populate('user');
     if (posts) {
       res.status(200).json(posts);
     }
