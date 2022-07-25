@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import StandUps from './pages/StandUps/StandUps';
+import Profile from './pages/Profile/Profile';
 
 
 // ! COMPONENTS
@@ -28,6 +29,7 @@ const App = () => {
           <Routes>
             <Route path="/dashboard" element={<Dashboard exact />} />
             <Route path="/stand-ups" element={<StandUps exact />} />
+            <Route path="/profile" element={<Profile exact />} />
             <Route path="/*" element={<Navigate to="/dashboard" />} exact />
           </Routes>
         </Layout>

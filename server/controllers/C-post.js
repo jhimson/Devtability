@@ -4,7 +4,6 @@ const Post = require('../models/M-post');
 
 const { generateAccessToken, generateRefreshToken } = require('../utils/index');
 
-
 // ? @Description    UPLOAD new image
 // ? @Route          POST /api/images/upload
 // ? @Access         PUBLIC
@@ -52,7 +51,7 @@ const uploadImage = async (req, res) => {
 // ? @Description    Fetch posts
 // ? @Route          GET /api/posts/:userId
 // ? @Access         PUBLIC
-const fetchPosts = async (req, res) => {
+const fetchUserPosts = async (req, res) => {
   try {
     const posts = await Post.find({ user: req.params.userId }).populate('user');
     if (posts) {
@@ -64,4 +63,19 @@ const fetchPosts = async (req, res) => {
   }
 };
 
-module.exports = { uploadImage, fetchPosts };
+// ? @Description    Fetch all posts
+// ? @Route          GET /api/posts/
+// ? @Access         PUBLIC
+const fetchAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({}).populate('user');
+    if (posts) {
+      res.status(200).json(posts);
+    }
+  } catch (error) {
+    console.log(`Error retrieving images from DB: ${error}`);
+    res.status(500);
+  }
+};
+
+module.exports = { uploadImage, fetchUserPosts, fetchAllPosts };
