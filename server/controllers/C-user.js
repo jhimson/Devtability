@@ -3,8 +3,10 @@ const bcrypt = require('bcrypt');
 const {
   generateAccessToken,
   generateRefreshToken,
-  refreshTokens,
 } = require('../utils/index');
+
+let refreshTokens = [];
+
 
 // ? @Description    CREATE new user
 // ? @Route          POST /api/users/signup
@@ -66,10 +68,12 @@ const Login = async (req, res) => {
   } catch (error) {
     res.status(500).json(`Error finding user in DB. ErrorMessage:${error}`);
   }
-
-  // const user = users.find(
-  //   (u) => u.username === username && u.password === password
-  // );
 };
 
-module.exports = { Signup, Login };
+const Logout = (req, res) => {
+  let refreshToken = req.body.token;
+  refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+  res.status(200).json('Logged out successfully!');
+};
+
+module.exports = { Signup, Login, Logout };

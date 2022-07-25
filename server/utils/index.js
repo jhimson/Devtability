@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-let refreshTokens = [];
 
 
 const generateAccessToken = (user) => {
@@ -29,9 +28,10 @@ const verify = (req, res, next) => {
   }
 };
 
+
+
 module.exports = {
   generateAccessToken,
   generateRefreshToken,
   verify,
-  refreshTokens
 };
