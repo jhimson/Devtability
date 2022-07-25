@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/images/Align6.png';
 import sample from '../../assets/images/sample.jpg';
-import { logOut } from '../../utils/users-api';
+import { Logout } from '../../utils/users-api';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // ! CONTEXTS IMPORTS
@@ -19,7 +19,7 @@ export default function NavBar() {
   const [currentPath, setCurrentPath] = useState('');
 
   const handleLogOut = () => {
-    logOut();
+    Logout();
     setUser(null);
     navigate('/login');
     setIsShow(false);
