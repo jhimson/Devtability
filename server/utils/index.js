@@ -1,17 +1,18 @@
+const jwt = require('jsonwebtoken');
 let refreshTokens = [];
 
 
-export const generateAccessToken = (user) => {
+const generateAccessToken = (user) => {
   return jwt.sign({ user }, 'mySecretKey', {
     expiresIn: '30d',
   });
 };
 
-export const generateRefreshToken = (user) => {
+const generateRefreshToken = (user) => {
   return jwt.sign({ user }, 'myRefreshSecretKey');
 };
 
-export const verify = (req, res, next) => {
+const verify = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(' ')[1];
@@ -26,4 +27,11 @@ export const verify = (req, res, next) => {
   } else {
     res.status(401).json('You are not authenticated');
   }
+};
+
+module.exports = {
+  generateAccessToken,
+  generateRefreshToken,
+  verify,
+  refreshTokens
 };
