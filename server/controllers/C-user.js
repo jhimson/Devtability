@@ -24,7 +24,7 @@ const Signup = async (req, res) => {
     } else {
       try {
         //! Insert new user to DB
-        await User.create({ name, email, password });
+        const user = await User.create({ name, email, password });
         //! Generate an access token
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
