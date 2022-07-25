@@ -11,7 +11,7 @@ export default function Layout({ children, active, user , setUser}) {
           <NavBar active={active} user={user} setUser={setUser}/>
         </header>
         <main style={{minHeight:'65vh'}}>{children}</main>
-        <footer>
+        <footer style={{height:'20vh'}}>
           <Footer />
         </footer>
       </div>

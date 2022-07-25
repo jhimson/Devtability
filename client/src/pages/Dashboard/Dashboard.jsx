@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Sidenav from '../../components/Sidenav/Sidenav';
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div>
+      <Sidenav />
+    </div>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

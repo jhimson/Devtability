@@ -5,8 +5,11 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
-// import SignupPage from './pages/SignupPage/SignupPage';
 import Dashboard from './pages/Dashboard/Dashboard';
+import StandUps from './pages/StandUps/StandUps';
+
+
+// ! COMPONENTS
 import Layout from './components/Layout/Layout';
 
 // ! CONTEXTS
@@ -24,6 +27,7 @@ const App = () => {
         <Layout active={true} setUser={setUser} user={user}>
           <Routes>
             <Route path="/dashboard" element={<Dashboard exact />} />
+            <Route path="/stand-ups" element={<StandUps exact />} />
             <Route path="/*" element={<Navigate to="/dashboard" />} exact />
           </Routes>
         </Layout>
