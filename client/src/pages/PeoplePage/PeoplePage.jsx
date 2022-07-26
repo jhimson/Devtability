@@ -5,6 +5,7 @@ import Axios from 'axios';
 import Main from '../../components/Main/Main';
 
 // ! API
+import { removeContact } from '../../utils/contacts-api';
 
 // ! COMPONENTS
 import Sidenav from '../../components/Sidenav/Sidenav';
@@ -44,6 +45,26 @@ const PeoplePage = () => {
       userId: user._id,
       contactId,
     });
+  };
+
+  const deleteContact = async (userId, contactId) => {
+    let updatedZest = filteredPeople?.map((z) => {
+      if (z._id === contactId) {
+        z.isExist = false;
+        return z;
+      }
+      return z;
+    });
+
+    let currentContact = people.find((person) => person._id === contactId);
+    const updatedContacts = userContacts.filter(
+      (contact) => contact._id !== contactId
+    );
+    setUserContacts(updatedContacts);
+    setFilteredPeople(updatedZest);
+    localStorage.setItem('filteredPeople', JSON.stringify(updatedZest));
+    const response = await removeContact(userId, contactId);
+    console.log(`Successfully deleted a contact`, response);
   };
 
   const filterPeople = (contacts, people) => {
@@ -139,6 +160,7 @@ const PeoplePage = () => {
               <PeopleList
                 filteredPeople={filteredPeople}
                 addNewContact={addNewContact}
+                deleteContact={deleteContact}
               />
             </article>
           </div>

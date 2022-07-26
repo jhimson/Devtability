@@ -3,7 +3,7 @@
 import React from 'react';
 import PersonCard from '../PersonCard/PersonCard';
 
-const PeopleList = ({ filteredPeople, addNewContact }) => {
+const PeopleList = ({ filteredPeople, addNewContact, deleteContact }) => {
   return (
     <>
       <div className="bg-white shadow mt-6 rounded-lg p-6">
@@ -16,6 +16,7 @@ const PeopleList = ({ filteredPeople, addNewContact }) => {
               key={person?._id}
               person={person}
               addNewContact={addNewContact}
+              deleteContact={deleteContact}
             />
           ))}
           {/* <li>

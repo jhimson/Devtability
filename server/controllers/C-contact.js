@@ -51,7 +51,6 @@ const getUserContacts = async (req, res) => {
     }).populate('contacts');
 
     if (contacts) {
-      console.log(contacts, 'BUGOK KA!');
       res.status(200).json(contacts);
     } else {
       res.status(200).json([]);
@@ -62,4 +61,36 @@ const getUserContacts = async (req, res) => {
   }
 };
 
-module.exports = { addNewContact, getUserContacts };
+// ? @Description    Fetch all Contacts of current user
+// ? @Route          DELETE /api/contacts/:userId/:contactId
+// ? @Access         Private / Authorized user
+const deleteContact = async (req, res) => {
+  const { userId, contactId } = req.params;
+  try {
+    const contact = await Contact.updateOne(
+      { user: userId },
+      { $pull: { contacts: contactId } },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json({ Message: `Successfully removed from contacts`, contact });
+  } catch (error) {
+    res.status(500).json({
+      Message: `Error removing contact from contacts. ErrorMessage: ${error}`,
+    });
+  }
+
+  //   try {
+  //     const contacts = await Contact.findOne({
+  //       user: req.params.userId,
+  //     }).populate('contacts');
+  //     if (contacts) res.status(200).json(contacts);
+  //     res.status(200).json([]);
+  //   } catch (error) {
+  //     console.log(`Failed to fetch contacts. ErrorMessage: ${error}`);
+  //     res.status(500).json({ Message: error });
+  //   }
+};
+
+module.exports = { addNewContact, getUserContacts, deleteContact };

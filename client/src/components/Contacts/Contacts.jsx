@@ -6,10 +6,10 @@ const Contacts = ({ contacts }) => {
   return (
     <>
       <div className="bg-white shadow mt-6 rounded-lg p-6">
-        <h3 className="text-gray-600 text-sm font-semibold mb-4 text-center">
+        <h3 className="text-gray-600 text-sm font-semibold mb-4 text-center text-2xl">
           Contacts
         </h3>
-        <ul className="flex items-center justify-center space-x-2">
+        {contacts?.length ? <ul className="flex items-center justify-center space-x-2">
           {contacts?.map((contact) => (
             <li className="flex flex-col items-center space-y-2">
               <a className="block bg-white p-1 rounded-full" href="#">
@@ -21,7 +21,7 @@ const Contacts = ({ contacts }) => {
               <span className="text-xs text-gray-500"> {contact?.name.split(" ")[0]} </span>
             </li>
           ))}
-        </ul>
+        </ul> : <h1 className='text-center text-gray-500 text-xl'>No contacts found!</h1>}
       </div>
     </>
   );

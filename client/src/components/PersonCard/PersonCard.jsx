@@ -4,7 +4,7 @@ import Bryce from '../../assets/images/Bryce.png';
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
 
-const PersonCard = ({ person, addNewContact }) => {
+const PersonCard = ({ person, addNewContact, deleteContact }) => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
   return (
@@ -18,8 +18,8 @@ const PersonCard = ({ person, addNewContact }) => {
         <p className="text-gray-100 font-semibold">{person?.name}</p>
         {person?.isExist ? (
           <button
-            disabled
             className="w-full rounded-md bg-blue-500  py-2 text-indigo-100 hover:bg-blue-700 hover:shadow-md duration-75 mt-8"
+            onClick={() => deleteContact(user?._id, person?._id)}
           >
             Remove from Contacts
           </button>

@@ -24,42 +24,7 @@ export const getUserContacts = async (userId) => {
   }
 };
 
-export const getAllPosts = async () => {
-  const headers = {
-    'Content-Type': 'application/json',
-    authorization: `Bearer ${token}`,
-  };
-  try {
-    const response = await Axios({
-      method: 'GET',
-      url: `${BASE_URL}`,
-      headers,
-    });
-    return response;
-  } catch (error) {
-    console.log(`Error fetching posts. ErrorMessage: ${error}`);
-  }
-};
-
-export const createPost = async (formData) => {
-  const headers = {
-    'Content-Type': 'multipart/form-data',
-    authorization: `Bearer ${token}`,
-  };
-  try {
-    const result = await Axios({
-      method: 'POST',
-      url: `${BASE_URL}`,
-      data: formData,
-      headers,
-    });
-    return result;
-  } catch (error) {
-    console.log(`Error creating a post. ErrorMessage: ${error}`);
-  }
-};
-
-export const removePost = async (postId) => {
+export const removeContact = async (userId, contactId) => {
   const headers = {
     'Content-Type': 'application/json',
     authorization: `Bearer ${token}`,
@@ -67,27 +32,21 @@ export const removePost = async (postId) => {
   try {
     const response = await Axios({
       method: 'DELETE',
-      url: `${BASE_URL}`,
-      data: { postId },
+      url: `${BASE_URL}/${userId}/${contactId}`,
       headers,
     });
-    console.log(response);
-    return response;
+    return response.data;
   } catch (error) {
-    console.log(`Error deleting a user post. ErrorMessage: ${error}`);
+    console.log(`Error deleteing a contact. ErrorMessage: ${error}`);
   }
-};
-
-export const editPost = async (updatedPost) => {
-  const headers = {
-    'Content-Type': 'application/json',
-    authorization: `Bearer ${token}`,
-  };
-  try {
-    const response = await Axios.patch(`${BASE_URL}`, updatedPost, { headers });
-    console.log(response);
-    return response;
-  } catch (error) {
-    console.log(`Error updating a user post. ErrorMessage: ${error}`);
-  }
+  //   try {
+  //     const response = await Axios.delete(
+  //       `${BASE_URL}/`,
+  //       { userId, contactId },
+  //       { headers }
+  //     );
+  //     return response;
+  //   } catch (error) {
+  //     console.log(`Error deleting a contact. ErrorMessage: ${error}`);
+  //   }
 };
