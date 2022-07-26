@@ -357,7 +357,7 @@ const StandUps = () => {
                                   </button>
                                 </>
                               )}
-                              {post?.user?._id === user._id && (
+                              {post?.user?._id === user._id && !isUpdating && (
                                 <button
                                   className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-gray-400 rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-200 focus:outline-none"
                                   onClick={() => setShowOptions(!showOptions)}
@@ -576,7 +576,7 @@ const StandUps = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="relative flex items-center self-center w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
+                      <div className="relative flex items-center self-center w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400 mb-8">
                         <img
                           className="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
                           alt="User avatar"
