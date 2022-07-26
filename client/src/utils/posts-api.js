@@ -2,6 +2,8 @@ import Axios from 'axios';
 
 const BASE_URL = `http://localhost:8000/api/posts`;
 
+const token = JSON.parse(localStorage.getItem('token')) || null
+
 export const getUserPosts = async (userId) => {
   try {
     const response = await Axios.get(`${BASE_URL}/${userId}`);
@@ -26,8 +28,17 @@ export const createPost = async (formData) => {
 };
 
 export const removePost = async (postId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'authorization': `Bearer ${token}`
+  }
   try {
-    const response = await Axios.delete(`${BASE_URL}`, { postId });
+    const response = await Axios({
+      method: 'DELETE',
+      url: `${BASE_URL}`,
+      data: { postId },
+      headers,
+    });
     console.log(response);
     return response;
   } catch (error) {

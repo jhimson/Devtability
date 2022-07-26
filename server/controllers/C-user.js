@@ -1,12 +1,36 @@
 const User = require('../models/M-user');
 const bcrypt = require('bcrypt');
-const {
-  generateAccessToken,
-  generateRefreshToken,
-} = require('../utils/index');
+const { generateAccessToken, generateRefreshToken } = require('../utils/index');
 
 let refreshTokens = [];
 
+// ? @Description    Fetch all users except current user
+// ? @Route          GET /api/users/except/:userId
+// ? @Access         Private / Authorized
+const fetchUsersExceptCurrentUser = async (req, res) => {
+  try {
+    const users = await User.find({ _id: { $ne: req.params.userId } });
+    if (users) {
+      res.status(200).json(users);
+    } else {
+      res.status(400).json({ Message: `User not found in the DB` });
+    }
+  } catch (error) {
+    console.log(`Error fetching users in DB. Error: ${error}`);
+  }
+};
+// app.get('/api/users/except/:userId', async (req, res) => {
+//   try {
+//     const users = await User.find({ _id: {$ne: req.params.userId} });
+//     if (users) {
+//       res.status(200).json(users);
+//     } else {
+//       res.status(400).json({ Message: `User not found in the DB` });
+//     }
+//   } catch (error) {
+//     console.log(`Error fetching users in DB. Error: ${error}`);
+//   }
+// });
 
 // ? @Description    CREATE new user
 // ? @Route          POST /api/users/signup
@@ -54,8 +78,8 @@ const Login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     // if (!user) res.status(404).json({ Message: "Account doesn't Exist!" });
     // if (!match) res.status(401).json({ Message: 'Email/Password incorrect!' });
-      if(!user || !match){
-      res.status(404).json({ Message: "Email/Password incorrect!" });
+    if (!user || !match) {
+      res.status(404).json({ Message: 'Email/Password incorrect!' });
     }
     if (match) {
       //! Generate an access token
@@ -79,4 +103,4 @@ const Logout = (req, res) => {
   res.status(200).json('Logged out successfully!');
 };
 
-module.exports = { Signup, Login, Logout };
+module.exports = { Signup, Login, Logout, fetchUsersExceptCurrentUser };

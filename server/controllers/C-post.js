@@ -85,8 +85,9 @@ const fetchAllPosts = async (req, res) => {
 // ? @Route          DEL /api/posts/
 // ? @Access         PUBLIC
 const DeletePost = async (req, res) => {
+  console.log(req.body);
   try {
-    const post = await Post.deleteOne(req.body.postId);
+    const post = await Post.deleteOne({ _id: req.body.postId });
     if (post) {
       res.status(200).json({ Message: `Successfully deleted post`, post });
     }

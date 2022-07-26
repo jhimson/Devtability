@@ -11,7 +11,7 @@ const { verify } = require('../utils/index');
 router.get('/:userId', fetchUserPosts);
 router.get('/', fetchAllPosts);
 router.post('/', CreatePost);
-router.delete('/', DeletePost);
+router.delete('/', verify, DeletePost);
 router.patch('/', UpdatePost);
 
 module.exports = router;
