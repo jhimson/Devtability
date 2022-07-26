@@ -4,6 +4,9 @@ import Axios from 'axios';
 import { format } from 'timeago.js';
 import Main from '../../components/Main/Main';
 
+// ! API
+import { getUserPosts, createPost, removePost } from '../../utils/posts-api';
+
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaEdit } from 'react-icons/fa';
@@ -37,28 +40,28 @@ const Profile = () => {
     formData.append('tomorrowText', `${tomorrowText}`);
     formData.append('blockersText', `${blockersText}`);
 
-    const result = await Axios({
-      method: 'POST',
-      url: `http://localhost:8000/api/posts`,
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    if (result) {
+    const response = await createPost(formData);
+    if (response) {
       setTitle('');
       setTodayText('');
       setTomorrowText('');
       setBlockersText('');
-      console.log(result);
+      console.log(response);
     }
   };
 
   const fetchPosts = async () => {
-    const response = await Axios.get(
-      `http://localhost:8000/api/posts/${user._id}`
-    );
+    const response = await getUserPosts(user._id);
     if (response) {
       setPosts(response.data);
     }
+  };
+
+  const deletePost = async (postId) => {
+    await removePost(postId);
+    const updatedPosts = posts.filter((post) => post._id !== postId);
+    setPosts(updatedPosts);
+    setShowOptions(!showOptions)
   };
 
   useEffect(() => {
@@ -351,18 +354,18 @@ const Profile = () => {
                                 !showOptions && 'hidden'
                               }`}
                             >
-                              <a
-                                href="#"
-                                className="block px-4 py-3 text-sm text-gray-400 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold"
-                              >
+                              <button className="block px-4 py-3 text-sm text-gray-400 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold w-full">
                                 <FaEdit size={'1.3em'} />
                                 <span>Edit Post</span>
-                              </a>
+                              </button>
 
-                              <a className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold cursor-pointer">
+                              <button
+                                className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold cursor-pointer w-full"
+                                onClick={() => deletePost(post?._id)}
+                              >
                                 <RiDeleteBin6Line size={'1.3em'} />
                                 <span>Move to Trash</span>
-                              </a>
+                              </button>
                             </div>
                           </div>
                         </div>

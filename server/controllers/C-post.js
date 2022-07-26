@@ -4,10 +4,10 @@ const Post = require('../models/M-post');
 
 const { generateAccessToken, generateRefreshToken } = require('../utils/index');
 
-// ? @Description    UPLOAD new image
-// ? @Route          POST /api/images/upload
+// ? @Description    CREATE new post
+// ? @Route          POST /api/posts/
 // ? @Access         PUBLIC
-const uploadImage = async (req, res) => {
+const CreatePost = async (req, res) => {
   const { user, title, todayText, tomorrowText, blockersText } = req.body;
   AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -60,7 +60,7 @@ const fetchUserPosts = async (req, res) => {
       res.status(200).json(posts);
     }
   } catch (error) {
-    console.log(`Error retrieving images from DB: ${error}`);
+    console.log(`Error retrieving post from DB: ${error}`);
     res.status(500);
   }
 };
@@ -75,9 +75,24 @@ const fetchAllPosts = async (req, res) => {
       res.status(200).json(posts);
     }
   } catch (error) {
-    console.log(`Error retrieving images from DB: ${error}`);
+    console.log(`Error retrieving Posts from DB: ${error}`);
     res.status(500);
   }
 };
 
-module.exports = { uploadImage, fetchUserPosts, fetchAllPosts };
+// ? @Description    Delete a post
+// ? @Route          DEL /api/posts/
+// ? @Access         PUBLIC
+const DeletePost = async (req, res) => {
+  try {
+    const post = await Post.deleteOne(req.body.postId);
+    if (post) {
+      res.status(200).json({ Message: `Successfully deleted post`, post });
+    }
+  } catch (error) {
+    console.log(`Error deleting post from DB: ${error}`);
+    res.status(500);
+  }
+};
+
+module.exports = { CreatePost, fetchUserPosts, fetchAllPosts, DeletePost };
