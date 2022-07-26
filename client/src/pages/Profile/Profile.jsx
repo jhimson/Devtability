@@ -13,7 +13,7 @@ import {
   editPost,
 } from '../../utils/posts-api';
 
-import { getUserContacts } from '../../utils/contacts-api';
+import { getUserContacts, removeContact } from '../../utils/contacts-api';
 
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -24,6 +24,7 @@ import Sidenav from '../../components/Sidenav/Sidenav';
 import { UserContext } from '../../contexts/UserContext';
 import Contacts from '../../components/Contacts/Contacts';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
+import DeleteContactModal from '../../components/DeleteContactModal/DeleteContactModal';
 
 const Profile = () => {
   // ! CONTEXTS
@@ -41,6 +42,7 @@ const Profile = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   //   ! FUNCTIONS
   const clearFields = () => {
@@ -102,10 +104,20 @@ const Profile = () => {
   // ! CONTACTS FUNCTIONS
   const getContacts = async (userId) => {
     const response = await getUserContacts(userId);
-    console.log('YAWA', response);
     if (response) {
       setContacts(response.contacts);
     }
+  };
+
+  const deleteContact = async (userId, contactId) => {
+    const response = await removeContact(userId, contactId);
+    if (response) {
+      console.log(`Successfully deleted contact`, response);
+    }
+    let updatedContacts = contacts?.filter(
+      (contact) => contact._id !== contactId
+    );
+    setContacts(updatedContacts);
   };
 
   useEffect(() => {
@@ -161,7 +173,12 @@ const Profile = () => {
               {/* PROFILE INFO END -> */}
 
               {/* CONTACTS STARTS -> */}
-              <Contacts contacts={contacts} />
+              <Contacts
+                contacts={contacts}
+                deleteContact={deleteContact}
+                showModal={showModal}
+                setShowModal={setShowModal}
+              />
               {/* CONTACTS END -> */}
               {!isUpdating && (
                 <form
