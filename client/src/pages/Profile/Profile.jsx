@@ -13,6 +13,8 @@ import {
   editPost,
 } from '../../utils/posts-api';
 
+import { getUserContacts } from '../../utils/contacts-api';
+
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaEdit } from 'react-icons/fa';
@@ -34,6 +36,7 @@ const Profile = () => {
   const [todayText, setTodayText] = useState('');
   const [tomorrowText, setTomorrowText] = useState('');
   const [blockersText, setBlockersText] = useState('');
+  const [contacts, setContacts] = useState([]);
 
   const [showOptions, setShowOptions] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -96,8 +99,18 @@ const Profile = () => {
     }
   };
 
+  // ! CONTACTS FUNCTIONS
+  const getContacts = async (userId) => {
+    const response = await getUserContacts(userId);
+    console.log('YAWA', response);
+    if (response) {
+      setContacts(response.contacts);
+    }
+  };
+
   useEffect(() => {
     fetchPosts();
+    getContacts(user?._id);
   }, []);
 
   useEffect(() => {
@@ -148,7 +161,7 @@ const Profile = () => {
               {/* PROFILE INFO END -> */}
 
               {/* CONTACTS STARTS -> */}
-              <Contacts />
+              <Contacts contacts={contacts} />
               {/* CONTACTS END -> */}
               {!isUpdating && (
                 <form

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import PersonaCard from '../PersonCard/PersonaCard';
+import PersonCard from '../PersonCard/PersonCard';
 
 const PeopleList = ({ filteredPeople, addNewContact }) => {
   return (
@@ -12,7 +12,7 @@ const PeopleList = ({ filteredPeople, addNewContact }) => {
         </h3>
         <ul className="grid grid-cols-3 grid-auto-rows">
           {filteredPeople?.map((person) => (
-            <PersonaCard
+            <PersonCard
               key={person?._id}
               person={person}
               addNewContact={addNewContact}

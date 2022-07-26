@@ -46,13 +46,16 @@ const addNewContact = async (req, res) => {
 // ? @Access         Private / Authorized user
 const getUserContacts = async (req, res) => {
   try {
-    const contacts = await Contact.findOne({ user: req.params.userId }).populate('contacts');
-    if (contacts){
-        res.status(200).json(contacts)
+    const contacts = await Contact.findOne({
+      user: req.params.userId,
+    }).populate('contacts');
+
+    if (contacts) {
+      console.log(contacts, 'BUGOK KA!');
+      res.status(200).json(contacts);
     } else {
-        res.status(200).json([])
+      res.status(200).json([]);
     }
-    
   } catch (error) {
     console.log(`Failed to fetch contacts. ErrorMessage: ${error}`);
     res.status(500).json({ Message: error });

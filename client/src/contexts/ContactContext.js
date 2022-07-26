@@ -12,7 +12,7 @@ const ContactContextProvider = ({ children }) => {
       return JSON.parse(localStorage.getItem('contacts'));
 
     const res = await Axios.get(
-      `http://localhost:8000/api/contacts/${user._id}`
+      `http://localhost:8000/api/contacts/${user?._id}`
     );
     return res.data;
   };

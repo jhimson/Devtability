@@ -4,7 +4,7 @@ import Bryce from '../../assets/images/Bryce.png';
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
 
-const PersonaCard = ({ person, addNewContact }) => {
+const PersonCard = ({ person, addNewContact }) => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
   return (
@@ -53,4 +53,4 @@ const PersonaCard = ({ person, addNewContact }) => {
   );
 };
 
-export default PersonaCard;
+export default PersonCard;
