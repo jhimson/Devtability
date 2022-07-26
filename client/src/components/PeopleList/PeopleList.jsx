@@ -3,7 +3,7 @@
 import React from 'react';
 import PersonaCard from '../PersonCard/PersonaCard';
 
-const PeopleList = () => {
+const PeopleList = ({ filteredPeople, addNewContact }) => {
   return (
     <>
       <div className="bg-white shadow mt-6 rounded-lg p-6">
@@ -11,7 +11,14 @@ const PeopleList = () => {
           People
         </h3>
         <ul className="grid grid-cols-3 grid-auto-rows">
-          <li>
+          {filteredPeople?.map((person) => (
+            <PersonaCard
+              key={person?._id}
+              person={person}
+              addNewContact={addNewContact}
+            />
+          ))}
+          {/* <li>
             <PersonaCard />
           </li>
           <li>
@@ -25,7 +32,7 @@ const PeopleList = () => {
           </li>
           <li>
             <PersonaCard />
-          </li>
+          </li> */}
         </ul>
         {/* <ul className="flex items-center justify-center space-x-2">
           <li className="flex flex-col items-center space-y-2">

@@ -1,27 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import Axios from 'axios';
-import { format } from 'timeago.js';
 import Main from '../../components/Main/Main';
 
 // ! API
-import {
-  getUserPosts,
-  createPost,
-  removePost,
-  editPost,
-} from '../../utils/posts-api';
 
-// ! ICONS
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { FaEdit } from 'react-icons/fa';
 // ! COMPONENTS
 import Sidenav from '../../components/Sidenav/Sidenav';
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
-import Contacts from '../../components/Contacts/Contacts';
-import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
 import PeopleList from '../../components/PeopleList/PeopleList';
 
 const PeoplePage = () => {
@@ -29,81 +17,86 @@ const PeoplePage = () => {
   const { user, setUser } = useContext(UserContext);
 
   //  ! STATES
-  const [posts, setPosts] = useState([]);
-  const [file, setFile] = useState('');
-  const [title, setTitle] = useState('');
-  const [todayText, setTodayText] = useState('');
-  const [tomorrowText, setTomorrowText] = useState('');
-  const [blockersText, setBlockersText] = useState('');
-
-  const [showOptions, setShowOptions] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [people, setPeople] = useState([]);
+  const [userContacts, setUserContacts] = useState([]);
+  const [filteredPeople, setFilteredPeople] = useState(
+    localStorage.getItem('filteredPeople')
+      ? JSON.parse(localStorage.getItem('filteredPeople'))
+      : []
+  );
+  const test = useRef({});
 
   //   ! FUNCTIONS
-  const clearFields = () => {
-    setTitle('');
-    setTodayText('');
-    setTomorrowText('');
-    setBlockersText('');
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let formData = new FormData();
-    formData.append('data', file);
-    formData.append('user', `${user._id}`);
-    formData.append('title', `${title}`);
-    formData.append('todayText', `${todayText}`);
-    formData.append('tomorrowText', `${tomorrowText}`);
-    formData.append('blockersText', `${blockersText}`);
+  const addNewContact = async (userId, contactId) => {
+    let updatedZest = filteredPeople?.map((z) => {
+      if (z._id === contactId) {
+        z.isExist = true;
+        return z;
+      }
+      return z;
+    });
 
-    const response = await createPost(formData);
-    if (response) {
-      clearFields();
-      console.log(response);
-      setIsSubmitted(!isSubmitted);
-    }
+    let currentContact = people.find((person) => person._id === contactId);
+    setUserContacts((prevState) => [...prevState, currentContact]);
+    setFilteredPeople(updatedZest);
+    localStorage.setItem('filteredPeople', JSON.stringify(updatedZest));
+    const res = await Axios.post(`http://localhost:8000/api/contacts/`, {
+      userId: user._id,
+      contactId,
+    });
   };
 
-  const fetchPosts = async () => {
-    const response = await getUserPosts(user._id);
-    if (response) {
-      setPosts(response.data);
-    }
+  const filterPeople = (contacts, people) => {
+    let filtered = [];
+    let hash = new Map();
+    people?.map((person) => {
+      if (!hash.has(person._id)) {
+        hash.set(person._id, { ...person, isExist: false });
+      }
+    });
+
+    contacts?.map((contact) => {
+      if (hash.has(contact._id)) {
+        hash.set(contact._id, { ...hash.get(contact._id), isExist: true });
+      }
+    });
+    hash.forEach((test) => filtered.push(test));
+    return filtered;
   };
 
-  const deletePost = async (postId) => {
-    await removePost(postId);
-    const updatedPosts = posts.filter((post) => post._id !== postId);
-    setPosts(updatedPosts);
-    setShowOptions(!showOptions);
-  };
+  //! USE EFFECTS
+  useEffect(() => {
+    const fetchPeople = async () => {
+      const res = await Axios.get(
+        `http://localhost:8000/api/users/except/${user?._id}`
+      );
 
-  const setUpdateData = async (post) => {
-    console.log('WTF DUDE!');
-    setShowOptions(!showOptions);
-    setIsUpdating(true);
-    setFile(post.image);
-    setTitle(post.title);
-    setTodayText(post.todayText);
-    setTomorrowText(post.tomorrowText);
-    setBlockersText(post.blockersText);
-  };
+      if (res) {
+        test.current.people = res.data || [];
+        setPeople(res.data);
+      }
+    };
 
-  const updatePost = async (updatedPost) => {
-    const response = await editPost(updatedPost);
-    if (response) {
-      console.log(`Successfully updated post`, response);
-    }
-  };
+    const getContacts = async () => {
+      const res = await Axios.get(
+        `http://localhost:8000/api/contacts/${user?._id}`
+      );
+
+      if (res) {
+        test.current.contacts = res.data?.contacts || [];
+        setUserContacts(res.data?.contacts || []);
+      }
+    };
+    getContacts();
+    fetchPeople();
+    setFilteredPeople(
+      filterPeople(test.current?.contacts, test.current?.people)
+    );
+  }, [user]);
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  useEffect(() => {
-    fetchPosts();
-  }, [isSubmitted, isUpdating]);
+    setFilteredPeople(filterPeople(userContacts, people));
+  }, [user, people, userContacts]);
 
   return (
     <>
@@ -143,9 +136,10 @@ const PeoplePage = () => {
           </nav>
           <div>
             <article className="">
-              {/* CONTACTS STARTS -> */}
-              <PeopleList />
-              {/* CONTACTS END -> */}
+              <PeopleList
+                filteredPeople={filteredPeople}
+                addNewContact={addNewContact}
+              />
             </article>
           </div>
         </Main>

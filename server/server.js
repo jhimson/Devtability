@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 //! Put API routes here, before the "catch all" route
 app.use('/api/users', require('./routes/R-user'));
 app.use('/api/posts', require('./routes/R-post'));
+app.use('/api/contacts', require('./routes/R-contact'));
 
 
 const PORT = process.env.PORT;
