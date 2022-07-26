@@ -102,6 +102,7 @@ const DeletePost = async (req, res) => {
 // ? @Access         PUBLIC
 const UpdatePost = async (req, res) => {
   const { _id, title, todayText, tomorrowText, blockersText } = req.body;
+  console.log(req.body);
   try {
     const post = await Post.updateOne(
       { _id },

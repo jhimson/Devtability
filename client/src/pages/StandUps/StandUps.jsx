@@ -11,6 +11,7 @@ import {
   createPost,
   removePost,
   editPost,
+  getAllPosts,
 } from '../../utils/posts-api';
 
 // ! ICONS
@@ -63,7 +64,7 @@ const StandUps = () => {
   };
 
   const fetchPosts = async () => {
-    const response = await Axios.get(`http://localhost:8000/api/posts/`);
+    const response = await getAllPosts();
     if (response) {
       setPosts(response.data);
     }

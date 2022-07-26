@@ -2,24 +2,53 @@ import Axios from 'axios';
 
 const BASE_URL = `http://localhost:8000/api/posts`;
 
-const token = JSON.parse(localStorage.getItem('token')) || null
+const token = JSON.parse(localStorage.getItem('token')) || null;
 
 export const getUserPosts = async (userId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
   try {
-    const response = await Axios.get(`${BASE_URL}/${userId}`);
+    const response = await Axios({
+      method: 'GET',
+      url: `${BASE_URL}/${userId}`,
+      headers,
+    });
     return response;
   } catch (error) {
     console.log(`Error fetching user posts. ErrorMessage: ${error}`);
   }
 };
 
+export const getAllPosts = async () => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios({
+      method: 'GET',
+      url: `${BASE_URL}`,
+      headers,
+    });
+    return response;
+  } catch (error) {
+    console.log(`Error fetching posts. ErrorMessage: ${error}`);
+  }
+};
+
 export const createPost = async (formData) => {
+  const headers = {
+    'Content-Type': 'multipart/form-data',
+    authorization: `Bearer ${token}`,
+  };
   try {
     const result = await Axios({
       method: 'POST',
       url: `${BASE_URL}`,
       data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers,
     });
     return result;
   } catch (error) {
@@ -30,8 +59,8 @@ export const createPost = async (formData) => {
 export const removePost = async (postId) => {
   const headers = {
     'Content-Type': 'application/json',
-    'authorization': `Bearer ${token}`
-  }
+    authorization: `Bearer ${token}`,
+  };
   try {
     const response = await Axios({
       method: 'DELETE',
@@ -47,8 +76,12 @@ export const removePost = async (postId) => {
 };
 
 export const editPost = async (updatedPost) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
   try {
-    const response = await Axios.patch(`${BASE_URL}`, updatedPost);
+    const response = await Axios.patch(`${BASE_URL}`, updatedPost, { headers });
     console.log(response);
     return response;
   } catch (error) {
