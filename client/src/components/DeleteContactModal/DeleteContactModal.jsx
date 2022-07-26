@@ -9,7 +9,7 @@ const DeleteContactModal = ({ deleteContact, contact, setShowModal }) => {
   return (
     <>
       <div class="flex items-center justify-center fixed left-40 bottom-10 w-full h-full opacity-100">
-        <div class="bg-gray-200 rounded-lg w-1/4">
+        <div class="bg-gray-100 border-2 rounded-lg w-1/4 shadow-2xl">
           <div class="flex flex-col items-start p-4 opacity-100">
             <div class="flex items-center w-full">
               <div class="text-gray-900 font-medium text-lg">
@@ -31,19 +31,19 @@ const DeleteContactModal = ({ deleteContact, contact, setShowModal }) => {
             <hr />
             <div class="ml-auto">
               <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
                 onClick={() => {
                   setShowModal(false);
                   deleteContact(user?._id, contact?._id);
                 }}
               >
-                Confirm
+                Remove Contact
               </button>
               <button
-                class="bg-transparent bg-red-500 hover:bg-red-700 text-white font-bold hover:text-white py-2 px-4 border border-red-400 hover:border-transparent rounded"
+                class="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded"
                 onClick={() => setShowModal(false)}
               >
-                Close
+                Set as Accountability Partner
               </button>
             </div>
           </div>
