@@ -8,6 +8,7 @@ const { generateAccessToken, generateRefreshToken } = require('../utils/index');
 // ? @Route          POST /api/posts/
 // ? @Access         PUBLIC
 const CreatePost = async (req, res) => {
+  let today = new Date().toISOString().slice(0, 10);
   const { user, title, todayText, tomorrowText, blockersText } = req.body;
   console.log('AAAAAAWWWWL', req.files);
   AWS.config.update({
@@ -36,6 +37,7 @@ const CreatePost = async (req, res) => {
         todayText,
         tomorrowText,
         blockersText,
+        datePosted: today,
         image: data.Location,
       });
     } catch (error) {
