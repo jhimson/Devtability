@@ -9,6 +9,7 @@ const { generateAccessToken, generateRefreshToken } = require('../utils/index');
 // ? @Access         PUBLIC
 const CreatePost = async (req, res) => {
   const { user, title, todayText, tomorrowText, blockersText } = req.body;
+  console.log('AAAAAAWWWWL', req.files);
   AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -95,4 +96,29 @@ const DeletePost = async (req, res) => {
   }
 };
 
-module.exports = { CreatePost, fetchUserPosts, fetchAllPosts, DeletePost };
+// ? @Description    Update a post
+// ? @Route          PATCH /api/posts/
+// ? @Access         PUBLIC
+const UpdatePost = async (req, res) => {
+  const { _id, title, todayText, tomorrowText, blockersText } = req.body;
+  try {
+    const post = await Post.updateOne(
+      { _id },
+      { $set: { title, todayText, tomorrowText, blockersText } }
+    );
+    if (post) {
+      res.status(200).json({ Message: `Successfully Updated post`, post });
+    }
+  } catch (error) {
+    console.log(`Error Updating post from DB: ${error}`);
+    res.status(500);
+  }
+};
+
+module.exports = {
+  CreatePost,
+  fetchUserPosts,
+  fetchAllPosts,
+  DeletePost,
+  UpdatePost,
+};

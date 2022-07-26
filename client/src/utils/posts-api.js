@@ -34,3 +34,13 @@ export const removePost = async (postId) => {
     console.log(`Error deleting a user post. ErrorMessage: ${error}`);
   }
 };
+
+export const editPost = async (updatedPost) => {
+  try {
+    const response = await Axios.patch(`${BASE_URL}`, updatedPost);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error updating a user post. ErrorMessage: ${error}`);
+  }
+};

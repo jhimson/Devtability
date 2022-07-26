@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
@@ -5,7 +6,12 @@ import { format } from 'timeago.js';
 import Main from '../../components/Main/Main';
 
 // ! API
-import { getUserPosts, createPost, removePost } from '../../utils/posts-api';
+import {
+  getUserPosts,
+  createPost,
+  removePost,
+  editPost,
+} from '../../utils/posts-api';
 
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -28,8 +34,16 @@ const Profile = () => {
   const [blockersText, setBlockersText] = useState('');
 
   const [showOptions, setShowOptions] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   //   ! FUNCTIONS
+  const clearFields = () => {
+    setTitle('');
+    setTodayText('');
+    setTomorrowText('');
+    setBlockersText('');
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     let formData = new FormData();
@@ -42,11 +56,9 @@ const Profile = () => {
 
     const response = await createPost(formData);
     if (response) {
-      setTitle('');
-      setTodayText('');
-      setTomorrowText('');
-      setBlockersText('');
+      clearFields();
       console.log(response);
+      setIsSubmitted(!isSubmitted);
     }
   };
 
@@ -61,12 +73,34 @@ const Profile = () => {
     await removePost(postId);
     const updatedPosts = posts.filter((post) => post._id !== postId);
     setPosts(updatedPosts);
-    setShowOptions(!showOptions)
+    setShowOptions(!showOptions);
+  };
+
+  const setUpdateData = async (post) => {
+    console.log('WTF DUDE!');
+    setShowOptions(!showOptions);
+    setIsUpdating(true);
+    setFile(post.image);
+    setTitle(post.title);
+    setTodayText(post.todayText);
+    setTomorrowText(post.tomorrowText);
+    setBlockersText(post.blockersText);
+  };
+
+  const updatePost = async (updatedPost) => {
+    const response = await editPost(updatedPost);
+    if (response) {
+      console.log(`Successfully updated post`, response);
+    }
   };
 
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [isSubmitted, isUpdating]);
 
   return (
     <>
@@ -148,159 +182,161 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-              <form
-                onSubmit={handleSubmit}
-                className="bg-white shadow rounded-lg mb-6 p-4"
-              >
-                <div className="flex flex-col space-y-2 mb-8">
-                  <label htmlFor="" className="text-gray-500 font-semibold">
-                    Title
-                  </label>
-                  <textarea
-                    name="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Type something here..."
-                    className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
-                  ></textarea>
-                </div>
-                <div className="grid grid-cols-3 gap-x-8">
-                  <div className="flex flex-col space-y-2">
-                    <label
-                      htmlFor="todayText"
-                      className="text-gray-500 font-semibold"
-                    >
-                      What did you worked on today?
+              {!isUpdating && (
+                <form
+                  onSubmit={handleSubmit}
+                  className="bg-white shadow rounded-lg mb-6 p-4"
+                >
+                  <div className="flex flex-col space-y-2 mb-8">
+                    <label htmlFor="" className="text-gray-500 font-semibold">
+                      Title
                     </label>
                     <textarea
-                      name="todayText"
-                      value={todayText}
-                      onChange={(e) => setTodayText(e.target.value)}
+                      name="title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
                       placeholder="Type something here..."
                       className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
                     ></textarea>
                   </div>
-                  <div className="flex flex-col space-y-2">
-                    <label
-                      htmlFor="tomorrowText"
-                      className="text-gray-500 font-semibold"
-                    >
-                      What are you planning to work on tonight/tomorrow?
-                    </label>
-                    <textarea
-                      name="tomorrowText"
-                      value={tomorrowText}
-                      onChange={(e) => setTomorrowText(e.target.value)}
-                      placeholder="Type something here..."
-                      className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
-                    ></textarea>
+                  <div className="grid grid-cols-3 gap-x-8">
+                    <div className="flex flex-col space-y-2">
+                      <label
+                        htmlFor="todayText"
+                        className="text-gray-500 font-semibold"
+                      >
+                        What did you worked on today?
+                      </label>
+                      <textarea
+                        name="todayText"
+                        value={todayText}
+                        onChange={(e) => setTodayText(e.target.value)}
+                        placeholder="Type something here..."
+                        className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                      ></textarea>
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                      <label
+                        htmlFor="tomorrowText"
+                        className="text-gray-500 font-semibold"
+                      >
+                        What are you planning to work on tonight/tomorrow?
+                      </label>
+                      <textarea
+                        name="tomorrowText"
+                        value={tomorrowText}
+                        onChange={(e) => setTomorrowText(e.target.value)}
+                        placeholder="Type something here..."
+                        className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                      ></textarea>
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                      <label
+                        htmlFor="blockersText"
+                        className="text-gray-500 font-semibold"
+                      >
+                        What blockers do you have?
+                      </label>
+                      <textarea
+                        name="blockersText"
+                        value={blockersText}
+                        onChange={(e) => setBlockersText(e.target.value)}
+                        placeholder="Type something here..."
+                        className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                      ></textarea>
+                    </div>
                   </div>
-                  <div className="flex flex-col space-y-2">
-                    <label
-                      htmlFor="blockersText"
-                      className="text-gray-500 font-semibold"
-                    >
-                      What blockers do you have?
+                  <div className="flex flex-col space-y-2 bg-gray-100 p-4 mt-6 rounded w-full">
+                    <label htmlFor="" className="text-gray-500 font-semibold">
+                      Upload image
                     </label>
-                    <textarea
-                      name="blockersText"
-                      value={blockersText}
-                      onChange={(e) => setBlockersText(e.target.value)}
-                      placeholder="Type something here..."
-                      className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
-                    ></textarea>
+                    <input
+                      type="file"
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
                   </div>
-                </div>
-                <div className="flex flex-col space-y-2 bg-gray-100 p-4 mt-6 rounded w-full">
-                  <label htmlFor="" className="text-gray-500 font-semibold">
-                    Upload image
-                  </label>
-                  <input
-                    type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                  />
-                </div>
-                <footer className="flex justify-between mt-2">
-                  <div className="flex gap-2">
-                    <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                  <footer className="flex justify-between mt-2">
+                    <div className="flex gap-2">
+                      <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="css-i6dzq1"
+                        >
+                          <rect
+                            x="3"
+                            y="3"
+                            width="18"
+                            height="18"
+                            rx="2"
+                            ry="2"
+                          ></rect>
+                          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                          <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                      </span>
+                      <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="css-i6dzq1"
+                        >
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                      </span>
+                      <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          fill="none"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="css-i6dzq1"
+                        >
+                          <polyline points="4 17 10 11 4 5"></polyline>
+                          <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                      </span>
+                    </div>
+                    <button
+                      type="submit"
+                      className="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-600 text-white shadow-lg w-28 justify-center"
+                    >
+                      Post
                       <svg
+                        className="ml-1"
                         viewBox="0 0 24 24"
-                        width="24"
-                        height="24"
+                        width="16"
+                        height="16"
                         stroke="currentColor"
                         strokeWidth="2"
                         fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="css-i6dzq1"
                       >
-                        <rect
-                          x="3"
-                          y="3"
-                          width="18"
-                          height="18"
-                          rx="2"
-                          ry="2"
-                        ></rect>
-                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                        <polyline points="21 15 16 10 5 21"></polyline>
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                       </svg>
-                    </span>
-                    <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="24"
-                        height="24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="css-i6dzq1"
-                      >
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                      </svg>
-                    </span>
-                    <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="24"
-                        height="24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="css-i6dzq1"
-                      >
-                        <polyline points="4 17 10 11 4 5"></polyline>
-                        <line x1="12" y1="19" x2="20" y2="19"></line>
-                      </svg>
-                    </span>
-                  </div>
-                  <button
-                    type="submit"
-                    className="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-600 text-white shadow-lg w-28 justify-center"
-                  >
-                    Post
-                    <svg
-                      className="ml-1"
-                      viewBox="0 0 24 24"
-                      width="16"
-                      height="16"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="22" y1="2" x2="11" y2="13"></line>
-                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                  </button>
-                </footer>
-              </form>
+                    </button>
+                  </footer>
+                </form>
+              )}
 
               <div className="bg-white shadow rounded-lg">
                 {posts?.map((post) => {
@@ -332,29 +368,65 @@ const Profile = () => {
 
                         <div className="flex justify-center">
                           <div className="relative inline-block">
-                            <button
-                              className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-gray-400 rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-200 focus:outline-none"
-                              onClick={() => setShowOptions(!showOptions)}
-                            >
-                              <svg
-                                className="w-5 h-5 mx-1 text-gray-500"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
+                            <div className="flex space-x-4">
+                              {isUpdating && (
+                                <>
+                                  <button
+                                    className="py-2 px-4 rounded-lg text-sm bg-green-600 text-white shadow-lg"
+                                    onClick={() => {
+                                      clearFields();
+                                      setIsUpdating(false);
+                                      updatePost({
+                                        _id: post?._id,
+                                        title,
+                                        todayText,
+                                        tomorrowText,
+                                        blockersText,
+                                      });
+                                    }}
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    className="py-2 px-4 rounded-lg text-sm bg-red-600 text-white shadow-lg"
+                                    onClick={() => {
+                                      clearFields();
+                                      setIsUpdating(false);
+                                    }}
+                                  >
+                                    Cancel
+                                  </button>
+                                </>
+                              )}
+                              <button
+                                className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-gray-400 rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-200 focus:outline-none"
+                                onClick={() => setShowOptions(!showOptions)}
                               >
-                                <path
-                                  d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
-                                  fill="currentColor"
-                                ></path>
-                              </svg>
-                            </button>
+                                <svg
+                                  className="w-5 h-5 mx-1 text-gray-500"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
+                                    fill="currentColor"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
 
                             <div
                               className={`absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-200 border-2 border-gray-300 ${
                                 !showOptions && 'hidden'
                               }`}
                             >
-                              <button className="block px-4 py-3 text-sm text-gray-400 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold w-full">
+                              <button
+                                className="block px-4 py-3 text-sm text-gray-400 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold w-full"
+                                onClick={() => {
+                                  setUpdateData(post);
+                                }}
+                              >
                                 <FaEdit size={'1.3em'} />
                                 <span>Edit Post</span>
                               </button>
@@ -375,25 +447,79 @@ const Profile = () => {
                         <img className="rounded w-full" src={post?.image} />
                       </div>
                       <div className="text-gray-600 font-bold mb-4 mx-3 px-2 text-2xl">
-                        {post?.title}
+                        {isUpdating ? (
+                          <>
+                            <h1
+                              className="text-gray-500 font-semibold mb-4 text-5xl"
+                            >
+                              Editing Post
+                            </h1>
+                            <hr className='mb-4'/>
+                            <label
+                              htmlFor=""
+                              className="text-gray-500 font-semibold"
+                            >
+                              Title
+                            </label>
+                            <textarea
+                              name="title"
+                              value={title}
+                              onChange={(e) => setTitle(e.target.value)}
+                              placeholder="Type something here..."
+                              className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 font-normal h-auto"
+                            ></textarea>
+                          </>
+                        ) : (
+                          post?.title
+                        )}
                       </div>
                       <div className="text-gray-500 text-lg mb-6 mx-3 px-2">
                         <h1 className="font-semibold">
                           What did you worked on today?
                         </h1>
-                        {post?.todayText}
+                        {isUpdating ? (
+                          <textarea
+                            name="todayText"
+                            value={todayText}
+                            onChange={(e) => setTodayText(e.target.value)}
+                            placeholder="Type something here..."
+                            className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 h-24"
+                          ></textarea>
+                        ) : (
+                          post?.todayText
+                        )}
                       </div>
                       <div className="text-gray-500 text-lg mb-6 mx-3 px-2">
                         <h1 className="font-semibold">
                           What are you planning to work on tonight/tomorrow?
                         </h1>
-                        {post?.tomorrowText}
+                        {isUpdating ? (
+                          <textarea
+                            name="tomorrowText"
+                            value={tomorrowText}
+                            onChange={(e) => setTomorrowText(e.target.value)}
+                            placeholder="Type something here..."
+                            className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 h-24"
+                          ></textarea>
+                        ) : (
+                          post?.tomorrowText
+                        )}
                       </div>
                       <div className="text-gray-500 text-lg mb-6 mx-3 px-2">
                         <h1 className="font-semibold">
                           What blockers do you have?
                         </h1>
-                        {post?.blockersText}
+                        {isUpdating ? (
+                          <textarea
+                            name="blockersText"
+                            value={blockersText}
+                            onChange={(e) => setBlockersText(e.target.value)}
+                            placeholder="Type something here..."
+                            className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 h-24"
+                          ></textarea>
+                        ) : (
+                          post?.blockersText
+                        )}
                       </div>
 
                       <div className="flex justify-start mb-4 border-t border-gray-100">
