@@ -1,14 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
 
 // ! API
-import { setUserProfile } from '../../utils/users-api';
+import { setUserProfile, fetchUsers } from '../../utils/users-api';
 
 const ProfileInfo = () => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
+  const [usersEmail, setUsersEmail] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [emailExists, setEmailExists] = useState(false);
 
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -49,6 +51,26 @@ const ProfileInfo = () => {
     }
   };
 
+  const getUsers = async () => {
+    const response = await fetchUsers(user?._id);
+    if (response) {
+      console.log(`Successfully fetched users`, response.data);
+      const emails = response?.data?.map((user) => user?.email);
+      setUsersEmail(emails);
+    }
+  };
+
+  const checkIfEmailExists = (updatedEmail) => {
+    const exist = usersEmail?.includes(updatedEmail);
+    if (exist) {
+      setEmailExists(true);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <>
       <div className="bg-white shadow rounded-lg p-10 mb-8 flex flex-col">
@@ -57,19 +79,21 @@ const ProfileInfo = () => {
             {isUpdating && (
               <>
                 <button
-                  className="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2"
+                  className={`bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2 ${emailExists && 'bg-gray-600 border-gray-700 hover:bg-gray-500'}`}
                   onClick={() => {
                     updateUserInfo();
                     setIsUpdating(false);
-                    updateUserProfile()
+                    updateUserProfile();
                   }}
+                  disabled={emailExists}
                 >
                   Save
                 </button>
                 <button
-                  className="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2"
+                  className="bg-red-500 hover:bg-red-800 text-white font-bold hover:text-white py-2 px-4 border border-red-400 hover:border-transparent rounded mr-2"
                   onClick={() => {
                     setIsUpdating(false);
+                    setEmailExists(false);
                   }}
                 >
                   Cancel
@@ -152,14 +176,25 @@ const ProfileInfo = () => {
           <div className="font-semibold text-center mx-4">
             <p className="text-black">Email Address</p>
             {isUpdating ? (
-              <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500 mt-2">
-                <input
-                  type="text"
-                  className="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-gray-600 text-sm"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+              <>
+                <div
+                  class={`w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-${
+                    emailExists ? 'red' : 'blue'
+                  }-500 mt-2`}
+                >
+                  <input
+                    type="text"
+                    className={`w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-${
+                      emailExists ? 'red' : 'gray'
+                    }-600 text-sm`}
+                    value={email}
+                    onChange={(e) => {
+                      checkIfEmailExists(e.target.value);
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </div>
+              </>
             ) : (
               <span className="text-gray-400">{user?.email}</span>
             )}

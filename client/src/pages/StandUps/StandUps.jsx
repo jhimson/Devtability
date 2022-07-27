@@ -360,18 +360,21 @@ const StandUps = () => {
                               )}
                               {post?.user?._id === user._id && !isUpdating && (
                                 <button
-                                  className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-gray-400 rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-200 focus:outline-none"
+                                  className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white rounded-full focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white hover:bg-gray-200 focus:outline-none"
                                   onClick={() => setShowOptions(!showOptions)}
                                 >
                                   <svg
-                                    className="w-5 h-5 mx-1 text-gray-500"
-                                    viewBox="0 0 24 24"
+                                    className="w-6 h-6 text-gray-500"
                                     fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     <path
-                                      d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z"
-                                      fill="currentColor"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
                                     ></path>
                                   </svg>
                                 </button>

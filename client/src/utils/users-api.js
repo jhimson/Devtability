@@ -67,3 +67,9 @@ export const setUserProfile = async (userData) => {
     console.log(`Error updating a user profile. ErrorMessage: ${error}`);
   }
 };
+
+export const fetchUsers = async (userId) => {
+  const response = await Axios.get(`${BASE_URL}/except/${userId}`);
+  return response;
+};
+
