@@ -150,10 +150,25 @@ export default function SignUpForm() {
                             </p>
                           )}
                         </div>
+                        <div className='mt-4'>
+                          <label
+                            for="name"
+                            className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+                          >
+                            Address
+                          </label>
+                          <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            placeholder="City, State"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                          />
+                        </div>
                         <div>
                           <label
                             for="email"
-                            className="block mb-2 text-sm text-gray-600 dark:text-gray-200 mt-8"
+                            className="block mb-2 text-sm text-gray-600 dark:text-gray-200 mt-4"
                           >
                             Email Address
                           </label>
@@ -178,7 +193,7 @@ export default function SignUpForm() {
                           )}
                         </div>
 
-                        <div className="mt-6">
+                        <div className="mt-4">
                           <div className="flex justify-between mb-2">
                             <label
                               for="password"

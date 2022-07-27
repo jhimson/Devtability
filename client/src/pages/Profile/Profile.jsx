@@ -195,7 +195,7 @@ const Profile = () => {
           <div>
             <article className="">
               {/* PROFILE INFO START -> */}
-              <ProfileInfo name={user?.name} email={user?.email} />
+              <ProfileInfo user={user} />
               {/* PROFILE INFO END -> */}
 
               <Partner partner={partner} setShowModal={setShowModal} />

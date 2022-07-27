@@ -6,6 +6,7 @@ const {
   fetchUsersExceptCurrentUser,
   setAccountabilityPartner,
   fetchUser,
+  updateUserProfile
 } = require('../controllers/C-user');
 const { verify } = require('../utils/index');
 
@@ -17,5 +18,7 @@ router.post('/login', Login);
 router.post('/logout', verify, Logout);
 
 router.patch('/partner', setAccountabilityPartner);
+router.patch('/profile', updateUserProfile);
+
 
 module.exports = router;

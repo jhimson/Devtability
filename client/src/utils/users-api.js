@@ -49,3 +49,21 @@ export const setAccountabilityPartner = async (userId, contactId) => {
     console.log(`Error updating a user post. ErrorMessage: ${error}`);
   }
 };
+
+export const setUserProfile = async (userData) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.patch(
+      `${BASE_URL}/profile`,
+      { userData },
+      { headers }
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error updating a user profile. ErrorMessage: ${error}`);
+  }
+};

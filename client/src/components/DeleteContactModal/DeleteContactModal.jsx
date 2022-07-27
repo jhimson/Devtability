@@ -36,22 +36,22 @@ const DeleteContactModal = ({
             <hr />
             <div class="ml-auto">
               <button
-                class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
-                onClick={() => {
-                  setShowModal(false);
-                  deleteContact(user?._id, contact?._id);
-                }}
-              >
-                Remove Contact
-              </button>
-              <button
-                class="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded"
+                class="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2"
                 onClick={() => {
                   setShowModal(false);
                   setUserPartner(user?._id, contact?._id);
                 }}
               >
                 Set as Accountability Partner
+              </button>
+              <button
+                class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  setShowModal(false);
+                  deleteContact(user?._id, contact?._id);
+                }}
+              >
+                Remove Contact
               </button>
             </div>
           </div>

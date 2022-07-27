@@ -55,7 +55,7 @@ const fetchUser = async (req, res) => {
 
 // ? @Description    UPDATE accountability partner
 // ? @Route          PATCH /api/users/partner
-// ? @Access         PUBLIC
+// ? @Access         Private / Authorized
 const setAccountabilityPartner = async (req, res) => {
   console.log(req.body);
   try {
@@ -75,9 +75,32 @@ const setAccountabilityPartner = async (req, res) => {
   }
 };
 
+// ? @Description    UPDATE user profile
+// ? @Route          PATCH /api/users/profile
+// ? @Access         Private / Authorized
+const updateUserProfile = async (req, res) => {
+  console.log(req.body);
+  const { userId, name, email, address, github, linkedIn } = req.body.userData;
+  try {
+    const user = await User.updateOne(
+      { _id: userId },
+      { $set: { name, email, address, github, linkedIn } },
+      { new: true }
+    );
+    if (user) {
+      console.log('VOVOKA', user);
+      res.status(200).json(user);
+    } else {
+      res.status(400).json({ Message: `User not found in the DB` });
+    }
+  } catch (error) {
+    console.log(`Error updating user in DB. Error: ${error}`);
+  }
+};
+
 // ? @Description    CREATE new user
 // ? @Route          POST /api/users/signup
-// ? @Access         PUBLIC
+// ? @Access         Private / Authorized
 const Signup = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -153,4 +176,5 @@ module.exports = {
   fetchUsersExceptCurrentUser,
   setAccountabilityPartner,
   fetchUser,
+  updateUserProfile,
 };
