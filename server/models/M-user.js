@@ -20,6 +20,7 @@ const userSchema = new Schema(
       minLength: 3,
       required: true,
     },
+    image: { type: String },
     accountabilityPartner: {
       type: Schema.Types.ObjectId,
       ref: 'User',

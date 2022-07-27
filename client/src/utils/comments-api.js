@@ -1,0 +1,100 @@
+import Axios from 'axios';
+
+const BASE_URL = `http://localhost:8000/api/comments`;
+
+const token = JSON.parse(localStorage.getItem('token')) || null;
+
+// export const getUserPosts = async (userId) => {
+//   const headers = {
+//     'Content-Type': 'application/json',
+//     authorization: `Bearer ${token}`,
+//   };
+//   try {
+//     const response = await Axios({
+//       method: 'GET',
+//       url: `${BASE_URL}/${userId}`,
+//       headers,
+//     });
+//     return response;
+//   } catch (error) {
+//     console.log(`Error fetching user posts. ErrorMessage: ${error}`);
+//   }
+// };
+
+// export const getAllPosts = async () => {
+//   const headers = {
+//     'Content-Type': 'application/json',
+//     authorization: `Bearer ${token}`,
+//   };
+//   try {
+//     const response = await Axios({
+//       method: 'GET',
+//       url: `${BASE_URL}`,
+//       headers,
+//     });
+//     return response;
+//   } catch (error) {
+//     console.log(`Error fetching posts. ErrorMessage: ${error}`);
+//   }
+// };
+
+export const addComment = async (commentData) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.post(`${BASE_URL}`, commentData, { headers });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error inserting a comment. ErrorMessage: ${error}`);
+  }
+};
+
+export const fetchComment = async (commentId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.get(`${BASE_URL}/${commentId}`, { headers });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error fetching a comment. ErrorMessage: ${error}`);
+  }
+};
+
+// export const removePost = async (postId) => {
+//   const headers = {
+//     'Content-Type': 'application/json',
+//     authorization: `Bearer ${token}`,
+//   };
+//   try {
+//     const response = await Axios({
+//       method: 'DELETE',
+//       url: `${BASE_URL}`,
+//       data: { postId },
+//       headers,
+//     });
+//     console.log(response);
+//     return response;
+//   } catch (error) {
+//     console.log(`Error deleting a user post. ErrorMessage: ${error}`);
+//   }
+// };
+
+// export const editPost = async (updatedPost) => {
+//   const headers = {
+//     'Content-Type': 'application/json',
+//     authorization: `Bearer ${token}`,
+//   };
+//   try {
+//     const response = await Axios.patch(`${BASE_URL}`, updatedPost, { headers });
+//     console.log(response);
+//     return response;
+//   } catch (error) {
+//     console.log(`Error updating a user post. ErrorMessage: ${error}`);
+//   }
+// };

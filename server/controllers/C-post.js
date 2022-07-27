@@ -73,7 +73,10 @@ const fetchUserPosts = async (req, res) => {
 // ? @Access         PUBLIC
 const fetchAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find({}).sort({ createdAt: -1 }).populate('user');
+    const posts = await Post.find({})
+      .sort({ createdAt: -1 })
+      .populate('user')
+      .populate('comments');
     if (posts) {
       res.status(200).json(posts);
     }

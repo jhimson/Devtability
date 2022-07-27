@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { format } from 'timeago.js';
 
-const Comments = () => {
+// ! API
+import { fetchComment } from '../../utils/comments-api';
+
+const Comments = ({ commentId }) => {
+  const [comment, setComment] = useState({});
+
+  const getComment = async () => {
+    const response = await fetchComment(commentId);
+    if (response.data) {
+      setComment(response.data);
+    }
+  };
+
+  useEffect(() => {
+    getComment();
+  }, [commentId]);
+
   return (
     <>
-      <div className="bg-gray-50 w-full rounded-2xl px-6 py-4 shadow-lg hover:shadow-2xl transition duration-500 mb-4">
+      <div className="w-full bg-gray-50 rounded-2xl px-6 py-4 shadow-lg hover:shadow-2xl transition duration-500 mb-4">
         <div>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
@@ -15,17 +32,15 @@ const Comments = () => {
                 />
               </div>
               <div className="text-sm font-semibold">
-                John Lucas • <span className="font-normal"> 5 minutes ago</span>
+                {comment?.user.name} •{' '}
+                <span className="font-normal">
+                  {format(comment?.createdAt)}
+                </span>
               </div>
             </div>
           </div>
           {/*  */}
-          <p className="text-md text-gray-600 mt-2">
-            But I must explain to you how all this mistaken idea of denouncing
-            pleasure and praising pain was born and I will give you a complete
-            account of the system, and expound the actual teachings of the great
-            explorer of the truth, the master-builder of human happines.
-          </p>
+          <p className="text-md text-gray-600 mt-2">{comment?.text}</p>
         </div>
       </div>
     </>

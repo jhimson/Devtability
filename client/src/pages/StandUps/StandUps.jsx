@@ -13,6 +13,8 @@ import {
   editPost,
   getAllPosts,
 } from '../../utils/posts-api';
+//
+import { addComment } from '../../utils/comments-api';
 
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -34,6 +36,7 @@ const StandUps = () => {
   const [todayText, setTodayText] = useState('');
   const [tomorrowText, setTomorrowText] = useState('');
   const [blockersText, setBlockersText] = useState('');
+  const [comment, setComment] = useState('');
 
   const [showOptions, setShowOptions] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -93,6 +96,15 @@ const StandUps = () => {
     const response = await editPost(updatedPost);
     if (response) {
       console.log(`Successfully updated post`, response);
+    }
+  };
+
+  // ! COMMENTS ACTIONS
+  const insertNewComment = async (userId, postId, text) => {
+    const response = await addComment({ userId, postId, text });
+    if (response) {
+      console.log(`Successfully Added a new comment`, response);
+      fetchPosts();
     }
   };
 
@@ -581,15 +593,14 @@ const StandUps = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="relative flex flex-col items-center self-center w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400 mb-8">
+                      <div className="relative flex flex-col  w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400 mb-8">
                         <div>
-                          <Comments />
-                          <Comments />
-                          <Comments />
-                          <Comments />
+                          {post?.comments?.map((comment) => (
+                            <Comments commentId={comment._id} />
+                          ))}
                         </div>
                         {/* ADD COMMENT SECTION */}
-                        <div className='flex w-full mt-8'>
+                        <div className="flex w-full mt-8">
                           <img
                             className="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
                             alt="User avatar"
@@ -616,13 +627,24 @@ const StandUps = () => {
                               </svg>
                             </button>
                           </span>
-                          <input
-                            type="search"
-                            className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
-                            style={{ borderRadius: '25px' }}
-                            placeholder="Post a comment..."
-                            autoComplete="off"
-                          />
+                          <form
+                            className="w-full"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              insertNewComment(user?._id, post?._id, comment);
+                              setComment('');
+                            }}
+                          >
+                            <input
+                              type="text"
+                              className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
+                              value={comment}
+                              onChange={(e) => setComment(e.target.value)}
+                              style={{ borderRadius: '25px' }}
+                              placeholder="Post a comment..."
+                              autoComplete="off"
+                            />
+                          </form>
                         </div>
                       </div>
                     </>
