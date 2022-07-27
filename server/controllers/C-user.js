@@ -19,6 +19,22 @@ const fetchUsersExceptCurrentUser = async (req, res) => {
     console.log(`Error fetching users in DB. Error: ${error}`);
   }
 };
+
+// ? @Description    Fetch one user
+// ? @Route          GET /api/users/
+// ? @Access         Private / Authorized
+const fetchUser = async (req, res) => {
+  try {
+    const users = await User.findOne({ _id: req.params.userId });
+    if (users) {
+      res.status(200).json(users);
+    } else {
+      res.status(400).json({ Message: `User not found in the DB` });
+    }
+  } catch (error) {
+    console.log(`Error fetching user in DB. Error: ${error}`);
+  }
+};
 // app.get('/api/users/except/:userId', async (req, res) => {
 //   try {
 //     const users = await User.find({ _id: {$ne: req.params.userId} });
@@ -31,6 +47,25 @@ const fetchUsersExceptCurrentUser = async (req, res) => {
 //     console.log(`Error fetching users in DB. Error: ${error}`);
 //   }
 // });
+
+// ? @Description    UPDATE accountability partner
+// ? @Route          PATCH /api/users/partner
+// ? @Access         PUBLIC
+const setAccountabilityPartner = async (req, res) => {
+  try {
+    const user = await User.updateOne(
+      { _id: req.body.userId },
+      { $set: { accountabilityPartner: req.body.contactId } }
+    );
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(400).json({ Message: `User not found in the DB` });
+    }
+  } catch (error) {
+    console.log(`Error updating accountability partner in DB. Error: ${error}`);
+  }
+};
 
 // ? @Description    CREATE new user
 // ? @Route          POST /api/users/signup
@@ -103,4 +138,11 @@ const Logout = (req, res) => {
   res.status(200).json('Logged out successfully!');
 };
 
-module.exports = { Signup, Login, Logout, fetchUsersExceptCurrentUser };
+module.exports = {
+  Signup,
+  Login,
+  Logout,
+  fetchUsersExceptCurrentUser,
+  setAccountabilityPartner,
+  fetchUser,
+};

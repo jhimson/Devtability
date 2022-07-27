@@ -22,6 +22,7 @@ const userSchema = new Schema(
     accountabilityPartner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
+      default: null,
     },
   },
   {

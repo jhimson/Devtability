@@ -15,6 +15,8 @@ import {
 
 import { getUserContacts, removeContact } from '../../utils/contacts-api';
 
+import { getAccountabilityPartner } from '../../utils/users-api';
+
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaEdit } from 'react-icons/fa';
@@ -38,6 +40,7 @@ const Profile = () => {
   const [tomorrowText, setTomorrowText] = useState('');
   const [blockersText, setBlockersText] = useState('');
   const [contacts, setContacts] = useState([]);
+  const [partner, setPartner] = useState({});
 
   const [showOptions, setShowOptions] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -120,9 +123,17 @@ const Profile = () => {
     setContacts(updatedContacts);
   };
 
+  const getPartner = async (partnerId) => {
+    const response = await getAccountabilityPartner(partnerId);
+    if (response) {
+      setPartner(response.data);
+    }
+  };
+
   useEffect(() => {
     fetchPosts();
     getContacts(user?._id);
+    getPartner(user?.accountabilityPartner);
   }, []);
 
   useEffect(() => {
@@ -190,7 +201,9 @@ const Profile = () => {
                         src="https://images.unsplash.com/photo-1638612913771-8f00622b96fb?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=80"
                       />
                     </a>
-                    <span className="text-xs text-gray-500"> Testing</span>
+                    <span className="text-xs text-gray-500">
+                      {partner?.name}
+                    </span>
                   </li>
                 </div>
               </div>

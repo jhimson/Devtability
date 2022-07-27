@@ -22,3 +22,8 @@ export const Login = async ({ email, password }) => {
 export const Logout = async () => {
   localStorage.removeItem('token');
 };
+
+export const getAccountabilityPartner = async (userId) => {
+  const response = await Axios.get(`${BASE_URL}/${userId}`);
+  return response;
+};
