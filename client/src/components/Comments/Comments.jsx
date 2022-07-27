@@ -2,7 +2,11 @@ import React, { useEffect, useState, useContext } from 'react';
 import { format } from 'timeago.js';
 
 // ! API
-import { fetchComment, removeComment } from '../../utils/comments-api';
+import {
+  fetchComment,
+  removeComment,
+  editComment,
+} from '../../utils/comments-api';
 
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
@@ -14,9 +18,12 @@ import { FaEdit } from 'react-icons/fa';
 const Comments = ({ commentId, fetchPosts, postId }) => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
+
+  //! STATES
   const [comment, setComment] = useState({});
   const [commentText, setCommentText] = useState('');
   const [showOptions, setShowOptions] = useState(false);
+  const [updatingComment, setUpdatingComment] = useState(false);
 
   const getComment = async () => {
     const response = await fetchComment(commentId);
@@ -36,20 +43,35 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
     fetchPosts();
   };
 
+  const updateComment = async (commentId, text) => {
+    const response = await editComment(commentId, text);
+    if (response) {
+      console.log(`Successfully Updated comment`);
+      fetchPosts();
+    }
+  };
+
   const setUpdateComment = async (comment) => {
     setShowOptions(!showOptions);
     setCommentText(comment?.text);
-    // setIsUpdating(true);
-    // setFile(post.image);
-    // setTitle(post.title);
-    // setTodayText(post.todayText);
-    // setTomorrowText(post.tomorrowText);
-    // setBlockersText(post.blockersText);
   };
 
   useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.keyCode === 27) {
+        setUpdatingComment(false);
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
+  useEffect(() => {
     getComment();
-  }, [commentId]);
+  }, [commentId, updatingComment]);
 
   return (
     <>
@@ -67,7 +89,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
               <div className="text-sm font-semibold">
                 {comment?.user?.name} •{' '}
                 <span className="font-normal">
-                  {format(comment?.createdAt)}
+                  {format(comment?.updatedAt)} (edited)
                 </span>
               </div>
             </div>
@@ -100,8 +122,8 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
                 <button
                   className="block px-4 py-3 text-sm text-gray-400 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold w-full"
                   onClick={() => {
-                    // setUpdateData(post);
-                    setUpdateComment();
+                    setUpdateComment(comment);
+                    setUpdatingComment(true);
                   }}
                 >
                   <FaEdit size={'1.3em'} />
@@ -112,7 +134,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
                   className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold cursor-pointer w-full"
                   onClick={() => {
                     // deletePost(post?._id)
-                    deleteComment(postId, commentId)
+                    deleteComment(postId, commentId);
                   }}
                 >
                   <RiDeleteBin6Line size={'1.3em'} />
@@ -122,7 +144,33 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
             </div>
           </div>
           {/*  */}
-          <p className="text-md text-gray-600 mt-2">{comment?.text}</p>
+          {updatingComment ? (
+            <form
+              className="w-full mt-2"
+              onSubmit={(e) => {
+                //   e.preventDefault();
+                //   insertNewComment(user?._id, post?._id, comment);
+                //   setComment('');
+                e.preventDefault();
+                updateComment(comment?._id, commentText);
+                setUpdatingComment(false);
+              }}
+            >
+              <input
+                type="text"
+                className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                style={{ borderRadius: '25px' }}
+                placeholder="Post a comment..."
+                autoComplete="off"
+              />
+            </form>
+          ) : (
+            <p className="text-md text-gray-600 mt-2">
+              {comment?.text}
+            </p>
+          )}
         </div>
       </div>
     </>

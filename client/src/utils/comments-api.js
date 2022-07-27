@@ -82,6 +82,26 @@ export const removeComment = async (postId, commentId) => {
   }
 };
 
+export const editComment = async (commentId, text) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.patch(
+      `${BASE_URL}`,
+      { commentId, text },
+      {
+        headers,
+      }
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error updating a comment. ErrorMessage: ${error}`);
+  }
+};
+
 // export const removePost = async (postId) => {
 //   const headers = {
 //     'Content-Type': 'application/json',

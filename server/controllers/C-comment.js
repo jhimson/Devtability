@@ -86,4 +86,23 @@ const deleteComment = async (req, res) => {
   }
 };
 
-module.exports = { createComment, deleteComment, getComment };
+// ? @Description    Update a post
+// ? @Route          PATCH /api/posts/
+// ? @Access         PUBLIC
+const updateComment = async (req, res) => {
+  const { commentId, text } = req.body;
+  try {
+    const comment = await Comment.updateOne(
+      { _id: commentId },
+      { $set: { text } }
+    );
+    if (comment) {
+      res.status(200).json({ Message: `Successfully Updated comment`, comment });
+    }
+  } catch (error) {
+    console.log(`Error Updating comment from DB: ${error}`);
+    res.status(500);
+  }
+};
+
+module.exports = { createComment, deleteComment, getComment, updateComment };
