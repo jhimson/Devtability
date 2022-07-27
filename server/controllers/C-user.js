@@ -9,7 +9,10 @@ let refreshTokens = [];
 // ? @Access         Private / Authorized
 const fetchUsersExceptCurrentUser = async (req, res) => {
   try {
-    const users = await User.find({ _id: { $ne: req.params.userId } });
+    const users = await User.find({
+      _id: { $ne: req.params.userId },
+      isAdmin: false,
+    });
     if (users) {
       res.status(200).json(users);
     } else {
@@ -25,9 +28,11 @@ const fetchUsersExceptCurrentUser = async (req, res) => {
 // ? @Access         Private / Authorized
 const fetchUser = async (req, res) => {
   try {
-    const users = await User.findOne({ _id: req.params.userId });
-    if (users) {
-      res.status(200).json(users);
+    const user = await User.findOne({ _id: req.params.userId }).populate(
+      'accountabilityPartner'
+    );
+    if (user) {
+      res.status(200).json(user);
     } else {
       res.status(400).json({ Message: `User not found in the DB` });
     }
@@ -52,12 +57,15 @@ const fetchUser = async (req, res) => {
 // ? @Route          PATCH /api/users/partner
 // ? @Access         PUBLIC
 const setAccountabilityPartner = async (req, res) => {
+  console.log(req.body);
   try {
     const user = await User.updateOne(
       { _id: req.body.userId },
-      { $set: { accountabilityPartner: req.body.contactId } }
+      { $set: { accountabilityPartner: req.body.contactId } },
+      { new: true }
     );
     if (user) {
+      console.log('VOVOKA', user);
       res.status(200).json(user);
     } else {
       res.status(400).json({ Message: `User not found in the DB` });

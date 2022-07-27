@@ -3,7 +3,13 @@
 import React, { useState } from 'react';
 import DeleteContactModal from '../DeleteContactModal/DeleteContactModal';
 
-const Contacts = ({ contacts, deleteContact, showModal, setShowModal }) => {
+const Contacts = ({
+  contacts,
+  deleteContact,
+  showModal,
+  setShowModal,
+  setUserPartner,
+}) => {
   const [currentContact, setCurrentContact] = useState(null);
   return (
     <>
@@ -16,6 +22,7 @@ const Contacts = ({ contacts, deleteContact, showModal, setShowModal }) => {
             deleteContact={deleteContact}
             contact={currentContact}
             setShowModal={setShowModal}
+            setUserPartner={setUserPartner}
           />
         )}
         {contacts?.length ? (

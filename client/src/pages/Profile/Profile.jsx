@@ -15,7 +15,10 @@ import {
 
 import { getUserContacts, removeContact } from '../../utils/contacts-api';
 
-import { getAccountabilityPartner } from '../../utils/users-api';
+import {
+  getAccountabilityPartner,
+  setAccountabilityPartner,
+} from '../../utils/users-api';
 
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -27,6 +30,7 @@ import { UserContext } from '../../contexts/UserContext';
 import Contacts from '../../components/Contacts/Contacts';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
 import DeleteContactModal from '../../components/DeleteContactModal/DeleteContactModal';
+import Partner from '../../components/Partner/Partner';
 
 const Profile = () => {
   // ! CONTEXTS
@@ -123,22 +127,33 @@ const Profile = () => {
     setContacts(updatedContacts);
   };
 
-  const getPartner = async (partnerId) => {
-    const response = await getAccountabilityPartner(partnerId);
+  const getPartner = async (userId) => {
+    const response = await getAccountabilityPartner(userId);
     if (response) {
-      setPartner(response.data);
+      setPartner(response?.data?.accountabilityPartner);
+    }
+  };
+
+  const setUserPartner = async (userId, contactId) => {
+    const response = await setAccountabilityPartner(userId, contactId);
+    if (response) {
+      console.log(`Successfully set accountability partner`);
     }
   };
 
   useEffect(() => {
     fetchPosts();
     getContacts(user?._id);
-    getPartner(user?.accountabilityPartner);
+    getPartner(user?._id);
   }, []);
 
   useEffect(() => {
     fetchPosts();
   }, [isSubmitted, isUpdating]);
+
+  useEffect(() => {
+    getPartner(user?._id);
+  }, [showModal]);
 
   return (
     <>
@@ -183,31 +198,7 @@ const Profile = () => {
               <ProfileInfo name={user?.name} email={user?.email} />
               {/* PROFILE INFO END -> */}
 
-              <div className="flex flex-col w-full items-center jutify-center mb-4">
-                <div>
-                  <h3 className="text-gray-600 text-sm font-semibold mb-4 text-center text-2xl">
-                    Accountability Partner
-                  </h3>
-                  <li
-                    className="flex flex-col items-center space-y-2 cursor-pointer transition-transform duration-500 hover:scale-125 hover:font-bold
-            "
-                    onClick={() => {
-                      setShowModal(true);
-                    }}
-                  >
-                    <a className="block bg-white p-1 rounded-full">
-                      <img
-                        className="w-16 rounded-full"
-                        src="https://images.unsplash.com/photo-1638612913771-8f00622b96fb?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=80"
-                      />
-                    </a>
-                    <span className="text-xs text-gray-500">
-                      {partner?.name}
-                    </span>
-                  </li>
-                </div>
-              </div>
-              <hr />
+              <Partner partner={partner} setShowModal={setShowModal} />
 
               {/* CONTACTS STARTS -> */}
               <Contacts
@@ -215,6 +206,7 @@ const Profile = () => {
                 deleteContact={deleteContact}
                 showModal={showModal}
                 setShowModal={setShowModal}
+                setUserPartner={setUserPartner}
               />
               {/* CONTACTS END -> */}
               {!isUpdating && (

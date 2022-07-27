@@ -22,7 +22,11 @@ const userSchema = new Schema(
     accountabilityPartner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      default: null,
+      default: '62e12168650f328749d4713c',
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
   },
   {

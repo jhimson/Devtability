@@ -3,7 +3,12 @@ import React, { useContext } from 'react';
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
 
-const DeleteContactModal = ({ deleteContact, contact, setShowModal }) => {
+const DeleteContactModal = ({
+  deleteContact,
+  contact,
+  setShowModal,
+  setUserPartner,
+}) => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
   return (
@@ -41,7 +46,10 @@ const DeleteContactModal = ({ deleteContact, contact, setShowModal }) => {
               </button>
               <button
                 class="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded"
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  setUserPartner(user?._id, contact?._id);
+                }}
               >
                 Set as Accountability Partner
               </button>
