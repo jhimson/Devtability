@@ -1,17 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { format } from 'timeago.js';
 
 // ! API
-import { fetchComment } from '../../utils/comments-api';
+import { fetchComment, removeComment } from '../../utils/comments-api';
 
-const Comments = ({ commentId }) => {
+// ! CONTEXTS IMPORTS
+import { UserContext } from '../../contexts/UserContext';
+
+// ! ICONS
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
+
+const Comments = ({ commentId, fetchPosts, postId }) => {
+  // ! CONTEXTS
+  const { user, setUser } = useContext(UserContext);
   const [comment, setComment] = useState({});
+  const [commentText, setCommentText] = useState('');
+  const [showOptions, setShowOptions] = useState(false);
 
   const getComment = async () => {
     const response = await fetchComment(commentId);
     if (response.data) {
       setComment(response.data);
     }
+  };
+
+  //! FUNCTIONS
+  const deleteComment = async (postId, commentId) => {
+    // await removePost(postId);
+    // const updatedPosts = posts.filter((post) => post._id !== postId);
+    // setPosts(updatedPosts);
+    const response = await removeComment(postId, commentId);
+    console.log(`Successfully Deleted a comment`, response);
+    setShowOptions(!showOptions);
+    fetchPosts();
+  };
+
+  const setUpdateComment = async (comment) => {
+    setShowOptions(!showOptions);
+    setCommentText(comment?.text);
+    // setIsUpdating(true);
+    // setFile(post.image);
+    // setTitle(post.title);
+    // setTodayText(post.todayText);
+    // setTomorrowText(post.tomorrowText);
+    // setBlockersText(post.blockersText);
   };
 
   useEffect(() => {
@@ -32,10 +65,59 @@ const Comments = ({ commentId }) => {
                 />
               </div>
               <div className="text-sm font-semibold">
-                {comment?.user.name} •{' '}
+                {comment?.user?.name} •{' '}
                 <span className="font-normal">
                   {format(comment?.createdAt)}
                 </span>
+              </div>
+            </div>
+
+            <div>
+              <button
+                className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white rounded-full focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white hover:bg-gray-200 focus:outline-none"
+                onClick={() => setShowOptions(!showOptions)}
+              >
+                <svg
+                  className="w-6 h-6 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+                  ></path>
+                </svg>
+              </button>
+              <div
+                className={`absolute right-14 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-200 border-2 border-gray-300 ${
+                  !showOptions && 'hidden'
+                }`}
+              >
+                <button
+                  className="block px-4 py-3 text-sm text-gray-400 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold w-full"
+                  onClick={() => {
+                    // setUpdateData(post);
+                    setUpdateComment();
+                  }}
+                >
+                  <FaEdit size={'1.3em'} />
+                  <span>Edit Comment</span>
+                </button>
+
+                <button
+                  className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white flex items-center space-x-2 font-bold cursor-pointer w-full"
+                  onClick={() => {
+                    // deletePost(post?._id)
+                    deleteComment(postId, commentId)
+                  }}
+                >
+                  <RiDeleteBin6Line size={'1.3em'} />
+                  <span>Move to Trash</span>
+                </button>
               </div>
             </div>
           </div>

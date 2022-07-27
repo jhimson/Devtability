@@ -66,6 +66,22 @@ export const fetchComment = async (commentId) => {
   }
 };
 
+export const removeComment = async (postId, commentId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.delete(`${BASE_URL}/${postId}/${commentId}`, {
+      headers,
+    });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error deleting a comment. ErrorMessage: ${error}`);
+  }
+};
+
 // export const removePost = async (postId) => {
 //   const headers = {
 //     'Content-Type': 'application/json',

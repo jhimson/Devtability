@@ -21,9 +21,10 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaEdit } from 'react-icons/fa';
 // ! COMPONENTS
 import Sidenav from '../../components/Sidenav/Sidenav';
+import Comments from '../../components/Comments/Comments';
+
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
-import Comments from '../../components/Comments/Comments';
 
 const StandUps = () => {
   // ! CONTEXTS
@@ -596,7 +597,11 @@ const StandUps = () => {
                       <div className="relative flex flex-col  w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400 mb-8">
                         <div>
                           {post?.comments?.map((comment) => (
-                            <Comments commentId={comment._id} />
+                            <Comments
+                              commentId={comment._id}
+                              fetchPosts={fetchPosts}
+                              postId={post?._id}
+                            />
                           ))}
                         </div>
                         {/* ADD COMMENT SECTION */}

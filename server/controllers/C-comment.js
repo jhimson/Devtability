@@ -44,9 +44,9 @@ const createComment = async (req, res) => {
 // ? @Access         PRIVATE
 const getComment = async (req, res) => {
   try {
-    const comment = await Comment.findOne({ _id: req.params.commentId }).populate(
-      'user'
-    );
+    const comment = await Comment.findOne({
+      _id: req.params.commentId,
+    }).populate('user');
     if (comment) {
       res.status(200).json(comment);
     }
@@ -56,4 +56,34 @@ const getComment = async (req, res) => {
   }
 };
 
-module.exports = { createComment, getComment };
+// ? @Description    DELETE a comment
+// ? @Route          DEL /api/comments/:postId/:commentId
+// ? @Access         PRIVATE
+const deleteComment = async (req, res) => {
+  const { commentId, postId } = req.params;
+  try {
+    await Comment.deleteOne({
+      _id: commentId,
+    });
+    console.log(`Successfully deleted the comment from comments collection`);
+    try {
+      const updatedPost = await Post.updateOne(
+        { _id: postId },
+        { $pull: { comments: commentId } },
+        { new: true }
+      );
+      console.log(
+        `Successfully deleted the comment from posts collection`,
+        updatedPost
+      );
+      res.status(200).json(updatedPost);
+    } catch (error) {
+      console.log(`Error deleting a comment from posts collection`);
+    }
+  } catch (error) {
+    console.log(`Error deleteing a comment from comments collection: ${error}`);
+    res.status(500);
+  }
+};
+
+module.exports = { createComment, deleteComment, getComment };
