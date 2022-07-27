@@ -12,6 +12,7 @@ const postSchema = new Schema(
     tomorrowText: { type: String },
     blockersText: { type: String },
     image: { type: String },
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', default: [] }],
     datePosted: { type: String },
   },
   { timestamps: true }
