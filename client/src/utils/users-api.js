@@ -73,3 +73,8 @@ export const fetchUsers = async (userId) => {
   return response;
 };
 
+export const fetchUser = async (userId) => {
+  const response = await Axios.get(`${BASE_URL}/${userId}`);
+  console.log('rezz', response);
+  return response;
+};

@@ -1,9 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import DeleteContactModal from '../DeleteContactModal/DeleteContactModal';
 
+// ! CONTEXTS IMPORTS
+import { ContactContext } from '../../contexts/ContactContext';
+
 const Contacts = ({ ...contactsProps }) => {
+  const { contact, setContact } = useContext(ContactContext);
   const [currentContact, setCurrentContact] = useState(null);
   return (
     <>
@@ -17,6 +21,7 @@ const Contacts = ({ ...contactsProps }) => {
             contact={currentContact}
             setShowModal={contactsProps.setShowModal}
             setUserPartner={contactsProps.setUserPartner}
+            setContact={setContact}
           />
         )}
         {contactsProps.contacts?.length ? (

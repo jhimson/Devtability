@@ -31,12 +31,13 @@ import Contacts from '../../components/Contacts/Contacts';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
 import DeleteContactModal from '../../components/DeleteContactModal/DeleteContactModal';
 import Partner from '../../components/Partner/Partner';
-
-// ! CONTEXTS IMPORTS
-import { UserContext } from '../../contexts/UserContext';
 import PostForm from '../../components/PostForm/PostForm';
 import NavHeader from '../../components/NavHeader/NavHeader';
 import Posts from '../../components/Posts/Posts';
+
+// ! CONTEXTS IMPORTS
+import { UserContext } from '../../contexts/UserContext';
+import { ContactContext } from '../../contexts/ContactContext';
 
 const UserProfile = () => {
   // ! CONTEXTS
@@ -229,7 +230,7 @@ const UserProfile = () => {
           <NavHeader user={user} />
           <div>
             <article className="">
-              <ProfileInfo user={user} />
+              <ProfileInfo user={user} setUser={setUser} userLoggedIn={user} />
               <Partner partner={partner} setShowModal={setShowModal} />
               <Contacts {...contactsProps} />
               <PostForm {...postFormProps} />

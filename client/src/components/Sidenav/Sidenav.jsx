@@ -1,12 +1,21 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
 
+import { Logout } from '../../utils/users-api';
+
 const Sidenav = () => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    Logout();
+    setUser(null);
+    navigate('/login');
+  };
   return (
     <>
       <div className="mx-auto py-10">
@@ -132,7 +141,10 @@ const Sidenav = () => {
                 </svg>
                 <span className="font-semibold">Setthing</span>
               </li> */}
-          <button className="w-full mt-10 bg-[#EC5252] rounded-full py-1.5 text-white">
+          <button
+            className="w-full mt-10 bg-[#EC5252] rounded-full py-1.5 text-white"
+            onClick={handleLogOut}
+          >
             Logout
           </button>
         </ul>

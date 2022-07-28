@@ -1,13 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-// ! CONTEXTS IMPORTS
-import { UserContext } from '../../contexts/UserContext';
 
-// ! API
 import { setUserProfile, fetchUsers } from '../../utils/users-api';
 
-const ProfileInfo = () => {
+const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
   // ! CONTEXTS
-  const { user, setUser } = useContext(UserContext);
   const [usersEmail, setUsersEmail] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   const [emailExists, setEmailExists] = useState(false);
@@ -109,7 +105,7 @@ const ProfileInfo = () => {
                 </button>
               </>
             )}
-            {!isUpdating && (
+            {!isUpdating && userLoggedIn?._id === user?._id && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-8 w-8 cursor-pointer hover:text-blue-400"

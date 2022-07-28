@@ -19,6 +19,7 @@ const fetchUsersExceptCurrentUser = async (req, res) => {
       res.status(400).json({ Message: `User not found in the DB` });
     }
   } catch (error) {
+    console.log('WTFfff?')
     console.log(`Error fetching users in DB. Error: ${error}`);
   }
 };
@@ -37,6 +38,7 @@ const fetchUser = async (req, res) => {
       res.status(400).json({ Message: `User not found in the DB` });
     }
   } catch (error) {
+    console.log('WTFzzzz?')
     console.log(`Error fetching user in DB. Error: ${error}`);
   }
 };

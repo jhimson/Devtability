@@ -31,7 +31,7 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard exact />} />
             <Route path="/stand-ups" element={<StandUps exact />} />
             <Route path="/user-profile" element={<UserProfile exact />} />
-            <Route path="/profile" element={<Profile exact />} />
+            <Route path="/profile/:contactId" element={<Profile exact />} />
             <Route path="/people" element={<PeoplePage exact />} />
             <Route path="/*" element={<Navigate to="/dashboard" />} exact />
           </Routes>

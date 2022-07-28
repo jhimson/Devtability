@@ -22,6 +22,7 @@ import { FaEdit } from 'react-icons/fa';
 import {
   getAccountabilityPartner,
   setAccountabilityPartner,
+  fetchUser,
 } from '../../utils/users-api';
 
 // ! COMPONENTS
@@ -30,17 +31,18 @@ import Comments from '../../components/Comments/Comments';
 import Contacts from '../../components/Contacts/Contacts';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
 import DeleteContactModal from '../../components/DeleteContactModal/DeleteContactModal';
-import Partner from '../../components/Partner/Partner';
-
-// ! CONTEXTS IMPORTS
-import { UserContext } from '../../contexts/UserContext';
 import PostForm from '../../components/PostForm/PostForm';
 import NavHeader from '../../components/NavHeader/NavHeader';
 import Posts from '../../components/Posts/Posts';
 
+// ! CONTEXTS IMPORTS
+import { UserContext } from '../../contexts/UserContext';
+import { ContactContext } from '../../contexts/ContactContext';
+
 const UserProfile = () => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
+  const { contact, setContact } = useContext(ContactContext);
 
   //  ! STATES
   const [posts, setPosts] = useState([]);
@@ -52,6 +54,7 @@ const UserProfile = () => {
   const [contacts, setContacts] = useState([]);
   const [partner, setPartner] = useState({});
   const [comment, setComment] = useState('');
+  const [currentPerson, setCurrentPerson] = useState(null);
 
   const [showOptions, setShowOptions] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -84,7 +87,7 @@ const UserProfile = () => {
   };
 
   const fetchPosts = async () => {
-    const response = await getUserPosts(user._id);
+    const response = await getUserPosts(contact?._id || user?._id);
     if (response) {
       setPosts(response.data);
     }
@@ -142,17 +145,17 @@ const UserProfile = () => {
     setContacts(updatedContacts);
   };
 
-  const getPartner = async (userId) => {
-    const response = await getAccountabilityPartner(userId);
-    if (response) {
-      setPartner(response?.data?.accountabilityPartner);
-    }
-  };
-
   const setUserPartner = async (userId, contactId) => {
     const response = await setAccountabilityPartner(userId, contactId);
     if (response) {
       console.log(`Successfully set accountability partner`);
+    }
+  };
+
+  const getUser = async (userId) => {
+    const response = await fetchUser(userId);
+    if (response.data) {
+      setCurrentPerson(response.data);
     }
   };
 
@@ -209,17 +212,21 @@ const UserProfile = () => {
 
   useEffect(() => {
     fetchPosts();
-    getContacts(user?._id);
-    getPartner(user?._id);
+    getUser(contact?._id);
+    getContacts(contact?._id);
   }, []);
+
+  useEffect(() => {
+    fetchPosts();
+    getUser(contact?._id);
+    getContacts(contact?._id);
+  }, [contact]);
 
   useEffect(() => {
     fetchPosts();
   }, [isSubmitted, isUpdating]);
 
-  useEffect(() => {
-    getPartner(user?._id);
-  }, [showModal]);
+  useEffect(() => {}, [showModal]);
 
   return (
     <>
@@ -229,10 +236,13 @@ const UserProfile = () => {
           <NavHeader user={user} />
           <div>
             <article className="">
-              <ProfileInfo user={user} />
-              <Partner partner={partner} setShowModal={setShowModal} />
+              <ProfileInfo
+                user={currentPerson || contact}
+                userLoggedIn={user}
+                setUser={setUser}
+              />
               <Contacts {...contactsProps} />
-              <PostForm {...postFormProps} />
+              {/* <PostForm {...postFormProps} /> */}
               <Posts {...postProps} />
             </article>
           </div>

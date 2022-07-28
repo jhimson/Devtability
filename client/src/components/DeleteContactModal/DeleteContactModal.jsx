@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
@@ -8,9 +9,12 @@ const DeleteContactModal = ({
   contact,
   setShowModal,
   setUserPartner,
+  setContact,
 }) => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
   return (
     <>
       <div class="flex items-center justify-center fixed left-40 bottom-10 w-full h-full opacity-100">
@@ -34,7 +38,7 @@ const DeleteContactModal = ({
               Are you sure you want to remove this contact?
             </div>
             <hr />
-            <div class="ml-auto">
+            <div class="ml-auto flex space-x-2">
               <button
                 class="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2"
                 onClick={() => {
@@ -45,13 +49,23 @@ const DeleteContactModal = ({
                 Set as Accountability Partner
               </button>
               <button
+                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                onClick={() => {
+                  setShowModal(false);
+                  navigate(`/profile/${contact?._id}`);
+                  setContact(contact);
+                }}
+              >
+                View
+              </button>
+              <button
                 class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
                 onClick={() => {
                   setShowModal(false);
                   deleteContact(user?._id, contact?._id);
                 }}
               >
-                Remove Contact
+                Remove
               </button>
             </div>
           </div>
