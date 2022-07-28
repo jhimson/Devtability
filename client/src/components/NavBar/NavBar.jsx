@@ -39,7 +39,7 @@ export default function NavBar() {
           style={{ height: '8vh' }}
         >
           <div className="flex gap-x-10">
-            <Link to="/profle" className="flex items-center">
+            <Link to="/user-profle" className="flex items-center">
               <img
                 src={Logo}
                 className="mr-3 h-6 sm:h-9"
@@ -57,7 +57,7 @@ export default function NavBar() {
                     <Link
                       to="/profile"
                       className={`text-white bg-none ${
-                        location.pathname === '/profile' &&
+                        location.pathname === '/user-profile' &&
                         'bg-blue-800 px-4 py-2 rounded'
                       }`}
                     >

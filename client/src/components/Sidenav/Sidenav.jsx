@@ -23,7 +23,7 @@ const Sidenav = () => {
         </div>
         <ul>
           <li className="flex space-x-2 mt-10 cursor-pointer hover:text-[#EC5252] duration-150">
-            <Link to="/profile" className="flex space-x-2">
+            <Link to="/user-profile" className="flex space-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"

@@ -7,9 +7,9 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import StandUps from './pages/StandUps/StandUps';
-import Profile from './pages/Profile/Profile';
+import UserProfile from './pages/UserProfile/UserProfile';
 import PeoplePage from './pages/PeoplePage/PeoplePage';
-
+import Profile from './pages/Profile/Profile';
 
 // ! COMPONENTS
 import Layout from './components/Layout/Layout';
@@ -30,6 +30,7 @@ const App = () => {
           <Routes>
             <Route path="/dashboard" element={<Dashboard exact />} />
             <Route path="/stand-ups" element={<StandUps exact />} />
+            <Route path="/user-profile" element={<UserProfile exact />} />
             <Route path="/profile" element={<Profile exact />} />
             <Route path="/people" element={<PeoplePage exact />} />
             <Route path="/*" element={<Navigate to="/dashboard" />} exact />

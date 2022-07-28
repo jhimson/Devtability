@@ -175,7 +175,6 @@ const StandUps = () => {
             </article>
           </div>
         </Main>
-        {/* <div>Welcome, {user.name}!</div> */}
       </div>
     </>
   );

@@ -15,7 +15,7 @@ const DeleteContactModal = ({
     <>
       <div class="flex items-center justify-center fixed left-40 bottom-10 w-full h-full opacity-100">
         <div class="bg-gray-100 border-2 rounded-lg w-1/4 shadow-2xl">
-          <div class="flex flex-col items-start p-4 opacity-100">
+          <div class="flex flex-col items-start p-4 z-50">
             <div class="flex items-center w-full">
               <div class="text-gray-900 font-medium text-lg">
                 Remove Contact

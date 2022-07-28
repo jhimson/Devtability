@@ -94,7 +94,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
               </div>
             </div>
 
-            {comment?.user?._id == user?._id && (
+            {comment?.user?._id === user?._id && (
               <div>
                 <button
                   className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white rounded-full focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white hover:bg-gray-200 focus:outline-none"
