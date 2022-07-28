@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from 'timeago.js';
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -6,6 +6,8 @@ import { FaEdit } from 'react-icons/fa';
 import Comments from '../Comments/Comments';
 
 const Posts = ({ ...postProps }) => {
+  const [currentPost, setCurrentPost] = useState(null);
+
   return (
     <>
       <div className="bg-white shadow rounded-lg">
@@ -41,42 +43,45 @@ const Posts = ({ ...postProps }) => {
                   <div className="relative inline-block">
                     <div className="flex space-x-4">
                       {postProps.isUpdating &&
-                        post?.user?._id === postProps.user._id && (
-                          <>
-                            <button
-                              className="py-2 px-4 rounded-lg text-sm bg-green-600 text-white shadow-lg"
-                              onClick={() => {
-                                postProps.clearFields();
-                                postProps.setIsUpdating(false);
-                                postProps.updatePost({
-                                  _id: post?._id,
-                                  title: postProps.title,
-                                  todayText: postProps.todayText,
-                                  tomorrowText: postProps.tomorrowText,
-                                  blockersText: postProps.blockersText,
-                                });
-                              }}
-                            >
-                              Save
-                            </button>
-                            <button
-                              className="py-2 px-4 rounded-lg text-sm bg-red-600 text-white shadow-lg"
-                              onClick={() => {
-                                postProps.clearFields();
-                                postProps.setIsUpdating(false);
-                              }}
-                            >
-                              Cancel
-                            </button>
-                          </>
-                        )}
+                        post?.user?._id === postProps.user._id &&
+                        post?._id ===
+                          currentPost && (
+                            <>
+                              <button
+                                className="py-2 px-4 rounded-lg text-sm bg-green-600 text-white shadow-lg"
+                                onClick={() => {
+                                  postProps.clearFields();
+                                  postProps.setIsUpdating(false);
+                                  postProps.updatePost({
+                                    _id: post?._id,
+                                    title: postProps.title,
+                                    todayText: postProps.todayText,
+                                    tomorrowText: postProps.tomorrowText,
+                                    blockersText: postProps.blockersText,
+                                  });
+                                }}
+                              >
+                                Save
+                              </button>
+                              <button
+                                className="py-2 px-4 rounded-lg text-sm bg-red-600 text-white shadow-lg"
+                                onClick={() => {
+                                  postProps.clearFields();
+                                  postProps.setIsUpdating(false);
+                                }}
+                              >
+                                Cancel
+                              </button>
+                            </>
+                          )}
                       {post?.user?._id === postProps.user._id &&
                         !postProps.isUpdating && (
                           <button
                             className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white rounded-full focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white hover:bg-gray-200 focus:outline-none"
-                            onClick={() =>
-                              postProps.setShowOptions(!postProps.showOptions)
-                            }
+                            onClick={() => {
+                              postProps.setShowOptions(!postProps.showOptions);
+                              setCurrentPost(post?._id);
+                            }}
                           >
                             <svg
                               className="w-6 h-6 text-gray-500"
