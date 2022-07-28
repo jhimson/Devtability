@@ -48,6 +48,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
     if (response) {
       console.log(`Successfully Updated comment`);
       fetchPosts();
+      getComment();
     }
   };
 
