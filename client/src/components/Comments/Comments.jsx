@@ -94,7 +94,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
               </div>
             </div>
 
-            <div>
+            <div className={`${comment?.user?._id !== user?._id && 'hidden'}`}>
               <button
                 className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white rounded-full focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white hover:bg-gray-200 focus:outline-none"
                 onClick={() => setShowOptions(!showOptions)}
@@ -167,9 +167,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
               />
             </form>
           ) : (
-            <p className="text-md text-gray-600 mt-2">
-              {comment?.text}
-            </p>
+            <p className="text-md text-gray-600 mt-2">{comment?.text}</p>
           )}
         </div>
       </div>
