@@ -153,7 +153,7 @@ const StandUps = () => {
             </div>
           </nav>
           {/* HEREE ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
-          <div className='w-11/12'>
+          <div className='w-11/12 mx-auto'>
             <article className="">
               {!isUpdating && (
                 <form

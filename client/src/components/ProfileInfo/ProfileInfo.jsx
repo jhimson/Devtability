@@ -47,7 +47,6 @@ const ProfileInfo = () => {
       github,
     });
     if (response) {
-      console.log('tabga', response);
       //! RESETS THE USER TOKEN IN THE LOCALSTORAGE
       const token = JSON.parse(
         window.atob(response.data.accessToken.split('.')[1])

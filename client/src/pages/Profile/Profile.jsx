@@ -34,6 +34,8 @@ import Partner from '../../components/Partner/Partner';
 
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
+import PostForm from '../../components/PostForm/PostForm';
+import NavHeader from '../../components/NavHeader/NavHeader';
 
 const Profile = () => {
   // ! CONTEXTS
@@ -153,6 +155,23 @@ const Profile = () => {
     }
   };
 
+  // ! PROPS
+  const postFormProps = {
+    isUpdating,
+    setIsUpdating,
+    handleSubmit,
+    title,
+    setTitle,
+    todayText,
+    setTodayText,
+    tomorrowText,
+    setTomorrowText,
+    blockersText,
+    setBlockersText,
+    file,
+    setFile,
+  };
+
   useEffect(() => {
     fetchPosts();
     getContacts(user?._id);
@@ -172,37 +191,7 @@ const Profile = () => {
       <div className="min-h-screen bg-red-400">
         {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
-          <nav className="flex items-center justify-between px-4 bg-white py-6 border-b">
-            <div className="flex items-center bg-gray-100 px-4 py-2 rounded-md space-x-3 w-1/8">
-              <input
-                type="text"
-                placeholder="search"
-                className="bg-gray-100 outline-none w-full"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 cursor-pointer text-gray-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            <div className="flex items-center space-x-4">
-              <img
-                className="w-8 rounded-full"
-                src="https://imagez.tmz.com/image/f7/1by1/2021/12/14/f7703994b69d48ca802df55729a2325c_xl.jpg"
-                alt="Elon Musk"
-              />
-              <p className="hidden md:block">{user?.name}</p>
-            </div>
-          </nav>
+          <NavHeader user={user} />
           {/* HEREE ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
           <div>
             <article className="">
@@ -219,162 +208,7 @@ const Profile = () => {
                 setUserPartner={setUserPartner}
               />
               {/* CONTACTS END -> */}
-              {!isUpdating && (
-                <form
-                  onSubmit={handleSubmit}
-                  className="bg-white shadow rounded-lg mb-6 p-4"
-                >
-                  <div className="flex flex-col space-y-2 mb-8">
-                    <label htmlFor="" className="text-gray-500 font-semibold">
-                      Title
-                    </label>
-                    <textarea
-                      name="title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      placeholder="Type something here..."
-                      className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
-                    ></textarea>
-                  </div>
-                  <div className="grid grid-cols-3 gap-x-8">
-                    <div className="flex flex-col space-y-2">
-                      <label
-                        htmlFor="todayText"
-                        className="text-gray-500 font-semibold"
-                      >
-                        What did you worked on today?
-                      </label>
-                      <textarea
-                        name="todayText"
-                        value={todayText}
-                        onChange={(e) => setTodayText(e.target.value)}
-                        placeholder="Type something here..."
-                        className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
-                      ></textarea>
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                      <label
-                        htmlFor="tomorrowText"
-                        className="text-gray-500 font-semibold"
-                      >
-                        What are you planning to work on tonight/tomorrow?
-                      </label>
-                      <textarea
-                        name="tomorrowText"
-                        value={tomorrowText}
-                        onChange={(e) => setTomorrowText(e.target.value)}
-                        placeholder="Type something here..."
-                        className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
-                      ></textarea>
-                    </div>
-                    <div className="flex flex-col space-y-2">
-                      <label
-                        htmlFor="blockersText"
-                        className="text-gray-500 font-semibold"
-                      >
-                        What blockers do you have?
-                      </label>
-                      <textarea
-                        name="blockersText"
-                        value={blockersText}
-                        onChange={(e) => setBlockersText(e.target.value)}
-                        placeholder="Type something here..."
-                        className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="flex flex-col space-y-2 bg-gray-100 p-4 mt-6 rounded w-full">
-                    <label htmlFor="" className="text-gray-500 font-semibold">
-                      Upload image
-                    </label>
-                    <input
-                      type="file"
-                      onChange={(e) => setFile(e.target.files[0])}
-                    />
-                  </div>
-                  <footer className="flex justify-between mt-2">
-                    <div className="flex gap-2">
-                      <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                        <svg
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="css-i6dzq1"
-                        >
-                          <rect
-                            x="3"
-                            y="3"
-                            width="18"
-                            height="18"
-                            rx="2"
-                            ry="2"
-                          ></rect>
-                          <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                          <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                      </span>
-                      <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                        <svg
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="css-i6dzq1"
-                        >
-                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                          <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                      </span>
-                      <span className="flex items-center transition ease-out duration-300 hover:bg-blue-500 hover:text-white bg-blue-100 w-8 h-8 px-2 rounded-full text-blue-400 cursor-pointer">
-                        <svg
-                          viewBox="0 0 24 24"
-                          width="24"
-                          height="24"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="css-i6dzq1"
-                        >
-                          <polyline points="4 17 10 11 4 5"></polyline>
-                          <line x1="12" y1="19" x2="20" y2="19"></line>
-                        </svg>
-                      </span>
-                    </div>
-                    <button
-                      type="submit"
-                      className="flex items-center py-2 px-4 rounded-lg text-sm bg-blue-600 text-white shadow-lg w-28 justify-center"
-                    >
-                      Post
-                      <svg
-                        className="ml-1"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                      </svg>
-                    </button>
-                  </footer>
-                </form>
-              )}
-
+              <PostForm {...postFormProps} />
               <div className="bg-white shadow rounded-lg">
                 {posts?.map((post) => {
                   return (

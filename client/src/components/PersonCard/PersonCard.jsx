@@ -32,14 +32,14 @@ const PersonCard = ({ person, addNewContact, deleteContact }) => {
           </button>
         )}
       </div> */}
-      <div className="w-11/12 p-2" key={person?._id}>
+      <div className="w-11/12 p-2 transition-transform duration-500 hover:scale-125" key={person?._id}>
         <div className="bg-white px-6 py-8 rounded-lg shadow-2xl text-center">
-          <div className="mb-3">
+          <div className="mb-3 cursor-pointer">
             <img
               className="w-auto mx-auto rounded-full"
               src="https://i.pravatar.cc/150?img=66"
               alt=""
-            />
+              onClick={() => alert('wtf')}/>
           </div>
           <h2 className="text-xl font-medium text-gray-700">{person?.name}</h2>
           <span className="text-blue-500 block mb-5">Front End Developer</span>
