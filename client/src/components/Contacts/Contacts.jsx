@@ -3,13 +3,7 @@
 import React, { useState } from 'react';
 import DeleteContactModal from '../DeleteContactModal/DeleteContactModal';
 
-const Contacts = ({
-  contacts,
-  deleteContact,
-  showModal,
-  setShowModal,
-  setUserPartner,
-}) => {
+const Contacts = ({ ...contactsProps }) => {
   const [currentContact, setCurrentContact] = useState(null);
   return (
     <>
@@ -17,23 +11,23 @@ const Contacts = ({
         <h3 className="text-gray-600 text-sm font-semibold mb-4 text-center text-2xl">
           Contacts
         </h3>
-        {showModal && (
+        {contactsProps.showModal && (
           <DeleteContactModal
-            deleteContact={deleteContact}
+            deleteContact={contactsProps.deleteContact}
             contact={currentContact}
-            setShowModal={setShowModal}
-            setUserPartner={setUserPartner}
+            setShowModal={contactsProps.setShowModal}
+            setUserPartner={contactsProps.setUserPartner}
           />
         )}
-        {contacts?.length ? (
+        {contactsProps.contacts?.length ? (
           <ul className="flex items-center justify-center space-x-2">
-            {contacts?.map((contact) => (
+            {contactsProps.contacts?.map((contact) => (
               <>
                 <li
                   className="flex flex-col items-center space-y-2 cursor-pointer transition-transform duration-500 hover:scale-125 hover:font-bold
             "
                   onClick={() => {
-                    setShowModal(true);
+                    contactsProps.setShowModal(true);
                     setCurrentContact(contact);
                   }}
                 >
