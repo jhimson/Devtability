@@ -5,6 +5,7 @@ const {
   fetchAllPosts,
   DeletePost,
   UpdatePost,
+  togglePost,
 } = require('../controllers/C-post');
 const { verify } = require('../utils/index');
 
@@ -13,5 +14,7 @@ router.get('/', verify, fetchAllPosts);
 router.post('/', verify, CreatePost);
 router.delete('/', verify, DeletePost);
 router.patch('/', verify, UpdatePost);
+router.patch('/toggleLike', togglePost);
+
 
 module.exports = router;

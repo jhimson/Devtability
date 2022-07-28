@@ -123,10 +123,36 @@ const UpdatePost = async (req, res) => {
   }
 };
 
+// ? @Description    Update a post
+// ? @Route          PATCH /api/posts/toggleLike
+// ? @Access         PUBLIC
+const togglePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.body.postId);
+
+    //* check if the post already been liked
+    if (post.likes[0] === req.body.userId) {
+    }
+    if (post.likes.includes(req.body.userId)) {
+      let updatedLikes = post.likes.filter((like) => like !== req.body.userId);
+      post.likes = updatedLikes;
+      await post.save();
+      res.json({ like: 1 });
+    } else {
+      post.likes.unshift(req.body.userId);
+      await post.save();
+      res.json({ like: 0 });
+    }
+  } catch (error) {
+    res.status(500).send('Server Error');
+  }
+};
+
 module.exports = {
   CreatePost,
   fetchUserPosts,
   fetchAllPosts,
   DeletePost,
   UpdatePost,
+  togglePost,
 };
