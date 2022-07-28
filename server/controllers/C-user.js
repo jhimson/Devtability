@@ -82,14 +82,18 @@ const updateUserProfile = async (req, res) => {
   console.log(req.body);
   const { userId, name, email, address, github, linkedIn } = req.body.userData;
   try {
-    const user = await User.updateOne(
+    const user = await User.findOneAndUpdate(
       { _id: userId },
       { $set: { name, email, address, github, linkedIn } },
       { new: true }
     );
     if (user) {
+      //! Generate an access token
+      const accessToken = generateAccessToken(user);
+      const refreshToken = generateRefreshToken(user);
+      refreshTokens.push(refreshToken);
       console.log('VOVOKA', user);
-      res.status(200).json(user);
+      res.status(200).json({ user, accessToken, refreshToken });
     } else {
       res.status(400).json({ Message: `User not found in the DB` });
     }

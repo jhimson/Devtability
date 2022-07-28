@@ -47,6 +47,13 @@ const ProfileInfo = () => {
       github,
     });
     if (response) {
+      console.log('tabga', response);
+      //! RESETS THE USER TOKEN IN THE LOCALSTORAGE
+      const token = JSON.parse(
+        window.atob(response.data.accessToken.split('.')[1])
+      );
+      localStorage.setItem('token', JSON.stringify(response.data.accessToken));
+      setUser(token.user);
       console.log(`Successfully updated profile`, response);
     }
   };
@@ -79,7 +86,10 @@ const ProfileInfo = () => {
             {isUpdating && (
               <>
                 <button
-                  className={`bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2 ${emailExists && 'bg-gray-600 border-gray-700 hover:bg-gray-500'}`}
+                  className={`bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2 ${
+                    emailExists &&
+                    'bg-gray-600 border-gray-700 hover:bg-gray-500'
+                  }`}
                   onClick={() => {
                     updateUserInfo();
                     setIsUpdating(false);
