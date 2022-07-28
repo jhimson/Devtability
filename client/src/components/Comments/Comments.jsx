@@ -89,7 +89,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
               <div className="text-sm font-semibold">
                 {comment?.user?.name} •{' '}
                 <span className="font-normal">
-                  {format(comment?.updatedAt)} (edited)
+                  {format(comment?.updatedAt)} {comment?.isEdited && '(edited)'}
                 </span>
               </div>
             </div>

@@ -83,7 +83,6 @@ const StandUps = () => {
   };
 
   const setUpdateData = async (post) => {
-    console.log('WTF DUDE!');
     setShowOptions(!showOptions);
     setIsUpdating(true);
     setFile(post.image);
@@ -154,7 +153,7 @@ const StandUps = () => {
             </div>
           </nav>
           {/* HEREE ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
-          <div>
+          <div className='w-11/12'>
             <article className="">
               {!isUpdating && (
                 <form
@@ -334,7 +333,8 @@ const StandUps = () => {
                                 Software Engineer
                               </div>
                               <div className="text-gray-400 font-thin text-xs">
-                                • {format(post?.createdAt)}
+                                • {format(post?.updatedAt)}{' '}
+                                {post?.isEdited && '(edited)'}
                               </div>
                             </div>
                           </div>
@@ -598,7 +598,7 @@ const StandUps = () => {
                         <div>
                           {post?.comments?.map((comment) => (
                             <Comments
-                              commentId={comment._id}
+                              commentId={comment?._id}
                               fetchPosts={fetchPosts}
                               postId={post?._id}
                             />

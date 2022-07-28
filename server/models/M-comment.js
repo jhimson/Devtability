@@ -8,6 +8,7 @@ const CommentSchema = new Schema(
       ref: 'User',
     },
     text: String,
+    isEdited: { type: Boolean, default: false },
     likes: {
       type: Number,
       default: 0,

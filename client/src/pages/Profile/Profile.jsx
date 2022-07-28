@@ -14,24 +14,26 @@ import {
 } from '../../utils/posts-api';
 
 import { getUserContacts, removeContact } from '../../utils/contacts-api';
-
+import { addComment } from '../../utils/comments-api';
+// ! ICONS
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { FaEdit } from 'react-icons/fa';
 
 import {
   getAccountabilityPartner,
   setAccountabilityPartner,
 } from '../../utils/users-api';
 
-// ! ICONS
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { FaEdit } from 'react-icons/fa';
 // ! COMPONENTS
 import Sidenav from '../../components/Sidenav/Sidenav';
-// ! CONTEXTS IMPORTS
-import { UserContext } from '../../contexts/UserContext';
+import Comments from '../../components/Comments/Comments';
 import Contacts from '../../components/Contacts/Contacts';
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo';
 import DeleteContactModal from '../../components/DeleteContactModal/DeleteContactModal';
 import Partner from '../../components/Partner/Partner';
+
+// ! CONTEXTS IMPORTS
+import { UserContext } from '../../contexts/UserContext';
 
 const Profile = () => {
   // ! CONTEXTS
@@ -46,6 +48,7 @@ const Profile = () => {
   const [blockersText, setBlockersText] = useState('');
   const [contacts, setContacts] = useState([]);
   const [partner, setPartner] = useState({});
+  const [comment, setComment] = useState('');
 
   const [showOptions, setShowOptions] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -92,7 +95,6 @@ const Profile = () => {
   };
 
   const setUpdateData = async (post) => {
-    console.log('WTF DUDE!');
     setShowOptions(!showOptions);
     setIsUpdating(true);
     setFile(post.image);
@@ -106,6 +108,15 @@ const Profile = () => {
     const response = await editPost(updatedPost);
     if (response) {
       console.log(`Successfully updated post`, response);
+    }
+  };
+
+  // ! COMMENTS ACTIONS
+  const insertNewComment = async (userId, postId, text) => {
+    const response = await addComment({ userId, postId, text });
+    if (response) {
+      console.log(`Successfully Added a new comment`, response);
+      fetchPosts();
     }
   };
 
@@ -198,9 +209,7 @@ const Profile = () => {
               {/* PROFILE INFO START -> */}
               <ProfileInfo user={user} />
               {/* PROFILE INFO END -> */}
-
               <Partner partner={partner} setShowModal={setShowModal} />
-
               {/* CONTACTS STARTS -> */}
               <Contacts
                 contacts={contacts}
@@ -388,7 +397,8 @@ const Profile = () => {
                                 Software Engineer
                               </div>
                               <div className="text-gray-400 font-thin text-xs">
-                                • {format(post?.createdAt)}
+                                • {format(post?.updatedAt)}{' '}
+                                {post?.isEdited && '(edited)'}
                               </div>
                             </div>
                           </div>
@@ -397,7 +407,7 @@ const Profile = () => {
                         <div className="flex justify-center">
                           <div className="relative inline-block">
                             <div className="flex space-x-4">
-                              {isUpdating && (
+                              {isUpdating && post?.user?._id === user._id && (
                                 <>
                                   <button
                                     className="py-2 px-4 rounded-lg text-sm bg-green-600 text-white shadow-lg"
@@ -426,7 +436,7 @@ const Profile = () => {
                                   </button>
                                 </>
                               )}
-                              {!isUpdating && (
+                              {post?.user?._id === user._id && !isUpdating && (
                                 <button
                                   className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white rounded-full focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white hover:bg-gray-200 focus:outline-none"
                                   onClick={() => setShowOptions(!showOptions)}
@@ -648,40 +658,63 @@ const Profile = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="relative flex items-center self-center w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
-                        <img
-                          className="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
-                          alt="User avatar"
-                          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
-                        />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-6">
-                          <button
-                            type="submit"
-                            className="p-1 focus:outline-none focus:shadow-none hover:text-blue-500"
-                          >
-                            <svg
-                              className="w-6 h-6 transition ease-out duration-300 hover:text-blue-500 text-gray-400"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
+                      <div className="relative flex flex-col  w-full p-4 overflow-hidden text-gray-600 focus-within:text-gray-400 mb-8">
+                        <div>
+                          {post?.comments?.map((comment) => (
+                            <Comments
+                              commentId={comment?._id}
+                              fetchPosts={fetchPosts}
+                              postId={post?._id}
+                            />
+                          ))}
+                        </div>
+                        {/* ADD COMMENT SECTION */}
+                        <div className="flex w-full mt-8">
+                          <img
+                            className="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
+                            alt="User avatar"
+                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                          />
+                          <span className="absolute inset-y-50 right-0 flex items-center pr-6">
+                            <button
+                              type="submit"
+                              className="p-1 focus:outline-none focus:shadow-none hover:text-blue-500"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                              ></path>
-                            </svg>
-                          </button>
-                        </span>
-                        <input
-                          type="search"
-                          className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
-                          style={{ borderRadius: '25px' }}
-                          placeholder="Post a comment..."
-                          autoComplete="off"
-                        />
+                              <svg
+                                className="w-6 h-6 transition ease-out duration-300 hover:text-blue-500 text-gray-400"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                              </svg>
+                            </button>
+                          </span>
+                          <form
+                            className="w-full"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              insertNewComment(user?._id, post?._id, comment);
+                              setComment('');
+                            }}
+                          >
+                            <input
+                              type="text"
+                              className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
+                              value={comment}
+                              onChange={(e) => setComment(e.target.value)}
+                              style={{ borderRadius: '25px' }}
+                              placeholder="Post a comment..."
+                              autoComplete="off"
+                            />
+                          </form>
+                        </div>
                       </div>
                     </>
                   );

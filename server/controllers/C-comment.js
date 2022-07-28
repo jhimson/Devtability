@@ -94,10 +94,12 @@ const updateComment = async (req, res) => {
   try {
     const comment = await Comment.updateOne(
       { _id: commentId },
-      { $set: { text } }
+      { $set: { text, isEdited: true } }
     );
     if (comment) {
-      res.status(200).json({ Message: `Successfully Updated comment`, comment });
+      res
+        .status(200)
+        .json({ Message: `Successfully Updated comment`, comment });
     }
   } catch (error) {
     console.log(`Error Updating comment from DB: ${error}`);

@@ -58,7 +58,8 @@ const fetchUserPosts = async (req, res) => {
   try {
     const posts = await Post.find({ user: req.params.userId })
       .sort({ createdAt: -1 })
-      .populate('user');
+      .populate('user')
+      .populate('comments');
     if (posts) {
       res.status(200).json(posts);
     }
@@ -111,7 +112,7 @@ const UpdatePost = async (req, res) => {
   try {
     const post = await Post.updateOne(
       { _id },
-      { $set: { title, todayText, tomorrowText, blockersText } }
+      { $set: { title, todayText, tomorrowText, blockersText, isEdited: true } }
     );
     if (post) {
       res.status(200).json({ Message: `Successfully Updated post`, post });
