@@ -10,6 +10,7 @@ const DeleteContactModal = ({
   setShowModal,
   setUserPartner,
   setContact,
+  isProfile,
 }) => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
@@ -39,15 +40,17 @@ const DeleteContactModal = ({
             </div>
             <hr />
             <div class="ml-auto flex space-x-2">
-              <button
-                class="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2"
-                onClick={() => {
-                  setShowModal(false);
-                  setUserPartner(user?._id, contact?._id);
-                }}
-              >
-                Set as Accountability Partner
-              </button>
+              {!isProfile && (
+                <button
+                  class="bg-transparent bg-green-500 hover:bg-green-600 text-white font-bold hover:text-white py-2 px-4 border border-green-400 hover:border-transparent rounded mr-2"
+                  onClick={() => {
+                    setShowModal(false);
+                    setUserPartner(user?._id, contact?._id);
+                  }}
+                >
+                  Set as Accountability Partner
+                </button>
+              )}
               <button
                 class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                 onClick={() => {

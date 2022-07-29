@@ -208,6 +208,7 @@ const UserProfile = () => {
     showModal,
     setShowModal,
     setUserPartner,
+    isProfile: true,
   };
 
   useEffect(() => {
@@ -242,7 +243,6 @@ const UserProfile = () => {
                 setUser={setUser}
               />
               <Contacts {...contactsProps} />
-              {/* <PostForm {...postFormProps} /> */}
               <Posts {...postProps} />
             </article>
           </div>

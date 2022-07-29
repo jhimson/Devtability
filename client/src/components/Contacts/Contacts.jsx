@@ -22,6 +22,7 @@ const Contacts = ({ ...contactsProps }) => {
             setShowModal={contactsProps.setShowModal}
             setUserPartner={contactsProps.setUserPartner}
             setContact={setContact}
+            isProfile={contactsProps.isProfile}
           />
         )}
         {contactsProps.contacts?.length ? (
