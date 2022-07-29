@@ -9,6 +9,7 @@ const CommentSchema = new Schema(
     },
     text: String,
     isEdited: { type: Boolean, default: false },
+    updated: { type: Date, default: null },
     likes: { type: Array },
     replies: [{ type: Schema.Types.ObjectId, ref: 'Reply' }],
   },

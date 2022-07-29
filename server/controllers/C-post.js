@@ -112,7 +112,16 @@ const UpdatePost = async (req, res) => {
   try {
     const post = await Post.updateOne(
       { _id },
-      { $set: { title, todayText, tomorrowText, blockersText, isEdited: true } }
+      {
+        $set: {
+          title,
+          todayText,
+          tomorrowText,
+          blockersText,
+          isEdited: true,
+          updated: Date.now(),
+        },
+      }
     );
     if (post) {
       res.status(200).json({ Message: `Successfully Updated post`, post });
@@ -129,7 +138,6 @@ const UpdatePost = async (req, res) => {
 const toggleLike = async (req, res) => {
   try {
     const post = await Post.findById(req.body.postId);
-
     //* check if the post already been liked
     if (post.likes[0] === req.body.userId) {
     }

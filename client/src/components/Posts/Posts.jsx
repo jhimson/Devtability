@@ -51,7 +51,7 @@ const Posts = ({ ...postProps }) => {
                       <div className="text-gray-400 font-thin text-xs">
                         •{' '}
                         {post?.isEdited
-                          ? format(post?.updatedAt)
+                          ? format(post?.updated)
                           : format(post?.createdAt)}{' '}
                         {post?.isEdited && '(edited)'}
                       </div>

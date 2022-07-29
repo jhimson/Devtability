@@ -96,7 +96,7 @@ const updateComment = async (req, res) => {
   try {
     const comment = await Comment.updateOne(
       { _id: commentId },
-      { $set: { text, isEdited: true } }
+      { $set: { text, isEdited: true, updated: Date.now() } }
     );
     if (comment) {
       res
@@ -115,7 +115,6 @@ const updateComment = async (req, res) => {
 const toggleLike = async (req, res) => {
   try {
     const comment = await Comment.findById(req.body.commentId);
-
     //* check if the post already been liked
     if (comment.likes[0] === req.body.userId) {
     }

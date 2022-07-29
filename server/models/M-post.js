@@ -15,6 +15,7 @@ const postSchema = new Schema(
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', default: [] }],
     datePosted: { type: String },
     isEdited: { type: Boolean, default: false },
+    updated: { type: Date, default: null },
     likes: { type: Array },
   },
   { timestamps: true }
