@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Reply from '../Reply/Reply';
 
-const Replies = ({ comment, user, getComment }) => {
+const Replies = ({ comment, user, getComment, setIsReplying, isReplying }) => {
   const [updatingReply, setUpdatingReply] = useState(false);
   return (
     <>
@@ -12,6 +12,8 @@ const Replies = ({ comment, user, getComment }) => {
           user={user}
           reply={reply}
           getComment={getComment}
+          setIsReplying={setIsReplying}
+          isReplying={isReplying}
         />
       ))}
     </>

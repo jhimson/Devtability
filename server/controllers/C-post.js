@@ -126,7 +126,7 @@ const UpdatePost = async (req, res) => {
 // ? @Description    Update a post
 // ? @Route          PATCH /api/posts/toggleLike
 // ? @Access         PUBLIC
-const togglePost = async (req, res) => {
+const toggleLike = async (req, res) => {
   try {
     const post = await Post.findById(req.body.postId);
 
@@ -154,5 +154,5 @@ module.exports = {
   fetchAllPosts,
   DeletePost,
   UpdatePost,
-  togglePost,
+  toggleLike,
 };

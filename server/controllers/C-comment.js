@@ -48,7 +48,7 @@ const getComment = async (req, res) => {
       _id: req.params.commentId,
     })
       .populate('user')
-      .populate('replies')
+      .populate('replies');
     if (comment) {
       res.status(200).json(comment);
     }
@@ -109,4 +109,37 @@ const updateComment = async (req, res) => {
   }
 };
 
-module.exports = { createComment, deleteComment, getComment, updateComment };
+// ? @Description    Update a comment
+// ? @Route          PATCH /api/comments/toggleLike
+// ? @Access         PUBLIC
+const toggleLike = async (req, res) => {
+  try {
+    const comment = await Comment.findById(req.body.commentId);
+
+    //* check if the post already been liked
+    if (comment.likes[0] === req.body.userId) {
+    }
+    if (comment.likes.includes(req.body.userId)) {
+      let updatedLikes = comment.likes.filter(
+        (like) => like !== req.body.userId
+      );
+      comment.likes = updatedLikes;
+      await comment.save();
+      res.json({ like: 1 });
+    } else {
+      comment.likes.unshift(req.body.userId);
+      await comment.save();
+      res.json({ like: 0 });
+    }
+  } catch (error) {
+    res.status(500).send('Server Error');
+  }
+};
+
+module.exports = {
+  createComment,
+  deleteComment,
+  getComment,
+  updateComment,
+  toggleLike,
+};

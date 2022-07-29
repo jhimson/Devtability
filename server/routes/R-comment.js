@@ -3,7 +3,8 @@ const {
   createComment,
   getComment,
   deleteComment,
-  updateComment
+  updateComment,
+  toggleLike,
 } = require('../controllers/C-comment');
 const { verify } = require('../utils/index');
 
@@ -14,5 +15,7 @@ router.get('/:commentId', getComment);
 router.delete('/:postId/:commentId', deleteComment);
 
 router.patch('/', updateComment);
+
+router.patch('/toggleLike', toggleLike);
 
 module.exports = router;

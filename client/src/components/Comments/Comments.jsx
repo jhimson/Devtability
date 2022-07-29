@@ -6,6 +6,7 @@ import {
   fetchComment,
   removeComment,
   editComment,
+  toggleCommentLike,
 } from '../../utils/comments-api';
 
 // ! CONTEXTS IMPORTS
@@ -28,7 +29,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
   const [commentText, setCommentText] = useState('');
   const [showOptions, setShowOptions] = useState(false);
   const [updatingComment, setUpdatingComment] = useState(false);
-  const [toggleReply, setToggleReply] = useState(false);
+  const [toggleLike, setToggleLike] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
 
   const getComment = async () => {
@@ -61,6 +62,14 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
   const setUpdateComment = async (comment) => {
     setShowOptions(!showOptions);
     setCommentText(comment?.text);
+  };
+
+  const togLike = async (userId, commentId) => {
+    const response = await toggleCommentLike({ userId, commentId });
+    if (response) {
+      console.log(response);
+      getComment();
+    }
   };
 
   useEffect(() => {
@@ -97,7 +106,10 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
               <div className="text-sm font-semibold">
                 {comment?.user?.name} •{' '}
                 <span className="font-normal">
-                  {format(comment?.updatedAt)} {comment?.isEdited && '(edited)'}
+                  {comment?.isEdited
+                    ? format(comment?.updatedAt)
+                    : format(comment?.createdAt)}{' '}
+                  {comment?.isEdited && '(edited)'}
                 </span>
               </div>
               {comment?.user?._id === user?._id && (
@@ -189,16 +201,19 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
               <div className="flex mb-2 space-x-2">
                 <span
                   className={`text-xs cursor-pointer ${
-                    toggleReply
+                    comment?.likes?.includes(user?._id)
                       ? 'text-white bg-blue-500'
                       : 'text-blue-500 bg-transparent'
                   } border-2 border-blue-500 rounded py-1 px-2`}
-                  onClick={() => setToggleReply(!toggleReply)}
+                  onClick={() => {
+                    setToggleLike(!toggleLike);
+                    togLike(user?._id, comment?._id);
+                  }}
                 >
                   Like
                   {/* <span className="ml-2">2</span> */}
                   <span className="inline-flex justify-center items-center ml-2 w-4 h-4 text-xs font-semibold text-white bg-blue-800 rounded-full">
-                    5
+                    {comment?.likes?.length}
                   </span>
                 </span>
 
@@ -208,7 +223,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
                 >
                   Reply
                   <span className="inline-flex justify-center items-center ml-2 w-4 h-4 text-xs font-semibold text-white bg-gray-600 rounded-full">
-                    2
+                    {comment?.replies?.length}
                   </span>
                 </span>
               </div>
@@ -220,7 +235,13 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
                 comment={comment}
                 getComment={getComment}
               />
-              <Replies comment={comment} user={user} getComment={getComment} />
+              <Replies
+                comment={comment}
+                user={user}
+                getComment={getComment}
+                setIsReplying={setIsReplying}
+                isReplying={isReplying}
+              />
             </div>
           )}
         </div>

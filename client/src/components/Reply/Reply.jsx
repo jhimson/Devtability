@@ -8,8 +8,16 @@ import { FaEdit } from 'react-icons/fa';
 //! API
 import { createReply, deleteReply } from '../../utils/replies-api';
 import { fetchUser } from '../../utils/users-api';
+import ReplyForm from '../ReplyForm/ReplyForm';
 
-const Reply = ({ comment, user, reply, getComment }) => {
+const Reply = ({
+  comment,
+  user,
+  reply,
+  getComment,
+  setIsReplying,
+  isReplying,
+}) => {
   const [replyOptions, setReplyOptions] = useState(false);
   const [toggleReply, setToggleReply] = useState(false);
   const [replyText, setReplyText] = useState('');
@@ -130,10 +138,14 @@ const Reply = ({ comment, user, reply, getComment }) => {
             </span>
           </span>
 
-          <span className="text-xs text-white bg-gray-800 rounded py-1 px-2 cursor-pointer">
+          <span
+            className="text-xs text-white bg-gray-800 rounded py-1 px-2 cursor-pointer"
+            onClick={() => setIsReplying(true)}
+          >
             Reply
           </span>
         </div>
+        {/* <ReplyForm isReplying={isReplying} setIsReplying={setIsReplying} /> */}
       </div>
       <hr className="my-2" />
     </>

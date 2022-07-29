@@ -102,6 +102,24 @@ export const editComment = async (commentId, text) => {
   }
 };
 
+export const toggleCommentLike = async ({ userId, commentId }) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.patch(
+      `${BASE_URL}/toggleLike`,
+      { userId, commentId },
+      { headers }
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error updating a like. ErrorMessage: ${error}`);
+  }
+};
+
 // export const removePost = async (postId) => {
 //   const headers = {
 //     'Content-Type': 'application/json',

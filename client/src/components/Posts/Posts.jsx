@@ -49,7 +49,10 @@ const Posts = ({ ...postProps }) => {
                         Software Engineer
                       </div>
                       <div className="text-gray-400 font-thin text-xs">
-                        • {format(post?.updatedAt)}{' '}
+                        •{' '}
+                        {post?.isEdited
+                          ? format(post?.updatedAt)
+                          : format(post?.createdAt)}{' '}
                         {post?.isEdited && '(edited)'}
                       </div>
                     </div>
