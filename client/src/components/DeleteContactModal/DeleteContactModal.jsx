@@ -11,6 +11,7 @@ const DeleteContactModal = ({
   setUserPartner,
   setContact,
   isProfile,
+  partner
 }) => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);

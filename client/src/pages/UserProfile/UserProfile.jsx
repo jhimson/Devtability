@@ -135,6 +135,12 @@ const UserProfile = () => {
   const deleteContact = async (userId, contactId) => {
     const response = await removeContact(userId, contactId);
     if (response) {
+      if (contactId === partner?._id) {
+        // 62e12168650f328749d4713c
+        //! If the current partner is being deleted from the contact, automatically set admin as the partner.
+        setUserPartner(user?._id, '62e12168650f328749d4713c');
+        getPartner(user?._id);
+      }
       console.log(`Successfully deleted contact`, response);
     }
     let updatedContacts = contacts?.filter(
@@ -206,6 +212,7 @@ const UserProfile = () => {
     showModal,
     setShowModal,
     setUserPartner,
+    partner,
   };
 
   useEffect(() => {

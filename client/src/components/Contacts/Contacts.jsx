@@ -15,19 +15,20 @@ const Contacts = ({ ...contactsProps }) => {
         <h3 className="text-gray-600 text-sm font-semibold mb-4 text-center text-2xl">
           Contacts
         </h3>
-        {contactsProps.showModal && (
+        {contactsProps?.showModal && (
           <DeleteContactModal
-            deleteContact={contactsProps.deleteContact}
+            deleteContact={contactsProps?.deleteContact}
             contact={currentContact}
-            setShowModal={contactsProps.setShowModal}
-            setUserPartner={contactsProps.setUserPartner}
+            setShowModal={contactsProps?.setShowModal}
+            setUserPartner={contactsProps?.setUserPartner}
             setContact={setContact}
-            isProfile={contactsProps.isProfile}
+            isProfile={contactsProps?.isProfile}
+            partner={contactsProps?.partner}
           />
         )}
         {contactsProps.contacts?.length ? (
           <ul className="flex items-center justify-center space-x-2">
-            {contactsProps.contacts?.map((contact) => (
+            {contactsProps?.contacts?.map((contact) => (
               <>
                 <li
                   className="flex flex-col items-center space-y-2 cursor-pointer transition-transform duration-500 hover:scale-125 hover:font-bold
@@ -45,7 +46,7 @@ const Contacts = ({ ...contactsProps }) => {
                   </a>
                   <span className="text-xs text-gray-500">
                     {' '}
-                    {contact?.name.split(' ')[0]}{' '}
+                    {contact?.name?.split(' ')[0]}{' '}
                   </span>
                 </li>
               </>
