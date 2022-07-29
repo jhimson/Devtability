@@ -72,6 +72,44 @@ export const deleteReply = async ({ commentId, replyId }) => {
   }
 };
 
+export const editReply = async ({ replyId, text }) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.patch(
+      `${BASE_URL}`,
+      { replyId, text },
+      {
+        headers,
+      }
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error updating a reply. ErrorMessage: ${error}`);
+  }
+};
+
+export const toggleReplyLike = async ({ userId, replyId }) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.patch(
+      `${BASE_URL}/toggleLike`,
+      { userId, replyId },
+      { headers }
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error updating a like. ErrorMessage: ${error}`);
+  }
+};
+
 // export const fetchComment = async (commentId) => {
 //   const headers = {
 //     'Content-Type': 'application/json',

@@ -9,9 +9,10 @@ const ReplySchema = new Schema(
     },
     text: String,
     likes: {
-      type: Number,
-      default: 0,
+      type: Array,
     },
+    isEdited: { type: Boolean, default: false },
+    updated: { type: Date, default: null },
   },
   {
     timestamps: true,

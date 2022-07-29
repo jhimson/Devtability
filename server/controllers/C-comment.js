@@ -88,9 +88,9 @@ const deleteComment = async (req, res) => {
   }
 };
 
-// ? @Description    Update a post
-// ? @Route          PATCH /api/posts/
-// ? @Access         PUBLIC
+// ? @Description    Update a comment
+// ? @Route          PATCH /api/comments/
+// ? @Access         PRIVATE
 const updateComment = async (req, res) => {
   const { commentId, text } = req.body;
   try {
@@ -111,7 +111,7 @@ const updateComment = async (req, res) => {
 
 // ? @Description    Update a comment
 // ? @Route          PATCH /api/comments/toggleLike
-// ? @Access         PUBLIC
+// ? @Access         PRIVATE
 const toggleLike = async (req, res) => {
   try {
     const comment = await Comment.findById(req.body.commentId);

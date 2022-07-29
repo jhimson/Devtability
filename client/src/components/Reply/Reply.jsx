@@ -6,7 +6,12 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaEdit } from 'react-icons/fa';
 
 //! API
-import { createReply, deleteReply } from '../../utils/replies-api';
+import {
+  createReply,
+  deleteReply,
+  editReply,
+  toggleReplyLike,
+} from '../../utils/replies-api';
 import { fetchUser } from '../../utils/users-api';
 import ReplyForm from '../ReplyForm/ReplyForm';
 
@@ -20,10 +25,19 @@ const Reply = ({
 }) => {
   const [replyOptions, setReplyOptions] = useState(false);
   const [toggleReply, setToggleReply] = useState(false);
-  const [replyText, setReplyText] = useState('');
-  const [currentUser, setCurrentUser] = useState();
+  const [replyComment, setReplyComment] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [updatingReply, setUpdatingReply] = useState(false);
 
   //! FUNCTIONS
+  const getUser = async (userId) => {
+    const response = await fetchUser(userId);
+    if (response) {
+      console.log('zzzz', response);
+      setCurrentUser(response.data);
+    }
+  };
+
   const removeReply = async (commentId, replyId) => {
     const response = await deleteReply({ commentId, replyId });
     if (response) {
@@ -32,11 +46,21 @@ const Reply = ({
     }
   };
 
-  const getUser = async (userId) => {
-    const response = await fetchUser(userId);
+  const updateReply = async (replyId, text) => {
+    const response = await editReply({ replyId, text });
     if (response) {
-      console.log('zzzz', response);
-      setCurrentUser(response.data);
+      console.log('sucessfully updated reply', response);
+      getComment();
+      setUpdatingReply(false);
+      // setCurrentUser(response.data);
+    }
+  };
+
+  const togLike = async (userId, replyId) => {
+    const response = await toggleReplyLike({ userId, replyId });
+    if (response) {
+      console.log(response);
+      getComment();
     }
   };
 
@@ -58,7 +82,10 @@ const Reply = ({
           <div className="text-sm font-semibold">
             {currentUser?.name} •{' '}
             <span className="font-normal">
-              {format(comment?.updatedAt)} {comment?.isEdited && '(edited)'}
+              {reply?.isEdited
+                ? format(reply?.updated)
+                : format(reply?.createdAt)}{' '}
+              {reply?.isEdited && '(edited)'}
             </span>
           </div>
           {reply?.user === user?._id && (
@@ -96,6 +123,9 @@ const Reply = ({
                   onClick={() => {
                     //   setUpdateComment(comment);
                     //   setUpdatingComment(true);
+                    setUpdatingReply(true);
+                    setReplyComment(reply?.text);
+                    setReplyOptions(!replyOptions);
                   }}
                 >
                   <FaEdit size={'1.3em'} />
@@ -119,32 +149,64 @@ const Reply = ({
             </div>
           )}
         </div>
-        <p className="text-md text-gray-600 mt-2 mb-2 font-semibold">
-          {reply?.text}
-        </p>
-        <div className="flex mb-2 space-x-2">
-          <span
-            className={`text-xs cursor-pointer ${
-              toggleReply
-                ? 'text-white bg-blue-500'
-                : 'text-blue-500 bg-transparent'
-            } border-2 border-blue-500 rounded py-1 px-2`}
-            onClick={() => setToggleReply(!toggleReply)}
-          >
-            Like
-            {/* <span className="ml-2">2</span> */}
-            <span className="inline-flex justify-center items-center ml-2 w-4 h-4 text-xs font-semibold text-white bg-blue-800 rounded-full">
-              1
-            </span>
-          </span>
+        {updatingReply ? (
+          <>
+            <form
+              className="w-full mt-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                updateReply(reply?._id, replyComment);
+                // updateComment(comment?._id, commentText);
+                // setUpdatingComment(false);
+              }}
+            >
+              <input
+                type="text"
+                className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
+                value={replyComment}
+                onChange={(e) => setReplyComment(e.target.value)}
+                style={{ borderRadius: '25px' }}
+                placeholder="Post a comment..."
+                autoComplete="off"
+              />
+            </form>
+            {/* <div className="ml-8 mt-2">
+              <Replies comment={comment} getComment={getComment} />
+            </div> */}
+          </>
+        ) : (
+          <>
+            <p className="text-md text-gray-600 mt-2 mb-2 font-semibold">
+              {reply?.text}
+            </p>
+            <div className="flex mb-2 space-x-2">
+              <span
+                className={`text-xs cursor-pointer ${
+                  reply?.likes?.includes(user?._id)
+                    ? 'text-white bg-blue-500'
+                    : 'text-blue-500 bg-transparent'
+                } border-2 border-blue-500 rounded py-1 px-2`}
+                onClick={() => {
+                  setToggleReply(!toggleReply);
+                  togLike(user?._id, reply?._id);
+                }}
+              >
+                Like
+                {/* <span className="ml-2">2</span> */}
+                <span className="inline-flex justify-center items-center ml-2 w-4 h-4 text-xs font-semibold text-white bg-blue-800 rounded-full">
+                  {reply?.likes?.length}
+                </span>
+              </span>
 
-          <span
-            className="text-xs text-white bg-gray-800 rounded py-1 px-2 cursor-pointer"
-            onClick={() => setIsReplying(true)}
-          >
-            Reply
-          </span>
-        </div>
+              <span
+                className="text-xs text-white bg-gray-800 rounded py-1 px-2 cursor-pointer"
+                onClick={() => setIsReplying(true)}
+              >
+                Reply
+              </span>
+            </div>
+          </>
+        )}
         {/* <ReplyForm isReplying={isReplying} setIsReplying={setIsReplying} /> */}
       </div>
       <hr className="my-2" />

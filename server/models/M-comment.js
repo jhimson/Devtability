@@ -14,7 +14,7 @@ const CommentSchema = new Schema(
     replies: [{ type: Schema.Types.ObjectId, ref: 'Reply' }],
   },
   {
-    timestamps: true,
+  timestamps: true,
   }
 );
 

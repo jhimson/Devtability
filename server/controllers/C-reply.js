@@ -65,6 +65,53 @@ const deleteReply = async (req, res) => {
   }
 };
 
+// ? @Description    Update a reply
+// ? @Route          PATCH /api/replies/
+// ? @Access         PUBLIC
+const updateReply = async (req, res) => {
+  const { replyId, text } = req.body;
+  console.log('wtf', req.body.text);
+  try {
+    const reply = await Reply.updateOne(
+      { _id: replyId },
+      { $set: { text, isEdited: true, updated: Date.now() } }
+    );
+    if (reply) {
+      res.status(200).json({ Message: `Successfully Updated reply`, reply });
+    }
+  } catch (error) {
+    console.log(`Error Updating reply from DB: ${error}`);
+    res.status(500);
+  }
+};
+
+// ? @Description    TOGGLE Like
+// ? @Route          PATCH /api/replies/toggleLike
+// ? @Access         PRIVATE
+const toggleLike = async (req, res) => {
+  console.log(req.body)
+  try {
+    const reply = await Reply.findById(req.body.replyId);
+    //* check if the post already been liked
+    // if (reply.likes[0] === req.body.userId) {
+    // }
+    if (reply.likes.includes(req.body.userId)) {
+      let updatedLikes = reply.likes.filter(
+        (like) => like !== req.body.userId
+      );
+      reply.likes = updatedLikes;
+      await reply.save();
+      res.json({ like: 1 });
+    } else {
+      reply.likes.unshift(req.body.userId);
+      await reply.save();
+      res.json({ like: 0 });
+    }
+  } catch (error) {
+    res.status(500).send('Error updating like for reply');
+  }
+};
+
 // // ? @Description    FETCH a comment
 // // ? @Route          GET /api/comments/:commentId
 // // ? @Access         PRIVATE
@@ -103,4 +150,4 @@ const deleteReply = async (req, res) => {
 //   }
 // };
 
-module.exports = { createReply, deleteReply };
+module.exports = { createReply, deleteReply, updateReply, toggleLike };
