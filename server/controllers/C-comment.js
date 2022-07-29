@@ -46,7 +46,9 @@ const getComment = async (req, res) => {
   try {
     const comment = await Comment.findOne({
       _id: req.params.commentId,
-    }).populate('user');
+    })
+      .populate('user')
+      .populate('replies')
     if (comment) {
       res.status(200).json(comment);
     }

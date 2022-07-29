@@ -16,5 +16,4 @@ router.delete('/', verify, DeletePost);
 router.patch('/', verify, UpdatePost);
 router.patch('/toggleLike', togglePost);
 
-
 module.exports = router;

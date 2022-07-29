@@ -25,6 +25,7 @@ app.use('/api/users', require('./routes/R-user'));
 app.use('/api/posts', require('./routes/R-post'));
 app.use('/api/contacts', require('./routes/R-contact'));
 app.use('/api/comments', require('./routes/R-comment'));
+app.use('/api/replies', require('./routes/R-reply'));
 
 const PORT = process.env.PORT;
 const port = 8000;

@@ -9,11 +9,8 @@ const CommentSchema = new Schema(
     },
     text: String,
     isEdited: { type: Boolean, default: false },
-    likes: {
-      type: Number,
-      default: 0,
-    },
-    // replies: [{ type: Schema.Types.ObjectId, ref: 'Reply' }],
+    likes: { type: Array },
+    replies: [{ type: Schema.Types.ObjectId, ref: 'Reply' }],
   },
   {
     timestamps: true,
