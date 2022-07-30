@@ -18,6 +18,7 @@ import Layout from './components/Layout/Layout';
 // import UserContextProvider from './contexts/UserContext';
 import { UserContext } from './contexts/UserContext';
 import PersonProfile from './pages/PersonProfile/PersonProfile';
+import ChatPage from './pages/ChatPage/ChatPage';
 
 const App = () => {
   const { user, setUser } = useContext(UserContext);
@@ -37,6 +38,7 @@ const App = () => {
               path="/person-profile/:personId"
               element={<PersonProfile exact />}
             />
+            <Route path="/chats" element={<ChatPage exact />} />
             <Route path="/people" element={<PeoplePage exact />} />
             <Route path="/*" element={<Navigate to="/dashboard" />} exact />
           </Routes>
