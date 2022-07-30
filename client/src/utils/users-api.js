@@ -52,20 +52,31 @@ export const setAccountabilityPartner = async (userId, contactId) => {
 
 export const setUserProfile = async (userData) => {
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'multipart/form-data',
     authorization: `Bearer ${token}`,
   };
   try {
-    const response = await Axios.patch(
-      `${BASE_URL}/profile`,
-      { userData },
-      { headers }
-    );
-    console.log(response);
-    return response;
+    const result = await Axios({
+      method: 'PATCH',
+      url: `${BASE_URL}/profile`,
+      data: userData,
+      headers,
+    });
+    return result;
   } catch (error) {
-    console.log(`Error updating a user profile. ErrorMessage: ${error}`);
+    console.log(`Error creating a post. ErrorMessage: ${error}`);
   }
+  // try {
+  //   const response = await Axios.patch(
+  //     `${BASE_URL}/profile`,
+  //     { userData },
+  //     { headers }
+  //   );
+  //   console.log(response);
+  //   return response;
+  // } catch (error) {
+  //   console.log(`Error updating a user profile. ErrorMessage: ${error}`);
+  // }
 };
 
 export const fetchUsers = async (userId) => {

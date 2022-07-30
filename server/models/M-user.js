@@ -20,11 +20,15 @@ const userSchema = new Schema(
       minLength: 3,
       required: true,
     },
-    image: { type: String },
+    image: {
+      type: String,
+      default:
+        'https://catcollector-with-toys-and-pics1.s3.amazonaws.com/blankuser.png',
+    },
     accountabilityPartner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      default: '62e12168650f328749d4713c',
+      default: '62e4554d4f7d64655cdde9e1',
     },
     linkedIn: { type: String, default: null },
     github: { type: String, default: null },

@@ -1,5 +1,7 @@
+require('dotenv').config();
 const User = require('../models/M-user');
 const bcrypt = require('bcrypt');
+const AWS = require('aws-sdk');
 const { generateAccessToken, generateRefreshToken } = require('../utils/index');
 
 let refreshTokens = [];
@@ -19,7 +21,7 @@ const fetchUsersExceptCurrentUser = async (req, res) => {
       res.status(400).json({ Message: `User not found in the DB` });
     }
   } catch (error) {
-    console.log('WTFfff?')
+    console.log('WTFfff?');
     console.log(`Error fetching users in DB. Error: ${error}`);
   }
 };
@@ -38,7 +40,7 @@ const fetchUser = async (req, res) => {
       res.status(400).json({ Message: `User not found in the DB` });
     }
   } catch (error) {
-    console.log('WTFzzzz?')
+    console.log('WTFzzzz?');
     console.log(`Error fetching user in DB. Error: ${error}`);
   }
 };
@@ -81,27 +83,75 @@ const setAccountabilityPartner = async (req, res) => {
 // ? @Route          PATCH /api/users/profile
 // ? @Access         Private / Authorized
 const updateUserProfile = async (req, res) => {
-  console.log(req.body);
-  const { userId, name, email, address, github, linkedIn } = req.body.userData;
-  try {
-    const user = await User.findOneAndUpdate(
-      { _id: userId },
-      { $set: { name, email, address, github, linkedIn } },
-      { new: true }
-    );
-    if (user) {
-      //! Generate an access token
-      const accessToken = generateAccessToken(user);
-      const refreshToken = generateRefreshToken(user);
-      refreshTokens.push(refreshToken);
-      console.log('VOVOKA', user);
-      res.status(200).json({ user, accessToken, refreshToken });
-    } else {
-      res.status(400).json({ Message: `User not found in the DB` });
+  console.log('ATAY KA!')
+  console.log(req.files.data.data);
+  const { userId, name, email, address, github, linkedIn } = req.body;
+
+  AWS.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: 'us-east-1',
+  });
+  const s3 = new AWS.S3();
+  const fileContent = Buffer.from(req.files.data.data, 'binary');
+
+  const params = {
+    Bucket: 'catcollector-with-toys-and-pics1',
+    Key: req.files.data.name,
+    Body: fileContent,
+  };
+  s3.upload(params, async (err, data) => {
+    if (err) {
+      throw err;
     }
-  } catch (error) {
-    console.log(`Error updating user in DB. Error: ${error}`);
-  }
+    console.log('wwwtf', data);
+    // try {
+    //   await Post.create({
+    //     user,
+    //     title,
+    //     todayText,
+    //     tomorrowText,
+    //     blockersText,
+    //     datePosted: today,
+    //     image: data.Location,
+    //   });
+    // } catch (error) {
+    //   console.log(`Error uploading image ${error}`);
+    // }
+    try {
+      const user = await User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $set: {
+            name,
+            email,
+            address,
+            github,
+            linkedIn,
+            image: data.Location,
+          },
+        },
+        { new: true }
+      );
+      if (user) {
+        //! Generate an access token
+        const accessToken = generateAccessToken(user);
+        const refreshToken = generateRefreshToken(user);
+        refreshTokens.push(refreshToken);
+        console.log('VOVOKA', user);
+        res.status(200).json({ user, accessToken, refreshToken });
+      } else {
+        res.status(400).json({ Message: `User not found in the DB` });
+      }
+    } catch (error) {
+      console.log(`Error updating user in DB. Error: ${error}`);
+    }
+    // res.send({
+    //   response_code: 200,
+    //   response_message: 'Success',
+    //   response_data: data,
+    // });
+  });
 };
 
 // ? @Description    CREATE new user

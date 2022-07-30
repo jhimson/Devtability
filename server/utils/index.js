@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const cron = require('node-cron');
 let shell = require('shelljs');
+const AWS = require('aws-sdk');
 require('dotenv').config(); // Load ENV Variables
 require('../config/database');
 
@@ -122,6 +123,7 @@ const postChecker = (userId) => {
     }
   });
 };
+
 
 // GET TODAY'S DATE WITH 2022-07-26 format
 // let today = new Date().toISOString().slice(0, 10);

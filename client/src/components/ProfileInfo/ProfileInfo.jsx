@@ -8,6 +8,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [emailExists, setEmailExists] = useState(false);
 
+  const [file, setFile] = useState('');
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
@@ -34,14 +35,14 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
   };
 
   const updateUserProfile = async () => {
-    const response = await setUserProfile({
-      userId: user?._id,
-      name,
-      email,
-      address,
-      linkedIn,
-      github,
-    });
+    let formData = new FormData();
+    formData.append('data', file);
+    formData.append('userId', `${user?._id}`);
+    formData.append('email', `${email}`);
+    formData.append('address', `${address}`);
+    formData.append('linkedIn', `${linkedIn}`);
+    formData.append('github', `${github}`);
+    const response = await setUserProfile(formData);
     if (response) {
       //! RESETS THE USER TOKEN IN THE LOCALSTORAGE
       const token = JSON.parse(
@@ -128,11 +129,47 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
           </div>
         </div>
         <div className="flex flex-col gap-1 text-center items-center">
-          <img
-            className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
-            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
-            alt=""
-          />
+          <div className="flex items-center justify-center flex-col space-y-2 p-4 mt-6 rounded w-full">
+            {/* <input
+              type="file"
+              // onChange={(e) => postFormProps.setFile(e.target.files[0])}
+            /> */}
+            <label class="btn btn-primary">
+              <i class="fa fa-image"></i>
+              <img
+                className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
+                src={user?.image}
+                alt=""
+              />
+              <input
+                type="file"
+                style={{ display: 'none' }}
+                name="image"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+            </label>
+          </div>
+          {/* <div className="page">
+            <div className="container">
+              <h1 className="heading">Add your Image</h1>
+              <div className="img-holder">
+                <img src={profileImg} alt="" id="img" className="img" />
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                name="image-upload"
+                id="input"
+                onChange={this.imageHandler}
+              />
+              <div className="label">
+                <label className="image-upload" htmlFor="input">
+                  <i className="material-icons">add_photo_alternate</i>
+                  Choose your Photo
+                </label>
+              </div>
+            </div>
+          </div> */}
           {isUpdating ? (
             <div class="w-1/6 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500 mt-2">
               <input

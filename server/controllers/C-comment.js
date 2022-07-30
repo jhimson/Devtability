@@ -22,7 +22,7 @@ const createComment = async (req, res) => {
       try {
         const currentPost = await Post.findOne({ _id: postId });
         if (currentPost) {
-          currentPost.comments.push(newComment._id);
+          currentPost.comments.unshift(newComment._id);
           currentPost.save();
         }
         // const updatedPost = await Post.updateOne({ _id: postId }, {$set: {}});

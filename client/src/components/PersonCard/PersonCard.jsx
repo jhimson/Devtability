@@ -36,8 +36,8 @@ const PersonCard = ({ person, addNewContact, deleteContact }) => {
         <div className="bg-white px-6 py-8 rounded-lg shadow-2xl text-center">
           <div className="mb-3 cursor-pointer">
             <img
-              className="w-auto mx-auto rounded-full"
-              src="https://i.pravatar.cc/150?img=66"
+              className="w-40 h-40 mx-auto rounded-full"
+              src={person?.image}
               alt=""
               onClick={() => alert('wtf')}/>
           </div>

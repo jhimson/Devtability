@@ -19,7 +19,7 @@ const createReply = async (req, res) => {
     try {
       const comment = await Comment.findById(commentId);
       if (comment) {
-        comment.replies.push(newReply._id);
+        comment.replies.unshift(newReply._id);
         await comment.save();
         res
           .status(200)

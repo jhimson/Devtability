@@ -21,7 +21,7 @@ const Sidenav = () => {
       <div className="mx-auto py-10">
         <div className="mt-8 text-center">
           <img
-            src="https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp"
+            src={user?.image}
             alt=""
             className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
           />

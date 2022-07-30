@@ -2,7 +2,11 @@ require('dotenv').config();
 const AWS = require('aws-sdk');
 const Post = require('../models/M-post');
 
-const { generateAccessToken, generateRefreshToken } = require('../utils/index');
+const {
+  generateAccessToken,
+  generateRefreshToken,
+  imageUpload,
+} = require('../utils/index');
 
 // ? @Description    CREATE new post
 // ? @Route          POST /api/posts/
@@ -10,7 +14,8 @@ const { generateAccessToken, generateRefreshToken } = require('../utils/index');
 const CreatePost = async (req, res) => {
   let today = new Date().toISOString().slice(0, 10);
   const { user, title, todayText, tomorrowText, blockersText } = req.body;
-  console.log('AAAAAAWWWWL', req.files);
+  // console.log('AAAAAAWWWWL', req.files);
+
   AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -24,7 +29,6 @@ const CreatePost = async (req, res) => {
     Key: req.files.data.name,
     Body: fileContent,
   };
-
   s3.upload(params, async (err, data) => {
     if (err) {
       throw err;

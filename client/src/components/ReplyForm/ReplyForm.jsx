@@ -28,7 +28,7 @@ const ReplyForm = ({
         <div className="mb-2 flex space-x-2 items-end">
           <img
             className="w-9 h-9 rounded-full"
-            src="https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80"
+            src={user?.image}
             alt=""
           />
           <form

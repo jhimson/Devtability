@@ -37,7 +37,7 @@ const Posts = ({ ...postProps }) => {
                     <img
                       className="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
                       alt="User avatar"
-                      src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200"
+                      src={post?.user?.image}
                     />
                   </div>
                   <div className="flex flex-col mb-2 ml-4 mt-1">
@@ -148,7 +148,7 @@ const Posts = ({ ...postProps }) => {
               </div>
               <div className="border-b border-gray-100"></div>
               <div className="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2 grid grid-cols-1 grid-row-auto gap-2">
-                <img className="rounded w-full" src={post?.image} />
+                <img className="rounded w-full" src={post?.image} alt="" />
               </div>
               <div className="text-gray-600 font-bold mb-4 mx-3 px-2 text-2xl">
                 {postProps.isUpdating ? (
@@ -319,7 +319,7 @@ const Posts = ({ ...postProps }) => {
                   <img
                     className="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
                     alt="User avatar"
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                    src={postProps?.user?.image}
                   />
                   <span className="absolute inset-y-50 right-0 flex items-center pr-6">
                     <button
