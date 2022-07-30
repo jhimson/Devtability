@@ -10,10 +10,12 @@ import { Signup } from '../../utils/users-api';
 
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
+import { AlertContext } from '../../contexts/AlertContext';
 
 export default function SignUpForm() {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
+  const { alertMessage, setAlertMessage } = useContext(AlertContext);
 
   //! STATES
   const [data, setData] = useState({
@@ -43,19 +45,28 @@ export default function SignUpForm() {
       delete formData.confirm;
       //   const user = await signUp(formData);
       const response = await Signup(formData);
-      setUser(user);
       if (response) {
-        const token = JSON.parse(
-          window.atob(response.data.accessToken.split('.')[1])
-        );
-        console.log(token.user);
-        localStorage.setItem(
-          'token',
-          JSON.stringify(response.data.accessToken)
-        );
-        setUser(token.user);
+        console.log(response.data);
+        setAlertMessage({
+          message: `Please verify your email to login using your account.`,
+          type: 'info',
+        });
+        navigate('/login', { replace: true });
       }
-      if (user) navigate('/dashboard', { replace: true });
+      // console.log('wtf',response);
+      // setUser(user);
+      // if (response.data.value === 1) {
+      //   const token = JSON.parse(
+      //     window.atob(response.data.accessToken.split('.')[1])
+      //   );
+      //   console.log(token.user);
+      //   localStorage.setItem(
+      //     'token',
+      //     JSON.stringify(response.data.accessToken)
+      //   );
+      //   setUser(token.user);
+      // }
+      // if (user) navigate('/login', { replace: true });
     } catch (error) {
       // An error occurred
       console.log(`Invalid Email/Password!`);
@@ -77,7 +88,7 @@ export default function SignUpForm() {
       >
         {(props) => (
           <animated.div style={props}>
-            <div className="bg-none flex items-center justify-center w-full rounded overflow-hidden mt-20">
+            <div className="bg-none flex items-center justify-center w-full rounded overflow-hidden my-20">
               <div
                 className="flex justify-center bg-gray-900 h-full w-1/2 rounded"
                 style={{ height: '70vh' }}
@@ -91,7 +102,9 @@ export default function SignUpForm() {
                 >
                   <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
                     <div>
-                      <h2 className="text-4xl font-bold text-white">Devtability</h2>
+                      <h2 className="text-4xl font-bold text-white">
+                        Devtability
+                      </h2>
 
                       <p className="max-w-xl mt-3 text-gray-300">
                         Lorem ipsum dolor sit, amet consectetur adipisicing
@@ -150,7 +163,7 @@ export default function SignUpForm() {
                             </p>
                           )}
                         </div>
-                        <div className='mt-4'>
+                        <div className="mt-4">
                           <label
                             for="name"
                             className="block mb-2 text-sm text-gray-600 dark:text-gray-200"

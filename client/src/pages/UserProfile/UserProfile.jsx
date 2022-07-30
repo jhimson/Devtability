@@ -138,7 +138,7 @@ const UserProfile = () => {
       if (contactId === partner?._id) {
         // 62e12168650f328749d4713c
         //! If the current partner is being deleted from the contact, automatically set admin as the partner.
-        setUserPartner(user?._id, '62e12168650f328749d4713c');
+        setUserPartner(user?._id, '62e4554d4f7d64655cdde9e1');
         getPartner(user?._id);
       }
       console.log(`Successfully deleted contact`, response);
@@ -159,6 +159,7 @@ const UserProfile = () => {
   const setUserPartner = async (userId, contactId) => {
     const response = await setAccountabilityPartner(userId, contactId);
     if (response) {
+      getPartner(userId);
       console.log(`Successfully set accountability partner`);
     }
   };

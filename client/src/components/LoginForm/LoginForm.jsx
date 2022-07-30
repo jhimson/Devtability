@@ -10,10 +10,13 @@ import { Login } from '../../utils/users-api';
 
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
+import { AlertContext } from '../../contexts/AlertContext';
+import Alert from '../Alert/Alert';
 
 export default function LoginForm() {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
+  const { alertMessage, setAlertMessage } = useContext(AlertContext);
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -37,7 +40,7 @@ export default function LoginForm() {
     try {
       const response = await Login(data);
       console.log(response);
-      if (response) {
+      if (response.data.value === 1) {
         const token = JSON.parse(
           window.atob(response.data.accessToken.split('.')[1])
         );
@@ -49,9 +52,18 @@ export default function LoginForm() {
         );
         setUser(token.user);
         if (user) navigate('/dashboard');
+      } else {
+        setAlertMessage({
+          message: 'Please verify your email to login using your account.',
+          type: 'info',
+        });
       }
     } catch (error) {
       console.log(`Invalid Email/Password!`);
+      setAlertMessage({
+        message: 'Invalid Username/Password. Try again!',
+        type: 'error',
+      });
       console.log(`Failed to login. ErrorMessage:${error}`);
     }
   }
@@ -64,7 +76,13 @@ export default function LoginForm() {
       >
         {(props) => (
           <animated.div style={props}>
-            <div className="bg-none flex items-center justify-center w-full rounded overflow-hidden mt-20">
+            {alertMessage && (
+              <Alert
+                message={alertMessage?.message}
+                type={alertMessage?.type}
+              />
+            )}
+            <div className="bg-none flex items-center justify-center w-full rounded overflow-hidden my-20">
               <div
                 className="flex justify-center bg-gray-900 h-full w-1/2 rounded"
                 style={{ height: '60vh' }}

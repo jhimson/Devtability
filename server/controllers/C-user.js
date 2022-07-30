@@ -2,7 +2,12 @@ require('dotenv').config();
 const User = require('../models/M-user');
 const bcrypt = require('bcrypt');
 const AWS = require('aws-sdk');
-const { generateAccessToken, generateRefreshToken } = require('../utils/index');
+const crypto = require('crypto');
+const {
+  generateAccessToken,
+  generateRefreshToken,
+  sendEmailVerification,
+} = require('../utils/index');
 
 let refreshTokens = [];
 
@@ -83,7 +88,7 @@ const setAccountabilityPartner = async (req, res) => {
 // ? @Route          PATCH /api/users/profile
 // ? @Access         Private / Authorized
 const updateUserProfile = async (req, res) => {
-  console.log('ATAY KA!')
+  console.log('ATAY KA!');
   console.log(req.files.data.data);
   const { userId, name, email, address, github, linkedIn } = req.body;
 
@@ -170,16 +175,24 @@ const Signup = async (req, res) => {
     } else {
       try {
         //! Insert new user to DB
-        const user = await User.create({ name, email, password });
+        const user = await User.create({
+          name,
+          email,
+          password,
+          emailToken: crypto.randomBytes(64).toString('hex'),
+        });
         //! Generate an access token
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
         refreshTokens.push(refreshToken);
-        res.status(200).json({
-          Message: `Successfully created account`,
-          accessToken,
-          refreshToken,
-        });
+        if (user) {
+          sendEmailVerification(user, req);
+          res.status(200).json({
+            Message: `Successfully created account`,
+            accessToken,
+            refreshToken,
+          });
+        }
       } catch (error) {
         console.log(`Error inserting new user in DB. ErrorMessage:${error}`);
       }
@@ -200,19 +213,26 @@ const Login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     // if (!user) res.status(404).json({ Message: "Account doesn't Exist!" });
     // if (!match) res.status(401).json({ Message: 'Email/Password incorrect!' });
-    if (!user || !match) {
-      res.status(404).json({ Message: 'Email/Password incorrect!' });
-    }
-    if (match) {
-      //! Generate an access token
-      const accessToken = generateAccessToken(user);
-      const refreshToken = generateRefreshToken(user);
-      refreshTokens.push(refreshToken);
-      res.status(200).json({
-        Message: `Logged in successfully`,
-        accessToken,
-        refreshToken,
-      });
+    if (user.isVerified) {
+      if (!user || !match) {
+        res.status(404).json({ Message: 'Email/Password incorrect!' });
+      }
+      if (match) {
+        //! Generate an access token
+        const accessToken = generateAccessToken(user);
+        const refreshToken = generateRefreshToken(user);
+        refreshTokens.push(refreshToken);
+        res.status(200).json({
+          Message: `Logged in successfully`,
+          value: 1,
+          accessToken,
+          refreshToken,
+        });
+      }
+    } else {
+      res
+        .status(200)
+        .json({ Message: `Please verify your email to login`, value: 0 });
     }
   } catch (error) {
     res.status(500).json(`Error finding user in DB. ErrorMessage:${error}`);
@@ -225,6 +245,24 @@ const Logout = (req, res) => {
   res.status(200).json('Logged out successfully!');
 };
 
+const verifyEmail = async (req, res) => {
+  try {
+    const token = req.query.token;
+    const user = await User.findOne({ emailToken: token });
+    if (user) {
+      user.emailToken = null;
+      user.isVerified = true;
+      await user.save();
+      res.send('Successfully verified email. You can close this tab now.');
+    } else {
+      res.send('Email is not verified');
+    }
+  } catch (error) {
+    console.log(`Error verifying email`);
+  }
+  // res.send('NICE!')
+};
+
 module.exports = {
   Signup,
   Login,
@@ -233,4 +271,5 @@ module.exports = {
   setAccountabilityPartner,
   fetchUser,
   updateUserProfile,
+  verifyEmail,
 };

@@ -22,7 +22,7 @@ const PeopleList = ({ filteredPeople, addNewContact, deleteContact }) => {
         </ul>
       </div> */}
       <div id="container" className="w-11/12 mx-auto mt-8">
-        <div className="grid grid-cols-3 grid-auto-rows gap-4">
+        <div className="grid grid-cols-3 grid-auto-rows gap-x-4 gap-y-10">
           {filteredPeople?.map((person) => (
             <PersonCard
               key={person?._id}

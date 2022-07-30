@@ -290,15 +290,15 @@ const Posts = ({ ...postProps }) => {
               </div>
               <div className="flex w-full border-t border-gray-100">
                 <div className="mt-3 mx-5 flex flex-row text-xs">
-                  <div className="flex text-gray-700 font-normal rounded-md mb-2 mr-4 items-center">
+                  <div className="flex text-gray-800 font-semibold rounded-md mb-2 mr-4 items-center">
                     Comments:
-                    <div className="ml-1 text-gray-400 text-ms">
+                    <div className="ml-1 text-gray-600 text-ms">
                       {post?.comments?.length}
                     </div>
                   </div>
-                  <div className="flex text-gray-700 font-normal rounded-md mb-2 mr-4 items-center">
+                  <div className="flex text-gray-700 text-gray-800 font-semibold rounded-md mb-2 mr-4 items-center">
                     Likes:
-                    <div className="ml-1 text-gray-400 text-ms">
+                    <div className="ml-1 text-gray-600 text-ms">
                       {post?.likes?.length}
                     </div>
                   </div>

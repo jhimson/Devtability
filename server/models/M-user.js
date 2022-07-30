@@ -32,10 +32,12 @@ const userSchema = new Schema(
     },
     linkedIn: { type: String, default: null },
     github: { type: String, default: null },
+    emailToken: { type: String },
     isAdmin: {
       type: Boolean,
       default: false,
     },
+    isVerified: { type: Boolean, default: false },
   },
   {
     timestamps: true,

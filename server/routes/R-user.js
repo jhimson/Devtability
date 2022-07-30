@@ -6,10 +6,13 @@ const {
   fetchUsersExceptCurrentUser,
   setAccountabilityPartner,
   fetchUser,
-  updateUserProfile
+  updateUserProfile,
+  verifyEmail,
 } = require('../controllers/C-user');
-const { verify } = require('../utils/index');
 
+const { verify, emailVerifiedChecker } = require('../utils/index');
+
+router.get('/verify-email', verifyEmail);
 router.get('/:userId', fetchUser);
 router.get('/except/:userId', fetchUsersExceptCurrentUser);
 
@@ -19,6 +22,5 @@ router.post('/logout', verify, Logout);
 
 router.patch('/partner', setAccountabilityPartner);
 router.patch('/profile', updateUserProfile);
-
 
 module.exports = router;

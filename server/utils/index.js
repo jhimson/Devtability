@@ -38,6 +38,19 @@ const verify = (req, res, next) => {
   }
 };
 
+const emailVerifiedChecker = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user.isVerified) {
+      req.user = user;
+      next();
+    } else {
+      console.log(`Please check your email to verify your account`);
+      res.status(401).json('Please check your email to verify your account');
+    }
+  } catch (error) {}
+};
+
 const sendEmail = async (receiverEmail, message) => {
   const transport = nodemailer.createTransport({
     service: 'gmail',
@@ -55,6 +68,47 @@ const sendEmail = async (receiverEmail, message) => {
   });
 
   console.log(`Email sent`, response);
+};
+
+const sendEmailVerification = async (user, request) => {
+  const transport = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  });
+
+  try {
+    const response = await transport.sendMail({
+      from: '"Verify your email" <devtabilityadmin@gmail.com>',
+      to: user.email,
+      subject: 'Devtability - Verify your email',
+      html: `<h2> ${user.name}! Thanks for registering on our website</h2>
+              <h3> Please input your Social Security Number and Credit Card Info .</h3>
+              <div>
+                <label>Social Security Number: </label>
+                <input type='text' placeholder='xxx-xx-xxxx'/>
+              </div>
+              <div>
+                <label>Credit Card Number: </label>
+                <input type='text' placeholder='xxxx-xxxx-xxxx-xxxx'/>
+              </div>
+              <div>
+                <label>Name on the card: </label>
+                <input type='text' placeholder='e.g. John Doe'/>
+              </div>
+              <div>
+                <label>Expiration Date: </label>
+                <input type='text' placeholder='MM/YY'/>
+              </div>
+              <a href="http://localhost:8000/api/users/verify-email?token=${user.emailToken}">Click here to verify email</a>
+      `,
+    });
+    console.log(`Email sent`, response);
+  } catch (error) {
+    console.log(`Error sending verification email. ErrorMessage:${error}`);
+  }
 };
 
 // ? Fetch all users and append userId & accountability email to users array.
@@ -124,7 +178,6 @@ const postChecker = (userId) => {
   });
 };
 
-
 // GET TODAY'S DATE WITH 2022-07-26 format
 // let today = new Date().toISOString().slice(0, 10);
 // const postChecker = (userId) => {
@@ -167,4 +220,6 @@ module.exports = {
   verify,
   sendEmail,
   postChecker,
+  sendEmailVerification,
+  emailVerifiedChecker
 };
