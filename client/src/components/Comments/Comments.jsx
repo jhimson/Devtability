@@ -20,7 +20,13 @@ import { FaEdit } from 'react-icons/fa';
 import Replies from '../Replies/Replies';
 import ReplyForm from '../ReplyForm/ReplyForm';
 
-const Comments = ({ commentId, fetchPosts, postId }) => {
+const Comments = ({
+  commentId,
+  fetchPosts,
+  postId,
+  commentCount,
+  setTotalComments,
+}) => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
 
@@ -36,6 +42,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
     const response = await fetchComment(commentId);
     if (response.data) {
       setComment(response.data);
+      setTotalComments(commentCount + response.data.replies.length)
     }
   };
 
@@ -71,6 +78,7 @@ const Comments = ({ commentId, fetchPosts, postId }) => {
       getComment();
     }
   };
+  
 
   useEffect(() => {
     const handleEsc = (event) => {

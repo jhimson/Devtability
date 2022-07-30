@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 import { format } from 'timeago.js';
 import Main from '../../components/Main/Main';
@@ -39,7 +40,8 @@ import Posts from '../../components/Posts/Posts';
 import { UserContext } from '../../contexts/UserContext';
 import { ContactContext } from '../../contexts/ContactContext';
 
-const Profile = () => {
+const PersonProfile = () => {
+  let { personId } = useParams();
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
   const { contact, setContact } = useContext(ContactContext);
@@ -87,7 +89,7 @@ const Profile = () => {
   };
 
   const fetchPosts = async () => {
-    const response = await getUserPosts(contact?._id || user?._id);
+    const response = await getUserPosts(personId);
     if (response) {
       setPosts(response.data);
     }
@@ -213,15 +215,15 @@ const Profile = () => {
 
   useEffect(() => {
     fetchPosts();
-    getUser(contact?._id);
-    getContacts(contact?._id);
+    getUser(personId);
+    getContacts(personId);
   }, []);
 
   useEffect(() => {
     fetchPosts();
-    getUser(contact?._id);
-    getContacts(contact?._id);
-  }, [contact]);
+    getUser(personId);
+    getContacts(personId);
+  }, [personId]);
 
   useEffect(() => {
     fetchPosts();
@@ -252,4 +254,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default PersonProfile;

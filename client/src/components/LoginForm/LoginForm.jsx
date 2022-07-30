@@ -51,6 +51,7 @@ export default function LoginForm() {
           JSON.stringify(response.data.accessToken)
         );
         setUser(token.user);
+        setAlertMessage(null);
         if (user) navigate('/dashboard');
       } else {
         setAlertMessage({

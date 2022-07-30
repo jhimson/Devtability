@@ -17,6 +17,7 @@ import Layout from './components/Layout/Layout';
 // ! CONTEXTS
 // import UserContextProvider from './contexts/UserContext';
 import { UserContext } from './contexts/UserContext';
+import PersonProfile from './pages/PersonProfile/PersonProfile';
 
 const App = () => {
   const { user, setUser } = useContext(UserContext);
@@ -32,6 +33,10 @@ const App = () => {
             <Route path="/stand-ups" element={<StandUps exact />} />
             <Route path="/user-profile" element={<UserProfile exact />} />
             <Route path="/profile/:contactId" element={<Profile exact />} />
+            <Route
+              path="/person-profile/:personId"
+              element={<PersonProfile exact />}
+            />
             <Route path="/people" element={<PeoplePage exact />} />
             <Route path="/*" element={<Navigate to="/dashboard" />} exact />
           </Routes>

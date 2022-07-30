@@ -12,6 +12,7 @@ import { toggleLike } from '../../utils/posts-api';
 import { UserContext } from '../../contexts/UserContext';
 
 const Posts = ({ ...postProps }) => {
+  const [totalComments, setTotalComments] = useState(0);
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
   const [currentPost, setCurrentPost] = useState(null);
@@ -311,6 +312,8 @@ const Posts = ({ ...postProps }) => {
                       commentId={comment?._id}
                       fetchPosts={postProps.fetchPosts}
                       postId={post?._id}
+                      commentCount={post?.comments?.length}
+                      setTotalComments={setTotalComments}
                     />
                   ))}
                 </div>
