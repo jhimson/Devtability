@@ -88,43 +88,73 @@ const setAccountabilityPartner = async (req, res) => {
 // ? @Route          PATCH /api/users/profile
 // ? @Access         Private / Authorized
 const updateUserProfile = async (req, res) => {
+  let image = null;
   console.log('ATAY KA!');
-  console.log(req.files.data.data);
+  // console.log('wtf',req.files.data.data);
+  if (req.files?.data) {
+    console.log('ASA KA!');
+  } else {
+    console.log('GAGO KA!');
+  }
   const { userId, name, email, address, github, linkedIn } = req.body;
+  const user = await User.findOne({ _id: userId });
+  if (user) {
+    image = user.image;
+  }
 
-  AWS.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: 'us-east-1',
-  });
-  const s3 = new AWS.S3();
-  const fileContent = Buffer.from(req.files.data.data, 'binary');
+  if (req?.files?.data) {
+    console.log('AYUUS!');
+    AWS.config.update({
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      region: 'us-east-1',
+    });
+    const s3 = new AWS.S3();
+    const fileContent = Buffer.from(req.files.data.data, 'binary');
 
-  const params = {
-    Bucket: 'catcollector-with-toys-and-pics1',
-    Key: req.files.data.name,
-    Body: fileContent,
-  };
-  s3.upload(params, async (err, data) => {
-    if (err) {
-      throw err;
-    }
-    console.log('wwwtf', data);
-    // try {
-    //   await Post.create({
-    //     user,
-    //     title,
-    //     todayText,
-    //     tomorrowText,
-    //     blockersText,
-    //     datePosted: today,
-    //     image: data.Location,
-    //   });
-    // } catch (error) {
-    //   console.log(`Error uploading image ${error}`);
-    // }
+    const params = {
+      Bucket: 'catcollector-with-toys-and-pics1',
+      Key: req.files.data.name,
+      Body: fileContent,
+    };
+    s3.upload(params, async (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        try {
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            {
+              $set: {
+                name,
+                email,
+                address,
+                github,
+                linkedIn,
+                image: data.Location,
+              },
+            },
+            { new: true }
+          );
+          if (updatedUser) {
+            //! Generate an access token
+            const accessToken = generateAccessToken(updatedUser);
+            const refreshToken = generateRefreshToken(updatedUser);
+            refreshTokens.push(refreshToken);
+            // console.log('VOVOKA', updatedUser);
+            res.status(200).json({ updatedUser, accessToken, refreshToken });
+          } else {
+            res.status(400).json({ Message: `User not found in the DB` });
+          }
+        } catch (error) {
+          console.log(`Error updating user in DB. Error: ${error}`);
+        }
+      }
+    });
+  } else {
     try {
-      const user = await User.findOneAndUpdate(
+      const updatedUser = await User.findOneAndUpdate(
         { _id: userId },
         {
           $set: {
@@ -133,30 +163,24 @@ const updateUserProfile = async (req, res) => {
             address,
             github,
             linkedIn,
-            image: data.Location,
           },
         },
         { new: true }
       );
-      if (user) {
+      if (updatedUser) {
         //! Generate an access token
-        const accessToken = generateAccessToken(user);
-        const refreshToken = generateRefreshToken(user);
+        const accessToken = generateAccessToken(updatedUser);
+        const refreshToken = generateRefreshToken(updatedUser);
         refreshTokens.push(refreshToken);
-        console.log('VOVOKA', user);
-        res.status(200).json({ user, accessToken, refreshToken });
+        // console.log('VOVOKA', updatedUser);
+        res.status(200).json({ updatedUser, accessToken, refreshToken });
       } else {
         res.status(400).json({ Message: `User not found in the DB` });
       }
     } catch (error) {
       console.log(`Error updating user in DB. Error: ${error}`);
     }
-    // res.send({
-    //   response_code: 200,
-    //   response_message: 'Success',
-    //   response_data: data,
-    // });
-  });
+  }
 };
 
 // ? @Description    CREATE new user
