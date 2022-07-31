@@ -10,11 +10,6 @@ const ContactContextProvider = ({ children }) => {
   const getContacts = async () => {
     if (localStorage.getItem('contacts'))
       return JSON.parse(localStorage.getItem('contacts'));
-    // console.log('YAWAAAA!')
-    // const res = await Axios.get(
-    //   `http://localhost:8000/api/contacts/${user?._id}`
-    // );
-    // return res.data;
   };
 
   const [contacts, setContacts] = useState(null);

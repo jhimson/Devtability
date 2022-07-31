@@ -11,7 +11,7 @@ const Contacts = ({ ...contactsProps }) => {
   const [currentContact, setCurrentContact] = useState(null);
   return (
     <>
-      <div className="bg-white shadow mt-6 rounded-lg p-6">
+      <div className="bg-white shadow mt-6 rounded-lg p-6 border-2 border-gray-50">
         <h3 className="text-gray-600 text-sm font-semibold mb-4 text-center text-2xl">
           Contacts
         </h3>

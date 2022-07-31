@@ -6,7 +6,7 @@ const PostForm = ({ ...postFormProps }) => {
       {!postFormProps.isUpdating && (
         <form
           onSubmit={postFormProps.handleSubmit}
-          className="bg-white shadow rounded-lg mb-6 p-4"
+          className="bg-white shadow rounded-lg mb-6 p-4 mt-4"
         >
           <div className="flex flex-col space-y-2 mb-8">
             <label htmlFor="" className="text-gray-500 font-semibold">

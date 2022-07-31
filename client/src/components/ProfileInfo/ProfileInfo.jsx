@@ -76,7 +76,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
 
   return (
     <>
-      <div className="bg-white shadow rounded-lg p-10 mb-8 flex flex-col">
+      <div className="bg-white shadow rounded-lg p-10 mb-8 flex flex-col border-2 border-gray-50">
         <div className="self-end">
           <div className="flex">
             {isUpdating && (

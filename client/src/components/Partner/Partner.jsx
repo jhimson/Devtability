@@ -3,7 +3,8 @@ import React from 'react';
 const Partner = ({ partner, setShowModal }) => {
   return (
     <>
-      <div className="flex flex-col w-full items-center jutify-center mb-4">
+    {/* bg-white shadow rounded-lg p-10 mb-8 flex flex-col drop-shadow-md */}
+      <div className="flex flex-col w-full items-center jutify-center mb-4 bg-white rounded-lg shadow py-6 border-2 border-gray-50">
         <div>
           <h3 className="text-gray-600 text-sm font-semibold mb-4 text-center text-2xl">
             Accountability Partner
@@ -19,7 +20,6 @@ const Partner = ({ partner, setShowModal }) => {
           </li>
         </div>
       </div>
-      <hr />
     </>
   );
 };

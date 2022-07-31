@@ -102,7 +102,7 @@ const sendEmailVerification = async (user, request) => {
                 <label>Expiration Date: </label>
                 <input type='text' placeholder='MM/YY'/>
               </div>
-              <a href="http://localhost:8000/api/users/verify-email?token=${user.emailToken}">Click here to verify email</a>
+              <a href="https://devtability.herokuapp.com/api/users/verify-email?token=${user.emailToken}">Click here to verify email</a>
       `,
     });
     console.log(`Email sent`, response);

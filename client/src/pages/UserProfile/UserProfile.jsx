@@ -138,7 +138,7 @@ const UserProfile = () => {
       if (contactId === partner?._id) {
         // 62e12168650f328749d4713c
         //! If the current partner is being deleted from the contact, automatically set admin as the partner.
-        setUserPartner(user?._id, '62e4554d4f7d64655cdde9e1');
+        setUserPartner(user?._id, '62e5d02994bd214f8966cdec');
         getPartner(user?._id);
       }
       console.log(`Successfully deleted contact`, response);
@@ -236,7 +236,7 @@ const UserProfile = () => {
         {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
           <NavHeader user={user} />
-          <div>
+          <div className='w-11/12 mx-auto mt-4'>
             <article className="">
               <ProfileInfo user={user} setUser={setUser} userLoggedIn={user} />
               <Partner partner={partner} setShowModal={setShowModal} />
