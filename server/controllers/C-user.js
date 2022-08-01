@@ -31,6 +31,33 @@ const fetchUsersExceptCurrentUser = async (req, res) => {
   }
 };
 
+// ? @Description    Fetch all users except current user
+// ? @Route          GET /api/users/search/:userId/:searchText
+// ? @Access         Private / Authorized
+const searchPerson = async (req, res) => {
+  //! Capitalize the first letter of the search text
+  if (req.body.searchText !== '') {
+    req.body.searchText =
+      req.body.searchText.charAt(0).toUpperCase() +
+      req.body.searchText.slice(1);
+  }
+  try {
+    const users = await User.find({
+      _id: { $ne: req.params.userId },
+      name: { $regex: req.body.searchText },
+      isAdmin: false,
+    });
+    if (users) {
+      res.status(200).json(users);
+    } else {
+      res.status(200).json([]);
+    }
+  } catch (error) {
+    console.log('WTFfff?');
+    console.log(`Error fetching users in DB. Error: ${error}`);
+  }
+};
+
 // ? @Description    Fetch one user
 // ? @Route          GET /api/users/
 // ? @Access         Private / Authorized
@@ -296,4 +323,5 @@ module.exports = {
   fetchUser,
   updateUserProfile,
   verifyEmail,
+  searchPerson,
 };

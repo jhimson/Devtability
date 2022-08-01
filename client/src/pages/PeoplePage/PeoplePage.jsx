@@ -12,13 +12,16 @@ import Sidenav from '../../components/Sidenav/Sidenav';
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
 import PeopleList from '../../components/PeopleList/PeopleList';
+import Search from '../../components/Search/Search';
 
 const PeoplePage = () => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
 
   //  ! STATES
+  const [isSearching, setIsSearching] = useState(false);
   const [people, setPeople] = useState([]);
+  const [searchList, setSearchList] = useState([]);
   const [userContacts, setUserContacts] = useState([]);
   const [filteredPeople, setFilteredPeople] = useState(
     localStorage.getItem('filteredPeople')
@@ -28,6 +31,11 @@ const PeoplePage = () => {
   const test = useRef({});
 
   //   ! FUNCTIONS
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+  };
+
   const addNewContact = async (userId, contactId) => {
     let updatedZest = filteredPeople?.map((z) => {
       if (z._id === contactId) {
@@ -37,14 +45,18 @@ const PeoplePage = () => {
       return z;
     });
 
+
     let currentContact = people.find((person) => person._id === contactId);
     setUserContacts((prevState) => [...prevState, currentContact]);
     setFilteredPeople(updatedZest);
     localStorage.setItem('filteredPeople', JSON.stringify(updatedZest));
-    const res = await Axios.post(`https://devtability.herokuapp.com/api/contacts/`, {
-      userId: user._id,
-      contactId,
-    });
+    const res = await Axios.post(
+      `https://devtability.herokuapp.com/api/contacts/`,
+      {
+        userId: user._id,
+        contactId,
+      }
+    );
   };
 
   const deleteContact = async (userId, contactId) => {
@@ -94,7 +106,11 @@ const PeoplePage = () => {
 
       if (res) {
         test.current.people = res.data || [];
-        setPeople(res.data);
+        if (isSearching) {
+          setPeople(searchList);
+        } else {
+          setPeople(res.data);
+        }
       }
     };
 
@@ -113,7 +129,7 @@ const PeoplePage = () => {
     setFilteredPeople(
       filterPeople(test.current?.contacts, test.current?.people)
     );
-  }, [user]);
+  }, [user, isSearching, searchList]);
 
   useEffect(() => {
     setFilteredPeople(filterPeople(userContacts, people));
@@ -122,39 +138,12 @@ const PeoplePage = () => {
   return (
     <>
       <div className="min-h-screen">
-        {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
-          <nav className="flex items-center justify-between px-32 bg-gray-300 py-6 border-b">
-            <div className="flex items-center bg-gray-100 px-4 py-2 rounded-md space-x-3 w-1/8">
-              <input
-                type="text"
-                placeholder="search"
-                className="bg-gray-100 outline-none w-full"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 cursor-pointer text-gray-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            {/* <div className="flex items-center space-x-4">
-              <img
-                className="w-8 rounded-full"
-                src="https://imagez.tmz.com/image/f7/1by1/2021/12/14/f7703994b69d48ca802df55729a2325c_xl.jpg"
-                alt="Elon Musk"
-              />
-              <p className="hidden md:block">{user?.name}</p>
-            </div> */}
-          </nav>
+          <Search
+            handleSearch={handleSearch}
+            setSearchList={setSearchList}
+            setIsSearching={setIsSearching}
+          />
           <div>
             <article className="w-11/12 mx-auto">
               <PeopleList
@@ -165,7 +154,6 @@ const PeoplePage = () => {
             </article>
           </div>
         </Main>
-        {/* <div>Welcome, {user.name}!</div> */}
       </div>
     </>
   );

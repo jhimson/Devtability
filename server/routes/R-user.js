@@ -8,6 +8,7 @@ const {
   fetchUser,
   updateUserProfile,
   verifyEmail,
+  searchPerson
 } = require('../controllers/C-user');
 
 const { verify, emailVerifiedChecker } = require('../utils/index');
@@ -19,6 +20,9 @@ router.get('/except/:userId', fetchUsersExceptCurrentUser);
 router.post('/signup', Signup);
 router.post('/login', Login);
 router.post('/logout', verify, Logout);
+router.post('/search/:userId', searchPerson);
+
+
 
 router.patch('/partner', setAccountabilityPartner);
 router.patch('/profile', updateUserProfile);

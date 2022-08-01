@@ -89,3 +89,25 @@ export const fetchUser = async (userId) => {
   console.log('rezz', response);
   return response;
 };
+
+// export const fetchSearch = async (userId, searchText) => {
+//   const response = await Axios.get(
+//     `${BASE_URL}/search/${userId}/${searchText}`
+//   );
+//   console.log('rezz', response);
+//   return response;
+// };
+
+export const fetchSearch = async (userId, searchText) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.post(`${BASE_URL}/search/${userId}`, {searchText}, { headers });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error fetching users. ErrorMessage: ${error}`);
+  }
+};
