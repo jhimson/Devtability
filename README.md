@@ -25,7 +25,7 @@
 <br/>
 
 ## Entity Relationship Diagram (ERD):
-![ERD V2](https://user-images.githubusercontent.com/42398487/174595221-90bfd90a-f102-4185-9354-3e778c283268.png)
+
 
 
 
