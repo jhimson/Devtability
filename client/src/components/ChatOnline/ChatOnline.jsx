@@ -13,6 +13,7 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
   const { user, setUser } = useContext(UserContext);
   const [contacts, setContacts] = useState([]);
   const [onlineContacts, setOnlineContacts] = useState([]);
+  const [offlineContacts, setOfflineContacts] = useState([]);
 
   const fetchContacts = async (userId) => {
     const response = await getUserContacts(userId);
@@ -35,19 +36,49 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
     setOnlineContacts(
       contacts.filter((contact) => onlineContactsId.includes(contact?._id))
     );
+
+    setOfflineContacts(
+      contacts.filter((contact) => !onlineContactsId.includes(contact?._id))
+    );
   }, [contacts, onlineUsers]);
 
   return (
-    <div className="chatOnline">
-      {onlineContacts?.map((online) => (
-        <div className="chatOnlineFriend" onClick={() => alert(online?.name)}>
-          <div className="chatOnlineImgContainer">
-            <img className="chatOnlineImg" src={online?.image} alt="" />
-            <div className="chatOnlineBadge"></div>
-          </div>
-          <span className="chatOnlineName">{online?.name}</span>
+    <div className="flex flex-col space-y-10">
+      <div>
+        <h1>Online Users</h1>
+        <div className="chatOnline">
+          {onlineContacts?.map((online) => (
+            <div
+              className="chatOnlineFriend"
+              onClick={() => alert(online?.name)}
+            >
+              <div className="chatOnlineImgContainer">
+                <img className="chatOnlineImg" src={online?.image} alt="" />
+                <div className="chatOnlineBadge"></div>
+              </div>
+              <span className="chatOnlineName">{online?.name}</span>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+      <hr />
+      <div>
+        <h1>Offline Users</h1>
+        <div className="chatOnline">
+          {offlineContacts?.map((online) => (
+            <div
+              className="chatOnlineFriend"
+              onClick={() => alert(online?.name)}
+            >
+              <div className="chatOnlineImgContainer">
+                <img className="chatOnlineImg" src={online?.image} alt="" />
+                {/* <div className="chatOnlineBadge"></div> */}
+              </div>
+              <span className="chatOnlineName">{online?.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
