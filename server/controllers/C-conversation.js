@@ -43,7 +43,6 @@ const getConversation = async (req, res) => {
     const conversation = await Conversation.findOne({
       members: { $all: [req.params.firstUserId, req.params.secondUserId] },
     });
-
     if (conversation) res.status(200).json(conversation);
   } catch (error) {
     console.log(`Failed to fetch conversation. ErrorMessage: ${error}`);

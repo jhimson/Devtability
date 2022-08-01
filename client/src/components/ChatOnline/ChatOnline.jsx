@@ -7,6 +7,7 @@ import { UserContext } from '../../contexts/UserContext';
 
 import { getUserContacts } from '../../utils/contacts-api';
 import { fetchUser } from '../../utils/users-api';
+import { fetchConversation } from '../../utils/conversations-api';
 
 const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
   // ! CONTEXTS
@@ -21,6 +22,12 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
       console.log(response?.contacts);
       setContacts(response?.contacts);
     }
+  };
+
+  const handleClick = async (user) => {
+    const response = await fetchConversation(currentId, user?._id);
+    console.log(response);
+    setCurrentChat(response.data);
   };
 
   useEffect(() => {
@@ -50,7 +57,7 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
           {onlineContacts?.map((online) => (
             <div
               className="chatOnlineFriend"
-              onClick={() => alert(online?.name)}
+              onClick={() => handleClick(online)}
             >
               <div className="chatOnlineImgContainer">
                 <img className="chatOnlineImg" src={online?.image} alt="" />
@@ -68,7 +75,7 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
           {offlineContacts?.map((online) => (
             <div
               className="chatOnlineFriend"
-              onClick={() => alert(online?.name)}
+              onClick={() => handleClick(online)}
             >
               <div className="chatOnlineImgContainer">
                 <img className="chatOnlineImg" src={online?.image} alt="" />

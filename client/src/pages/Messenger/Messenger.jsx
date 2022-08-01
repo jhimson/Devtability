@@ -8,7 +8,9 @@ import Main from '../../components/Main/Main';
 // ! API
 import { removeContact } from '../../utils/contacts-api';
 import { createMessage, fetchMessages } from '../../utils/messages-api';
-import { fetchConversations } from '../../utils/conversations-api';
+import {
+  fetchConversations,
+} from '../../utils/conversations-api';
 
 // ! COMPONENTS
 import Sidenav from '../../components/Sidenav/Sidenav';
