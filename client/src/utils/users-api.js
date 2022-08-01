@@ -4,9 +4,10 @@ const BASE_URL = `http://localhost:8000/api/users`;
 
 const token = JSON.parse(localStorage.getItem('token')) || null;
 
-export const Signup = async ({ name, email, password }) => {
+export const Signup = async ({ name, address, email, password }) => {
   const response = await Axios.post(`${BASE_URL}/signup`, {
     name,
+    address,
     email,
     password,
   });
@@ -104,7 +105,11 @@ export const fetchSearch = async (userId, searchText) => {
     authorization: `Bearer ${token}`,
   };
   try {
-    const response = await Axios.post(`${BASE_URL}/search/${userId}`, {searchText}, { headers });
+    const response = await Axios.post(
+      `${BASE_URL}/search/${userId}`,
+      { searchText },
+      { headers }
+    );
     console.log(response);
     return response;
   } catch (error) {

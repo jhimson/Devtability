@@ -242,7 +242,16 @@ const UserProfile = () => {
               <Partner partner={partner} setShowModal={setShowModal} />
               <Contacts {...contactsProps} />
               <PostForm {...postFormProps} />
-              <Posts {...postProps} />
+              {/* <Posts {...postProps} /> */}
+              {posts?.length ? (
+                <Posts {...postProps} />
+              ) : (
+                <div className="bg-white shadow mt-6 rounded-lg p-10 border-2 border-gray-50 mb-8">
+                  <h1 className="text-4xl text-center text-gray-400">
+                    You currently don't have any posts!{' '}
+                  </h1>
+                </div>
+              )}
             </article>
           </div>
         </Main>

@@ -214,7 +214,7 @@ const updateUserProfile = async (req, res) => {
 // ? @Route          POST /api/users/signup
 // ? @Access         Private / Authorized
 const Signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, address, email, password } = req.body;
 
   try {
     // ! Check if user already exists!
@@ -228,6 +228,7 @@ const Signup = async (req, res) => {
         //! Insert new user to DB
         const user = await User.create({
           name,
+          address,
           email,
           password,
           emailToken: crypto.randomBytes(64).toString('hex'),

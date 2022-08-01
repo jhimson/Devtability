@@ -148,6 +148,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>
+            
           </div>
           {/* <div className="page">
             <div className="container">
@@ -216,7 +217,6 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
         </div>
         <div className="flex justify-center items-center gap-2 my-3">
           <div className="font-semibold text-center mx-4">
-            <p className="text-black">Email Address</p>
             {isUpdating ? (
               <>
                 <div
@@ -224,6 +224,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                     emailExists ? 'red' : 'blue'
                   }-500 mt-2`}
                 >
+                  <p className="text-black">Email Address</p>
                   <input
                     type="text"
                     className={`w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-${
@@ -238,13 +239,23 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                 </div>
               </>
             ) : (
-              <span className="text-gray-400">{user?.email}</span>
+              // <span className="text-gray-400">{user?.email}</span>
+              <div class="flex justify-center">
+                <div class="block p-6 rounded-lg shadow-xl bg-gray-300 max-w-sm w-96">
+                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
+                    Email Address
+                  </h5>
+                  <p class="text-gray-700 text-base mb-4">
+                    {user?.github || 'N/A'}
+                  </p>
+                </div>
+              </div>
             )}
           </div>
           <div className="font-semibold text-center mx-4">
-            <p className="text-black">Github</p>
             {isUpdating ? (
               <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500 mt-2">
+                <p className="text-black">Github</p>
                 <input
                   type="text"
                   className="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-gray-600 text-sm"
@@ -253,13 +264,23 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                 />
               </div>
             ) : (
-              <span className="text-gray-400">{user?.github}</span>
+              // <span className="text-gray-400">{user?.github}</span>
+              <div class="flex justify-center">
+                <div class="block p-6 rounded-lg shadow-xl bg-gray-300 max-w-sm w-96">
+                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
+                    Github
+                  </h5>
+                  <p class="text-gray-700 text-base mb-4">
+                    {user?.github || 'N/A'}
+                  </p>
+                </div>
+              </div>
             )}
           </div>
           <div className="font-semibold text-center mx-4">
-            <p className="text-black">LinkedIn</p>
             {isUpdating ? (
               <div class="w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500 mt-2">
+                <p className="text-black">LinkedIn</p>
                 <input
                   type="text"
                   className="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-gray-600 text-sm"
@@ -268,7 +289,17 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                 />
               </div>
             ) : (
-              <span className="text-gray-400">{user?.linkedIn}</span>
+              // <span className="text-gray-400">{user?.linkedIn}</span>
+              <div class="flex justify-center">
+                <div class="block p-6 rounded-lg shadow-xl bg-gray-300 max-w-sm w-96">
+                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
+                    LinkedIn
+                  </h5>
+                  <p class="text-gray-700 text-base mb-4">
+                    {user?.linkedIn || 'N/A'}
+                  </p>
+                </div>
+              </div>
             )}
           </div>
         </div>

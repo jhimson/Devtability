@@ -36,15 +36,15 @@ export default function NavBar() {
       <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
         <div
           className="container flex flex-wrap justify-between items-center mx-auto"
-          style={{ height: '8vh' }}
+          style={{ height: '10vh' }}
         >
-          <div className="flex">
+          <div className="flex items-center justify-center">
             <Link to="/user-profle" className="flex items-center">
               <img
                 src={Logo}
-                className="mr-3 h-20"
+                className="mr-3"
                 alt=""
-                style={{ height: '10vh', width:'18vh' }}
+                style={{ height: '10vh', width: '7vw' }}
               />
             </Link>
             {user && (

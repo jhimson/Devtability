@@ -20,6 +20,7 @@ export default function SignUpForm() {
   //! STATES
   const [data, setData] = useState({
     name: '',
+    address: '',
     email: '',
     password: '',
     error: '',
@@ -91,7 +92,7 @@ export default function SignUpForm() {
             <div className="bg-none flex items-center justify-center w-full rounded overflow-hidden my-20">
               <div
                 className="flex justify-center bg-gray-900 h-full w-1/2 rounded"
-                style={{ height: '70vh' }}
+                style={{ height: '80vh' }}
               >
                 <div
                   className="hidden bg-cover lg:block lg:w-2/3 rounded"
@@ -163,20 +164,38 @@ export default function SignUpForm() {
                             </p>
                           )}
                         </div>
-                        <div className="mt-4">
+                        <div>
                           <label
-                            for="name"
-                            className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+                            for="address"
+                            className="block mb-2 text-sm text-gray-600 dark:text-gray-200 mt-4"
                           >
                             Address
                           </label>
                           <input
                             type="text"
-                            name="name"
-                            id="name"
-                            placeholder="City, State"
+                            name="address"
+                            // value={data.name}
+                            // onChange={handleChange}
+                            {...register('address', {
+                              value: data.address,
+                              onChange: handleChange,
+                              required: 'Address is required',
+                              minLength: 3,
+                            })}
+                            id="address"
+                            placeholder="e.g. New York, NY"
                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                           />
+                          {errors?.address?.type === 'required' && (
+                            <p className="text-white bg-red-500 text-center mt-1 rounded font-bold px-2 py-1 text-sm">
+                              This field is required
+                            </p>
+                          )}
+                          {errors?.address?.type === 'minLength' && (
+                            <p className="text-white bg-red-500 text-center mt-1 rounded font-bold px-2 py-1 text-sm">
+                              Must have atleast 3 characters
+                            </p>
+                          )}
                         </div>
                         <div>
                           <label
