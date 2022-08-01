@@ -24,9 +24,11 @@ const getMessages = async (req, res) => {
       conversationId: req.params.conversationId,
     });
 
-    if (messages) res.status(200).json(messages);   
+    if (messages) res.status(200).json(messages);
   } catch (error) {
-    console.log(`Failed to fetch messages by conversationId. ErrorMessage: ${error}`);
+    console.log(
+      `Failed to fetch messages by conversationId. ErrorMessage: ${error}`
+    );
     res.status(500).json({ Message: error });
   }
 };

@@ -27,7 +27,7 @@ const Conversation = ({ currentUser, conversation }) => {
   }, [currentUser, conversation]);
 
   return (
-    <div className="conversation">
+    <div className="conversation hover:bg-gray-300 rounded">
       <img
         className="conversationImg"
         src={user?.image ? user?.image : noAvatar}

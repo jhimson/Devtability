@@ -4,6 +4,24 @@ const BASE_URL = `https://devtability.herokuapp.com/api/conversations`;
 
 const token = JSON.parse(localStorage.getItem('token')) || null;
 
+export const createConversation = async (senderId, receiverId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    authorization: `Bearer ${token}`,
+  };
+  try {
+    const response = await Axios.post(
+      `${BASE_URL}`,
+      { senderId, receiverId },
+      { headers }
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(`Error inserting a comment. ErrorMessage: ${error}`);
+  }
+};
+
 export const fetchConversations = async (userId) => {
   const headers = {
     'Content-Type': 'application/json',

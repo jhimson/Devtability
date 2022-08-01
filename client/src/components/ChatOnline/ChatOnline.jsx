@@ -7,7 +7,10 @@ import { UserContext } from '../../contexts/UserContext';
 
 import { getUserContacts } from '../../utils/contacts-api';
 import { fetchUser } from '../../utils/users-api';
-import { fetchConversation } from '../../utils/conversations-api';
+import {
+  fetchConversation,
+  createConversation,
+} from '../../utils/conversations-api';
 
 const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
   // ! CONTEXTS
@@ -19,18 +22,27 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
   const fetchContacts = async (userId) => {
     const response = await getUserContacts(userId);
     if (response) {
-      console.log('WTF BRU')
+      console.log('WTF BRU');
       console.log(response?.contacts);
       setContacts(response?.contacts);
     } else {
-      
     }
   };
 
   const handleClick = async (user) => {
     const response = await fetchConversation(currentId, user?._id);
     console.log(response);
-    setCurrentChat(response.data);
+
+    if (response.data.result) {
+      setCurrentChat(response.data.conversation);
+    } else {
+      console.log('WTF');
+      const response = await createConversation(user?._id, currentId);
+      if (response) {
+        console.log('goooks',response.data)
+        setCurrentChat(response.data);
+      }
+    }
   };
 
   useEffect(() => {
@@ -55,11 +67,13 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
   return (
     <div className="flex flex-col space-y-10">
       <div>
-        <h1 className='bg-gray-300 py-2 px-4 font-bold rounded-lg'>Online Contacts</h1>
+        <h1 className="bg-gray-300 py-2 px-4 font-bold rounded-lg">
+          Online Contacts
+        </h1>
         <div className="chatOnline px-2">
           {onlineContacts?.map((online) => (
             <div
-              className="chatOnlineFriend"
+              className="chatOnlineFriend hover:bg-gray-300 hover:font-bold p-2 rounded"
               onClick={() => handleClick(online)}
             >
               <div className="chatOnlineImgContainer">
@@ -73,11 +87,13 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
       </div>
       <hr />
       <div>
-        <h1 className='bg-gray-300 py-2 px-4 font-bold rounded-lg'>Offline Contacts</h1>
+        <h1 className="bg-gray-300 py-2 px-4 font-bold rounded-lg">
+          Offline Contacts
+        </h1>
         <div className="chatOnline px-2">
           {offlineContacts?.map((online) => (
             <div
-              className="chatOnlineFriend"
+              className="chatOnlineFriend hover:bg-gray-300 hover:font-bold p-2 rounded"
               onClick={() => handleClick(online)}
             >
               <div className="chatOnlineImgContainer">

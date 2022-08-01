@@ -6,9 +6,9 @@
   margin-top: 20px;
 }
 
-.conversation:hover {
-  background-color: rgb(245, 243, 243);
-}
+/* .conversation:hover {
+  background-color: #bfbfbf;
+} */
 
 .conversationImg {
   width: 40px;
