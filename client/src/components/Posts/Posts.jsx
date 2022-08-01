@@ -28,7 +28,7 @@ const Posts = ({ ...postProps }) => {
 
   return (
     <>
-      <div className="bg-white shadow rounded-lg">
+      <div className="bg-gray-200 shadow rounded-lg">
         {postProps.posts?.map((post) => {
           return (
             <>
@@ -147,7 +147,7 @@ const Posts = ({ ...postProps }) => {
                   </div>
                 </div>
               </div>
-              <div className="border-b border-gray-100"></div>
+              <div className="border-b border-gray-300"></div>
               <div className="text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2 grid grid-cols-1 grid-row-auto gap-2">
                 <img className="rounded w-full" src={post?.image} alt="" />
               </div>
@@ -174,7 +174,7 @@ const Posts = ({ ...postProps }) => {
                 )}
               </div>
               <div className="text-gray-500 text-lg mb-6 mx-3 px-2">
-                <h1 className="font-semibold">What did you worked on today?</h1>
+                <h1 className="font-semibold">What did you work on today?</h1>
                 {postProps.isUpdating ? (
                   <textarea
                     name="todayText"
@@ -218,7 +218,7 @@ const Posts = ({ ...postProps }) => {
                 )}
               </div>
 
-              <div className="flex justify-start mb-4 border-t border-gray-100">
+              <div className="flex justify-start mb-4 border-t border-gray-300">
                 <div className="flex w-full mt-1 pt-2 pl-5">
                   {/* <span className="bg-white transition ease-out duration-300 hover:text-red-500 border w-8 h-8 px-2 pt-2 text-center rounded-full text-gray-400 cursor-pointer mr-2">
                     <svg
@@ -289,7 +289,7 @@ const Posts = ({ ...postProps }) => {
                   </span>
                 </div>
               </div>
-              <div className="flex w-full border-t border-gray-100">
+              <div className="flex w-full border-t border-gray-300">
                 <div className="mt-3 mx-5 flex flex-row text-xs">
                   <div className="flex text-gray-800 font-semibold rounded-md mb-2 mr-4 items-center">
                     Comments:
@@ -359,7 +359,7 @@ const Posts = ({ ...postProps }) => {
                   >
                     <input
                       type="text"
-                      className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
+                      className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border-2 border-gray-300 appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
                       value={postProps.comment}
                       onChange={(e) => postProps.setComment(e.target.value)}
                       style={{ borderRadius: '25px' }}

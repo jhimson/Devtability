@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/images/Align6.png';
+import Logo from '../../assets/images/devtability.PNG';
 import sample from '../../assets/images/sample.jpg';
 import { Logout } from '../../utils/users-api';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -38,13 +38,13 @@ export default function NavBar() {
           className="container flex flex-wrap justify-between items-center mx-auto"
           style={{ height: '8vh' }}
         >
-          <div className="flex gap-x-10">
+          <div className="flex">
             <Link to="/user-profle" className="flex items-center">
               <img
                 src={Logo}
-                className="mr-3 h-6 sm:h-9"
+                className="mr-3 h-20"
                 alt=""
-                style={{ height: '8vh' }}
+                style={{ height: '10vh', width:'18vh' }}
               />
             </Link>
             {user && (
@@ -53,7 +53,7 @@ export default function NavBar() {
                 id="mobile-menu-2"
               >
                 <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-                  <li>
+                  {/* <li>
                     <Link
                       to="/profile"
                       className={`text-white bg-none ${
@@ -85,18 +85,7 @@ export default function NavBar() {
                     >
                       Messaging
                     </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/search-jobs"
-                      className={`text-white bg-none ${
-                        location.pathname === '/search-jobs' &&
-                        'bg-blue-800 px-4 py-2 rounded'
-                      }`}
-                    >
-                      Pair Programming
-                    </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             )}
@@ -150,7 +139,7 @@ export default function NavBar() {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="w-8 h-8 rounded-full"
-                      src={sample}
+                      src={user?.image}
                       alt="user photo"
                     />
                   </button>

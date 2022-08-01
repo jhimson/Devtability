@@ -52,8 +52,8 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
   return (
     <div className="flex flex-col space-y-10">
       <div>
-        <h1>Online Users</h1>
-        <div className="chatOnline">
+        <h1 className='bg-gray-300 py-2 px-4 font-bold rounded-lg'>Online Contacts</h1>
+        <div className="chatOnline px-2">
           {onlineContacts?.map((online) => (
             <div
               className="chatOnlineFriend"
@@ -70,8 +70,8 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
       </div>
       <hr />
       <div>
-        <h1>Offline Users</h1>
-        <div className="chatOnline">
+        <h1 className='bg-gray-300 py-2 px-4 font-bold rounded-lg'>Offline Contacts</h1>
+        <div className="chatOnline px-2">
           {offlineContacts?.map((online) => (
             <div
               className="chatOnlineFriend"

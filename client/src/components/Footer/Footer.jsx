@@ -144,7 +144,7 @@ export default function Footer() {
       >
         © 2022 Copyright: {" "}
         <a className="text-whitehite">
-          Align
+          Devtability
         </a>
       </div>
     </footer>

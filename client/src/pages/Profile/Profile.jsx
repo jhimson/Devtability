@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useEffect, useState } from 'react';
 import Axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { format } from 'timeago.js';
 import Main from '../../components/Main/Main';
 
@@ -40,6 +41,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { ContactContext } from '../../contexts/ContactContext';
 
 const Profile = () => {
+  const { contactId } = useParams();
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
   const { contact, setContact } = useContext(ContactContext);
@@ -213,14 +215,14 @@ const Profile = () => {
 
   useEffect(() => {
     fetchPosts();
-    getUser(contact?._id);
-    getContacts(contact?._id);
+    getUser(contactId);
+    getContacts(contactId);
   }, []);
 
   useEffect(() => {
     fetchPosts();
-    getUser(contact?._id);
-    getContacts(contact?._id);
+    getUser(contactId);
+    getContacts(contactId);
   }, [contact]);
 
   useEffect(() => {
@@ -231,19 +233,30 @@ const Profile = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-red-400">
+      <div className="min-h-screen">
         {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
-          <NavHeader user={user} />
           <div>
-            <article className="">
-              <ProfileInfo
-                user={currentPerson || contact}
-                userLoggedIn={user}
-                setUser={setUser}
-              />
-              <Contacts {...contactsProps} />
-              <Posts {...postProps} />
+            <article className="w-11/12 mx-auto">
+              <div className="mt-4">
+                <ProfileInfo
+                  user={currentPerson || contact}
+                  userLoggedIn={user}
+                  setUser={setUser}
+                />
+              </div>
+              <div className="mb-4">
+                <Contacts {...contactsProps} />
+              </div>
+              {posts?.length ? (
+                <Posts {...postProps} />
+              ) : (
+                <div className="bg-white shadow mt-6 rounded-lg p-10 border-2 border-gray-50">
+                  <h1 className="text-4xl text-center text-gray-400">
+                    User doesn't have any posts!{' '}
+                  </h1>
+                </div>
+              )}
             </article>
           </div>
         </Main>

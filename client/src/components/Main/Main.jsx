@@ -9,13 +9,13 @@ const Main = ({ sidenav, children }) => {
   const { user, setUser } = useContext(UserContext);
   return (
     <>
-      <div className="flex bg-white">
+      <div className="flex">
         <div className="md:flex w-2/5 md:w-1/4 h-screen bg-white border-r hidden">
           {sidenav}
         </div>
         {/* SIDE NAV END */}
 
-        <main className="w-full bg-white border-l">
+        <main className="w-full bg-gray-300 border-l">
           {children}
         </main>
       </div>

@@ -44,7 +44,7 @@ const Contacts = ({ ...contactsProps }) => {
                       src={contact?.image}
                     />
                   </a>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 font-bold">
                     {' '}
                     {contact?.name?.split(' ')[0]}{' '}
                   </span>

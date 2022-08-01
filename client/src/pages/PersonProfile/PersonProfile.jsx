@@ -233,19 +233,29 @@ const PersonProfile = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-red-400">
+      <div className="min-h-screen">
         {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
-          <NavHeader user={user} />
+          {/* <NavHeader user={user} /> */}
           <div>
-            <article className="">
+            <article className="w-11/12 mx-auto">
               <ProfileInfo
                 user={currentPerson || contact}
                 userLoggedIn={user}
                 setUser={setUser}
               />
-              <Contacts {...contactsProps} />
-              <Posts {...postProps} />
+              <div className="mb-4">
+                <Contacts {...contactsProps} />
+              </div>
+              {posts?.length ? (
+                <Posts {...postProps} />
+              ) : (
+                <div className="bg-white shadow mt-6 rounded-lg p-10 border-2 border-gray-50">
+                  <h1 className="text-4xl text-center text-gray-400">
+                    User doesn't have any posts!{' '}
+                  </h1>
+                </div>
+              )}
             </article>
           </div>
         </Main>

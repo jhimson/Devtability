@@ -121,10 +121,10 @@ const PeoplePage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-red-400">
+      <div className="min-h-screen">
         {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
-          <nav className="flex items-center justify-between px-4 bg-white py-6 border-b">
+          <nav className="flex items-center justify-between px-32 bg-gray-300 py-6 border-b">
             <div className="flex items-center bg-gray-100 px-4 py-2 rounded-md space-x-3 w-1/8">
               <input
                 type="text"
@@ -146,17 +146,17 @@ const PeoplePage = () => {
                 />
               </svg>
             </div>
-            <div className="flex items-center space-x-4">
+            {/* <div className="flex items-center space-x-4">
               <img
                 className="w-8 rounded-full"
                 src="https://imagez.tmz.com/image/f7/1by1/2021/12/14/f7703994b69d48ca802df55729a2325c_xl.jpg"
                 alt="Elon Musk"
               />
               <p className="hidden md:block">{user?.name}</p>
-            </div>
+            </div> */}
           </nav>
           <div>
-            <article className="">
+            <article className="w-11/12 mx-auto">
               <PeopleList
                 filteredPeople={filteredPeople}
                 addNewContact={addNewContact}

@@ -168,42 +168,11 @@ const Messenger = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-red-400">
+      <div className="min-h-screen">
         {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
-          <nav className="flex items-center justify-between px-4 bg-white py-6 border-b">
-            <div className="flex items-center bg-gray-100 px-4 py-2 rounded-md space-x-3 w-1/8">
-              <input
-                type="text"
-                placeholder="search"
-                className="bg-gray-100 outline-none w-full"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 cursor-pointer text-gray-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            <div className="flex items-center space-x-4">
-              <img
-                className="w-8 rounded-full"
-                src="https://imagez.tmz.com/image/f7/1by1/2021/12/14/f7703994b69d48ca802df55729a2325c_xl.jpg"
-                alt="Elon Musk"
-              />
-              <p className="hidden md:block">{user?.name}</p>
-            </div>
-          </nav>
-          <div className="messenger">
-            <div className="chatMenu">
+          <div className="messenger p-4 bg-gray-300 flex space-x-2">
+            <div className="chatMenu bg-white rounded">
               <div className="chatMenuWrapper">
                 <input
                   type="text"
@@ -222,7 +191,7 @@ const Messenger = () => {
                 ))}
               </div>
             </div>
-            <div className="chatBox">
+            <div className="chatBox bg-white rounded">
               <div className="chatBoxWrapper">
                 {currentChat ? (
                   <>
@@ -240,7 +209,7 @@ const Messenger = () => {
 
                     <div className="chatBoxBottom">
                       <textarea
-                        className="chatMessageInput"
+                        className="chatMessageInput border-2 border-gray-300 rounded"
                         placeholder="Write something..."
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
@@ -254,13 +223,13 @@ const Messenger = () => {
                     </div>
                   </>
                 ) : (
-                  <span className="noConversationText">
+                  <span className="noConversationText text-gray-400 font-bold px-4">
                     Open a conversation to start a chat
                   </span>
                 )}
               </div>
             </div>
-            <div className="chatOnline">
+            <div className="chatOnline bg-white py-2 px-3 rounded">
               <div className="onlineWrapper">
                 <ChatOnline
                   onlineUsers={onlineUsers}

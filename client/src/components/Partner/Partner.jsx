@@ -16,7 +16,7 @@ const Partner = ({ partner, setShowModal }) => {
             <a className="block bg-white p-1 rounded-full">
               <img className="w-20 h-20 rounded-full" src={partner?.image} />
             </a>
-            <span className="text-xs text-gray-500">{partner?.name}</span>
+            <span className="text-xs text-gray-500 font-bold">{partner?.name}</span>
           </li>
         </div>
       </div>

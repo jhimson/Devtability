@@ -17,7 +17,7 @@ const PostForm = ({ ...postFormProps }) => {
               value={postFormProps.title}
               onChange={(e) => postFormProps.setTitle(e.target.value)}
               placeholder="Type something here..."
-              className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+              className="w-full rounded-lg p-2 text-sm bg-gray-100 appearance-none rounded-tg placeholder-gray-400 border-2 border-gray-400 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-300"
             ></textarea>
           </div>
           <div className="grid grid-cols-3 gap-x-8">
@@ -26,14 +26,14 @@ const PostForm = ({ ...postFormProps }) => {
                 htmlFor="todayText"
                 className="text-gray-500 font-semibold"
               >
-                What did you worked on today?
+                What did you work on today?
               </label>
               <textarea
                 name="todayText"
                 value={postFormProps.todayText}
                 onChange={(e) => postFormProps.setTodayText(e.target.value)}
                 placeholder="Type something here..."
-                className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                className="w-full rounded-lg p-2 text-sm bg-gray-100 appearance-none rounded-tg placeholder-gray-400 border-2 border-gray-400 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-300"
               ></textarea>
             </div>
             <div className="flex flex-col space-y-2">
@@ -48,7 +48,7 @@ const PostForm = ({ ...postFormProps }) => {
                 value={postFormProps.tomorrowText}
                 onChange={(e) => postFormProps.setTomorrowText(e.target.value)}
                 placeholder="Type something here..."
-                className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                className="w-full rounded-lg p-2 text-sm bg-gray-100 appearance-none rounded-tg placeholder-gray-400 border-2 border-gray-400 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-300"
               ></textarea>
             </div>
             <div className="flex flex-col space-y-2">
@@ -63,7 +63,7 @@ const PostForm = ({ ...postFormProps }) => {
                 value={postFormProps.blockersText}
                 onChange={(e) => postFormProps.setBlockersText(e.target.value)}
                 placeholder="Type something here..."
-                className="w-full rounded-lg p-2 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
+                className="w-full rounded-lg p-2 text-sm bg-gray-100 appearance-none rounded-tg placeholder-gray-400 border-2 border-gray-400 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-300"
               ></textarea>
             </div>
           </div>

@@ -30,7 +30,6 @@ const App = () => {
       {user ? (
         <Layout active={true} setUser={setUser} user={user}>
           <Routes>
-            <Route path="/dashboard" element={<Dashboard exact />} />
             <Route path="/stand-ups" element={<StandUps exact />} />
             <Route path="/user-profile" element={<UserProfile exact />} />
             <Route path="/profile/:contactId" element={<Profile exact />} />
@@ -40,7 +39,7 @@ const App = () => {
             />
             <Route path="/messenger" element={<Messenger exact />} />
             <Route path="/people" element={<PeoplePage exact />} />
-            <Route path="/*" element={<Navigate to="/dashboard" />} exact />
+            <Route path="/*" element={<Navigate to="/stand-ups" />} exact />
           </Routes>
         </Layout>
       ) : (

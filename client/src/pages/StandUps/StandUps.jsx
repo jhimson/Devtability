@@ -164,10 +164,10 @@ const StandUps = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-red-400">
+      <div className="min-h-screen">
         {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
-          <NavHeader user={user} />
+          {/* <NavHeader user={user} /> */}
           <div className="w-11/12 mx-auto">
             <article className="">
               <PostForm {...postFormProps} />

@@ -52,7 +52,7 @@ export default function LoginForm() {
         );
         setUser(token.user);
         setAlertMessage(null);
-        if (user) navigate('/dashboard');
+        if (user) navigate('/stand-ups');
       } else {
         setAlertMessage({
           message: 'Please verify your email to login using your account.',
