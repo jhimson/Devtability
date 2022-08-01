@@ -19,8 +19,11 @@ const ChatOnline = ({ onlineUsers, currentId, setCurrentChat }) => {
   const fetchContacts = async (userId) => {
     const response = await getUserContacts(userId);
     if (response) {
+      console.log('WTF BRU')
       console.log(response?.contacts);
       setContacts(response?.contacts);
+    } else {
+      
     }
   };
 
