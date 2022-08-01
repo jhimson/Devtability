@@ -55,10 +55,11 @@ TheHood is a robinhood inspired Full-Stack web application but way less function
 - React ContextAPI
 - Tailwindcss
 - MongoDB/Mongoose Database (Atlas)
-- Heroku
-- Netlify
 - Insomnia (API Testing)
 - Socket.io (Web sockets)
+- Heroku
+- Netlify
+
 
 
 
