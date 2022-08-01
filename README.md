@@ -1,4 +1,4 @@
-# TheHood - Stocks Investment Tracker
+# DEVtability - Developer accountability web application
 
 
 ## Premise:
