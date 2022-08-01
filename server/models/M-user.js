@@ -32,6 +32,7 @@ const userSchema = new Schema(
     },
     linkedIn: { type: String, default: null },
     github: { type: String, default: null },
+    title: { type: String, default: 'Software Engineer' },
     emailToken: { type: String },
     isAdmin: {
       type: Boolean,

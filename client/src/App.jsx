@@ -45,9 +45,8 @@ const App = () => {
       ) : (
         <Layout active={true} setUser={setUser} user={user}>
           <Routes>
-            <Route path="/" element={<HomePage />} exact />
-            <Route path="/signup" element={<SignupPage />} exact />
             <Route path="/login" element={<LoginPage />} exact />
+            <Route path="/signup" element={<SignupPage />} exact />
             <Route path="/*" element={<Navigate to="/login" />} exact />
           </Routes>
         </Layout>

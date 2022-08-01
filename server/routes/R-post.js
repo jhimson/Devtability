@@ -9,8 +9,8 @@ const {
 } = require('../controllers/C-post');
 const { verify } = require('../utils/index');
 
-router.get('/:userId', verify, fetchUserPosts);
-router.get('/', verify, fetchAllPosts);
+router.get('/:userId', fetchUserPosts);
+router.get('/', fetchAllPosts);
 router.post('/', CreatePost);
 router.delete('/', verify, DeletePost);
 router.patch('/', verify, UpdatePost);

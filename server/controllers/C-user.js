@@ -123,7 +123,7 @@ const updateUserProfile = async (req, res) => {
   } else {
     console.log('GAGO KA!');
   }
-  const { userId, name, email, address, github, linkedIn } = req.body;
+  const { userId, name, title, email, address, github, linkedIn } = req.body;
   const user = await User.findOne({ _id: userId });
   if (user) {
     image = user.image;
@@ -156,6 +156,7 @@ const updateUserProfile = async (req, res) => {
               $set: {
                 name,
                 email,
+                title,
                 address,
                 github,
                 linkedIn,
@@ -187,6 +188,7 @@ const updateUserProfile = async (req, res) => {
           $set: {
             name,
             email,
+            title,
             address,
             github,
             linkedIn,

@@ -10,6 +10,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
 
   const [file, setFile] = useState('');
   const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [linkedIn, setLinkedIn] = useState('');
@@ -17,6 +18,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
 
   const setLocalStates = () => {
     setName(user?.name);
+    setTitle(user?.title);
     setEmail(user?.email);
     setAddress(user?.address);
     setLinkedIn(user?.linkedIn);
@@ -28,6 +30,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
       ...prevState,
       address,
       email,
+      title,
       github,
       linkedIn,
       name,
@@ -39,6 +42,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
     formData.append('data', file);
     formData.append('userId', `${user?._id}`);
     formData.append('email', `${email}`);
+    formData.append('title', `${title}`);
     formData.append('address', `${address}`);
     formData.append('linkedIn', `${linkedIn}`);
     formData.append('github', `${github}`);
@@ -137,7 +141,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
             <label class="btn btn-primary">
               <i class="fa fa-image"></i>
               <img
-                className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
+                className="h-32 w-32 bg-white p-2 rounded-full shadow"
                 src={user?.image}
                 alt=""
               />
@@ -148,29 +152,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>
-            
           </div>
-          {/* <div className="page">
-            <div className="container">
-              <h1 className="heading">Add your Image</h1>
-              <div className="img-holder">
-                <img src={profileImg} alt="" id="img" className="img" />
-              </div>
-              <input
-                type="file"
-                accept="image/*"
-                name="image-upload"
-                id="input"
-                onChange={this.imageHandler}
-              />
-              <div className="label">
-                <label className="image-upload" htmlFor="input">
-                  <i className="material-icons">add_photo_alternate</i>
-                  Choose your Photo
-                </label>
-              </div>
-            </div>
-          </div> */}
           {isUpdating ? (
             <div class="w-1/6 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500 mt-2">
               <input
@@ -181,7 +163,28 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
               />
             </div>
           ) : (
-            <p className="font-semibold">{user?.name}</p>
+            <div>
+              <p className="font-semibold text-xl font-bold tracking-wide">
+                {user?.name}
+              </p>
+            </div>
+          )}
+
+          {isUpdating ? (
+            <div class="w-1/6 transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500 mt-2">
+              <input
+                type="text"
+                className="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-gray-700 font-semibold"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+          ) : (
+            <div>
+              <h1 className="font-semibold text-gray-500 mb-4 text-sm">
+                {user?.title}
+              </h1>
+            </div>
           )}
 
           <div className="text-sm leading-normal text-gray-400 flex justify-center items-center mb-8">
@@ -198,7 +201,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
               <>
                 <svg
                   viewBox="0 0 24 24"
-                  className="mr-1"
+                  className="mr-1 text-gray-800"
                   width="16"
                   height="16"
                   stroke="currentColor"
@@ -210,7 +213,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                {user?.address}
+                <h2 className="text-lg text-gray-800">{user?.address}</h2>
               </>
             )}
           </div>
