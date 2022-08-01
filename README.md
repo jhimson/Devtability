@@ -75,5 +75,5 @@ TheHood is a robinhood inspired Full-Stack web application but way less function
 
 ## Stretch goals / ICE BOX:
 
-- [] Responsive design
-- [] Pair programming (Video call and Sharescreen using Web RTC)
+- [x] Responsive design
+- [x] Pair programming (Video call and Sharescreen using Web RTC)
