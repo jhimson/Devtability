@@ -66,5 +66,5 @@
 
 ## Stretch goals / ICE BOX:
 
-- [x] Responsive design
-- [x] Pair programming (Video call and Sharescreen using Web RTC)
+- [ ] Responsive design
+- [ ] Pair programming (Video call and Sharescreen using Web RTC)
