@@ -39,14 +39,4 @@ export const removeContact = async (userId, contactId) => {
   } catch (error) {
     console.log(`Error deleteing a contact. ErrorMessage: ${error}`);
   }
-  //   try {
-  //     const response = await Axios.delete(
-  //       `${BASE_URL}/`,
-  //       { userId, contactId },
-  //       { headers }
-  //     );
-  //     return response;
-  //   } catch (error) {
-  //     console.log(`Error deleting a contact. ErrorMessage: ${error}`);
-  //   }
 };

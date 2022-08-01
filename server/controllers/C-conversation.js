@@ -35,4 +35,20 @@ const getConversations = async (req, res) => {
   }
 };
 
-module.exports = { createNewConversation, getConversations };
+// ? @Description    Fetch conversations
+// ? @Route          GET /api/conversations/:firstUserId/:secondUserId
+// ? @Access         Private / Authorized user
+const getConversation = async (req, res) => {
+  try {
+    const conversation = await Conversation.findOne({
+      members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+    });
+
+    if (conversation) res.status(200).json(conversation);
+  } catch (error) {
+    console.log(`Failed to fetch conversation. ErrorMessage: ${error}`);
+    res.status(500).json({ Message: error });
+  }
+};
+
+module.exports = { createNewConversation, getConversations, getConversation };

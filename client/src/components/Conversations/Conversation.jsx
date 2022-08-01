@@ -30,7 +30,7 @@ const Conversation = ({ currentUser, conversation }) => {
     <div className="conversation">
       <img
         className="conversationImg"
-        src={user?.profilePicture ? user?.profilePicture : noAvatar}
+        src={user?.image ? user?.image : noAvatar}
         alt=""
       />
       <span className="conversationName">{user?.name}</span>

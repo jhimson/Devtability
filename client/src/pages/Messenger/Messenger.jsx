@@ -5,9 +5,10 @@ import Axios from 'axios';
 import io from 'socket.io-client';
 import Main from '../../components/Main/Main';
 
-
 // ! API
 import { removeContact } from '../../utils/contacts-api';
+import { createMessage, fetchMessages } from '../../utils/messages-api';
+import { fetchConversations } from '../../utils/conversations-api';
 
 // ! COMPONENTS
 import Sidenav from '../../components/Sidenav/Sidenav';
@@ -21,7 +22,7 @@ import { UserContext } from '../../contexts/UserContext';
 import PeopleList from '../../components/PeopleList/PeopleList';
 
 const Messenger = () => {
-  const ENDPOINT = "https://devtability-socket.herokuapp.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+  const ENDPOINT = 'https://devtability-socket.herokuapp.com'; // "https://talk-a-tive.herokuapp.com"; -> After deployment
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
 
@@ -60,19 +61,23 @@ const Messenger = () => {
       text: newMessage,
     });
 
-    try {
-      const res = await Axios.post(
-        `https://devtability.herokuapp.com/api/messages/`,
-        message
-      );
-      //! Append newMessage to messages state
-      if (res.data) setMessages((prevState) => [...prevState, res.data]);
-      setNewMessage('');
-    } catch (error) {
-      console.log(
-        `Failed to insert/create new message in DB. ErrorMessage: ${error}`
-      );
-    }
+    const res = await createMessage(message);
+    //! Append newMessage to messages state
+    if (res?.data) setMessages((prevState) => [...prevState, res?.data]);
+    setNewMessage('');
+    // try {
+    //   const res = await Axios.post(
+    //     `https://devtability.herokuapp.com/api/messages/`,
+    //     message
+    //   );
+    //   //! Append newMessage to messages state
+    //   if (res.data) setMessages((prevState) => [...prevState, res.data]);
+    //   setNewMessage('');
+    // } catch (error) {
+    //   console.log(
+    //     `Failed to insert/create new message in DB. ErrorMessage: ${error}`
+    //   );
+    // }
   };
 
   //! USE EFFECTS
@@ -121,14 +126,16 @@ const Messenger = () => {
 
   useEffect(() => {
     const getConversations = async () => {
-      try {
-        const res = await Axios.get(
-          `https://devtability.herokuapp.com/api/conversations/${user._id}`
-        );
-        setConversations(res.data);
-      } catch (error) {
-        console.log(`Error fetching conversations. ErrorMessage: ${error}`);
-      }
+      const res = await fetchConversations(user?._id);
+      setConversations(res.data);
+      // try {
+      //   const res = await Axios.get(
+      //     `https://devtability.herokuapp.com/api/conversations/${user._id}`
+      //   );
+      //   setConversations(res.data);
+      // } catch (error) {
+      //   console.log(`Error fetching conversations. ErrorMessage: ${error}`);
+      // }
     };
     getConversations();
   }, [user]);
@@ -136,16 +143,18 @@ const Messenger = () => {
   // ! Fetch messages of the currentChat/conversation using currentChat._id
   useEffect(() => {
     const getMessages = async () => {
-      try {
-        const res = await Axios.get(
-          `https://devtability.herokuapp.com/api/messages/${currentChat?._id}`
-        );
-        setMessages(res.data);
-      } catch (error) {
-        console.log(
-          `Failed to fetch messages of current converstion. ErrorMessage: ${error}`
-        );
-      }
+      const res = await fetchMessages(currentChat?._id);
+      setMessages(res.data);
+      // try {
+      //   const res = await Axios.get(
+      //     `https://devtability.herokuapp.com/api/messages/${currentChat?._id}`
+      //   );
+      //   setMessages(res.data);
+      // } catch (error) {
+      //   console.log(
+      //     `Failed to fetch messages of current converstion. ErrorMessage: ${error}`
+      //   );
+      // }
     };
     getMessages();
   }, [currentChat]);
