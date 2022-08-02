@@ -79,6 +79,8 @@ Devtability is an accountability app for Developers. This app will help develope
 - [X] CRUD functionality for POSTS
 - [X] CRUD functionality for COMMENTS
 - [X] CRUD functionality for COMMENT REPLIES
+- [X] Update functionality for User Profile
+- [X] Send email to accountability partner
 - [X] Realtime chatapp
 
 
