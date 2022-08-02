@@ -24,7 +24,8 @@ Devtability is an accountability app for Developers. This app will help develope
 - AAU, my accountability partner should receive an notification email whenever I did not post from the previous day.
 
 
-
+## TRELLO
+[Trello Link](https://trello.com/b/IOtefDEB/project-planning)
 
 ## Wireframes:
 
