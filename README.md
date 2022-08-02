@@ -64,6 +64,7 @@ Devtability is an accountability app for Developers. This app will help develope
 - Express
 - MongoDB/Mongoose Database (Atlas)
 - Nodemailer (For sending emails)
+- Amazon Web Services (AWS)
 - Socket.io (Web sockets)
 - Tailwindcss
 - Insomnia (API Testing)
