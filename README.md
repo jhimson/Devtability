@@ -57,13 +57,14 @@ Devtability is an accountability app for Developers. This app will help develope
 ## Technologies Used
 
 - React
+- React ContextAPI
 - Node.js
 - Express
-- React ContextAPI
-- Tailwindcss
 - MongoDB/Mongoose Database (Atlas)
-- Insomnia (API Testing)
+- Nodemailer (For sending emails)
 - Socket.io (Web sockets)
+- Tailwindcss
+- Insomnia (API Testing)
 - Heroku
 - Netlify
 
