@@ -2,23 +2,13 @@
 
 
 ## Premise:
-TheHood is a robinhood inspired Full-Stack web application but way less functionalities than robinhood. It is a stocks investment tracker application that will allow users to keep track all their buy and sell transactions of stocks. Users can also create a watchlist and can add as many stocks as they want in the watchlist. Users can also check news headlines.
 
-[Live Preview - TheHood](https://thehoodapp.herokuapp.com/)
+
+[Live Preview - DEVtability](https://devtability.netlify.app)
 
 ## User Story
 
 ##### As a user I want to:
-
-- Be able to Signup and login to an account.
-- Be able to create/update/delete a record of stock buy/sell transaction.
-- Be able to view all the transaction records that have been created.
-- Be able to create/update/delete a watchlist.
-- Be able to view all the watchlist that has been created by the user.
-- Be able to add/remove stocks from any watchlist created by the user.
-- Cannot view/update/delete other records of a different users.
-- Be able to look up a specific stock that user is interested to learn more about the company. (Using stocks API).
-- Be able to search a watchlist by name.
 
 
 ## Wireframes:
@@ -35,7 +25,7 @@ TheHood is a robinhood inspired Full-Stack web application but way less function
 <br/>
 
 ## Entity Relationship Diagram (ERD):
-![ERD V2](https://user-images.githubusercontent.com/42398487/174595221-90bfd90a-f102-4185-9354-3e778c283268.png)
+
 
 
 
@@ -76,5 +66,5 @@ TheHood is a robinhood inspired Full-Stack web application but way less function
 
 ## Stretch goals / ICE BOX:
 
-- [x] Responsive design
-- [x] Pair programming (Video call and Sharescreen using Web RTC)
+- [ ] Responsive design
+- [ ] Pair programming (Video call and Sharescreen using Web RTC)
