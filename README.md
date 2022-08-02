@@ -4,7 +4,7 @@
 ## Premise:
 Devtability is an accountability app for Developers. This app will help developers in maintaining daily coding commitment. It was programmed to check the users if they haven't been coding each day. The app is scheduled to check the database every 8:00 am in the morning using a nodejs CRON-job, if they are users found that did not post their standup from yesterday. The app will automatically send an email to each users' accountability partner, saying that the user did not post a standup from the previous day.
 
-[Live Preview - DEVtability](https://devtability.netlify.app)
+[Live Preview - DEVtability](httpsss://devtability.netlify.app)
 
 ## User Story
 
