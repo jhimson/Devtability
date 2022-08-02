@@ -4,7 +4,7 @@
 ## Premise:
 Devtability is an accountability app for Developers. This app will help developers in maintaining daily coding commitment. It was programmed to check the users if they haven't been coding each day. The app is scheduled to check the database every 8:00 am in the morning using a nodejs CRON-job, if they are users found that did not post their standup from yesterday. The app will automatically send an email to each users' accountability partner, saying that the user did not post a standup from the previous day.
 
-[Live Preview - DEVtability](https://devtability.netlify.app)
+[Live Preview - DEVtability](https://devtabilityapp.netlify.app)
 
 ## User Story
 
@@ -55,15 +55,18 @@ Devtability is an accountability app for Developers. This app will help develope
 <br/>
 
 ## Technologies Used
+<img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/react-colored.svg" width="36" height="36" alt="React">
+
 
 - React
+- React ContextAPI
 - Node.js
 - Express
-- React ContextAPI
-- Tailwindcss
 - MongoDB/Mongoose Database (Atlas)
-- Insomnia (API Testing)
+- Nodemailer (For sending emails)
 - Socket.io (Web sockets)
+- Tailwindcss
+- Insomnia (API Testing)
 - Heroku
 - Netlify
 
@@ -78,6 +81,8 @@ Devtability is an accountability app for Developers. This app will help develope
 - [X] CRUD functionality for POSTS
 - [X] CRUD functionality for COMMENTS
 - [X] CRUD functionality for COMMENT REPLIES
+- [X] Update functionality for User Profile
+- [X] Send email to accountability partner
 - [X] Realtime chatapp
 
 
