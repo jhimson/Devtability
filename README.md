@@ -55,7 +55,7 @@ Devtability is an accountability app for Developers. This app will help develope
 <br/>
 
 ## Technologies Used
-
+<img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/react-colored.svg" width="36" height="36" alt="React">
 - React
 - React ContextAPI
 - Node.js
