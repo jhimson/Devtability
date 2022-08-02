@@ -181,7 +181,7 @@ const Posts = ({ ...postProps }) => {
                           htmlFor=""
                           className="text-gray-500 font-semibold"
                         >
-                          Title
+                          Caption
                         </label>
                         <textarea
                           name="title"

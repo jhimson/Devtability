@@ -10,7 +10,7 @@ const PostForm = ({ ...postFormProps }) => {
         >
           <div className="flex flex-col space-y-2 mb-8">
             <label htmlFor="" className="text-gray-500 font-semibold">
-              Title
+              Caption
             </label>
             <textarea
               name="title"

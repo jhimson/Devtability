@@ -127,7 +127,7 @@ const getUsersData = async (usersArray) => {
 
 const postChecker = (userId) => {
   let users = [];
-  cron.schedule('20 * * * * *', async () => {
+  cron.schedule('* * 8 * * *', async () => {
     // ! GET YESTERDAY'S DATE WITH THIS FORMAT 2022-07-26
     const today = new Date();
     const yesterday = new Date(today);
