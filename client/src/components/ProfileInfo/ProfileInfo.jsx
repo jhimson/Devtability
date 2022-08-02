@@ -250,7 +250,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                     Email Address
                   </h5>
                   <p class="text-gray-700 text-base mb-4">
-                    {user?.github || 'N/A'}
+                    {user?.email || 'N/A'}
                   </p>
                 </div>
               </div>

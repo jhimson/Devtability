@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const BASE_URL = `http://localhost:8000/api/posts`;
+const BASE_URL = `https://devtability.herokuapp.com/api/posts`;
 
 const token = JSON.parse(localStorage.getItem('token')) || null;
 

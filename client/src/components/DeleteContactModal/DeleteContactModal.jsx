@@ -24,7 +24,7 @@ const DeleteContactModal = ({
           <div class="flex flex-col items-start p-4 z-50">
             <div class="flex items-center w-full">
               <div class="text-gray-900 font-medium text-lg">
-                Remove Contact
+                Choose options
               </div>
               <svg
                 class="ml-auto fill-current text-gray-700 w-6 h-6 cursor-pointer"
@@ -37,7 +37,7 @@ const DeleteContactModal = ({
             </div>
             <hr />
             <div class="my-4 text-gray-500 font-semibold">
-              Are you sure you want to remove this contact?
+              Are you sure you want that option?
             </div>
             <hr />
             <div class="ml-auto flex space-x-2">
