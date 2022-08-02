@@ -58,6 +58,7 @@ const UserProfile = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   //   ! FUNCTIONS
   const clearFields = () => {
@@ -86,7 +87,11 @@ const UserProfile = () => {
 
   const fetchPosts = async () => {
     const response = await getUserPosts(user._id);
+    setIsLoading(true);
     if (response) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
       setPosts(response.data);
     }
   };
@@ -94,8 +99,12 @@ const UserProfile = () => {
   const deletePost = async (postId) => {
     await removePost(postId);
     const updatedPosts = posts.filter((post) => post._id !== postId);
-    setPosts(updatedPosts);
-    setShowOptions(!showOptions);
+    setIsLoading(true);
+    if (updatedPosts) {
+      setIsLoading(false);
+      setPosts(updatedPosts);
+      setShowOptions(!showOptions);
+    }
   };
 
   const setUpdateData = async (post) => {
@@ -110,7 +119,9 @@ const UserProfile = () => {
 
   const updatePost = async (updatedPost) => {
     const response = await editPost(updatedPost);
+    setIsLoading(true);
     if (response) {
+      setIsLoading(false);
       console.log(`Successfully updated post`, response);
     }
   };
@@ -134,7 +145,9 @@ const UserProfile = () => {
 
   const deleteContact = async (userId, contactId) => {
     const response = await removeContact(userId, contactId);
+    setIsLoading(true);
     if (response) {
+      setIsLoading(false);
       if (contactId === partner?._id) {
         // 62e12168650f328749d4713c
         //! If the current partner is being deleted from the contact, automatically set admin as the partner.
@@ -158,7 +171,9 @@ const UserProfile = () => {
 
   const setUserPartner = async (userId, contactId) => {
     const response = await setAccountabilityPartner(userId, contactId);
+    setIsLoading(true);
     if (response) {
+      setIsLoading(false);
       getPartner(userId);
       console.log(`Successfully set accountability partner`);
     }
@@ -205,6 +220,7 @@ const UserProfile = () => {
     fetchPosts,
     insertNewComment,
     setComment,
+    isLoading,
   };
 
   const contactsProps = {
@@ -236,7 +252,7 @@ const UserProfile = () => {
         {/* <Sidenav /> */}
         <Main sidenav={<Sidenav />}>
           {/* <NavHeader user={user} /> */}
-          <div className='w-11/12 mx-auto mt-4'>
+          <div className="w-11/12 mx-auto mt-4">
             <article className="">
               <ProfileInfo user={user} setUser={setUser} userLoggedIn={user} />
               <Partner partner={partner} setShowModal={setShowModal} />

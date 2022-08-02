@@ -51,7 +51,7 @@ const PeoplePage = () => {
     setFilteredPeople(updatedZest);
     localStorage.setItem('filteredPeople', JSON.stringify(updatedZest));
     const res = await Axios.post(
-      `https://devtability.herokuapp.com/api/contacts/`,
+      `http://localhost:8000/api/contacts/`,
       {
         userId: user._id,
         contactId,
@@ -101,7 +101,7 @@ const PeoplePage = () => {
   useEffect(() => {
     const fetchPeople = async () => {
       const res = await Axios.get(
-        `https://devtability.herokuapp.com/api/users/except/${user?._id}`
+        `http://localhost:8000/api/users/except/${user?._id}`
       );
 
       if (res) {
@@ -116,7 +116,7 @@ const PeoplePage = () => {
 
     const getContacts = async () => {
       const res = await Axios.get(
-        `https://devtability.herokuapp.com/api/contacts/${user?._id}`
+        `http://localhost:8000/api/contacts/${user?._id}`
       );
 
       if (res) {

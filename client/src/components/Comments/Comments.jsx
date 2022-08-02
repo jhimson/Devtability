@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { format } from 'timeago.js';
+import { useNavigate } from 'react-router-dom';
 
 // ! API
 import {
@@ -30,6 +31,7 @@ const Comments = ({
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
 
+  const navigate = useNavigate();
   //! STATES
   const [comment, setComment] = useState({});
   const [commentText, setCommentText] = useState('');
@@ -42,7 +44,7 @@ const Comments = ({
     const response = await fetchComment(commentId);
     if (response.data) {
       setComment(response.data);
-      setTotalComments(commentCount + response.data.replies.length)
+      setTotalComments(commentCount + response.data.replies.length);
     }
   };
 
@@ -78,7 +80,6 @@ const Comments = ({
       getComment();
     }
   };
-  
 
   useEffect(() => {
     const handleEsc = (event) => {
@@ -104,7 +105,12 @@ const Comments = ({
         <div>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <div className="">
+              <div
+                className="cursor-pointer"
+                onClick={() =>
+                  navigate(`/person-profile/${comment?.user?._id}`)
+                }
+              >
                 <img
                   className="w-12 h-12 rounded-full"
                   src={comment?.user?.image}

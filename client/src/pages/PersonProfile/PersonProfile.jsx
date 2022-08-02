@@ -62,6 +62,7 @@ const PersonProfile = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   //   ! FUNCTIONS
   const clearFields = () => {
@@ -90,7 +91,11 @@ const PersonProfile = () => {
 
   const fetchPosts = async () => {
     const response = await getUserPosts(personId);
+    setIsLoading(true);
     if (response) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
       setPosts(response.data);
     }
   };
@@ -98,8 +103,12 @@ const PersonProfile = () => {
   const deletePost = async (postId) => {
     await removePost(postId);
     const updatedPosts = posts.filter((post) => post._id !== postId);
-    setPosts(updatedPosts);
-    setShowOptions(!showOptions);
+    setIsLoading(true);
+    if (updatedPosts) {
+      setIsLoading(false);
+      setPosts(updatedPosts);
+      setShowOptions(!showOptions);
+    }
   };
 
   const setUpdateData = async (post) => {
@@ -114,7 +123,9 @@ const PersonProfile = () => {
 
   const updatePost = async (updatedPost) => {
     const response = await editPost(updatedPost);
+    setIsLoading(true);
     if (response) {
+      setIsLoading(false);
       console.log(`Successfully updated post`, response);
     }
   };
@@ -138,7 +149,9 @@ const PersonProfile = () => {
 
   const deleteContact = async (userId, contactId) => {
     const response = await removeContact(userId, contactId);
+    setIsLoading(true);
     if (response) {
+      setIsLoading(false);
       console.log(`Successfully deleted contact`, response);
     }
     let updatedContacts = contacts?.filter(
@@ -149,7 +162,9 @@ const PersonProfile = () => {
 
   const setUserPartner = async (userId, contactId) => {
     const response = await setAccountabilityPartner(userId, contactId);
+    setIsLoading(true);
     if (response) {
+      setIsLoading(false);
       console.log(`Successfully set accountability partner`);
     }
   };
@@ -202,6 +217,7 @@ const PersonProfile = () => {
     fetchPosts,
     insertNewComment,
     setComment,
+    isLoading,
   };
 
   const contactsProps = {

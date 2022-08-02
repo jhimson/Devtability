@@ -62,6 +62,7 @@ const Profile = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   //   ! FUNCTIONS
   const clearFields = () => {
@@ -90,7 +91,11 @@ const Profile = () => {
 
   const fetchPosts = async () => {
     const response = await getUserPosts(contact?._id || user?._id);
+    setIsLoading(true);
     if (response) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
       setPosts(response.data);
     }
   };
@@ -98,8 +103,12 @@ const Profile = () => {
   const deletePost = async (postId) => {
     await removePost(postId);
     const updatedPosts = posts.filter((post) => post._id !== postId);
-    setPosts(updatedPosts);
-    setShowOptions(!showOptions);
+    setIsLoading(true);
+    if (updatedPosts) {
+      setIsLoading(false);
+      setPosts(updatedPosts);
+      setShowOptions(!showOptions);
+    }
   };
 
   const setUpdateData = async (post) => {
@@ -114,7 +123,9 @@ const Profile = () => {
 
   const updatePost = async (updatedPost) => {
     const response = await editPost(updatedPost);
+    setIsLoading(true);
     if (response) {
+      setIsLoading(false);
       console.log(`Successfully updated post`, response);
     }
   };
@@ -202,6 +213,7 @@ const Profile = () => {
     fetchPosts,
     insertNewComment,
     setComment,
+    isLoading,
   };
 
   const contactsProps = {
@@ -251,7 +263,7 @@ const Profile = () => {
               {posts?.length ? (
                 <Posts {...postProps} />
               ) : (
-                <div className="bg-white shadow mt-6 rounded-lg p-10 border-2 border-gray-50">
+                <div className="bg-white shadow mt-6 rounded-lg p-10 border-2 border-gray-50 mb-8">
                   <h1 className="text-4xl text-center text-gray-400">
                     User doesn't have any posts!{' '}
                   </h1>

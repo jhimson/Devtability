@@ -45,6 +45,7 @@ const StandUps = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   //   ! FUNCTIONS
   const clearFields = () => {
@@ -73,7 +74,11 @@ const StandUps = () => {
 
   const fetchPosts = async () => {
     const response = await getAllPosts();
+    setIsLoading(true);
     if (response) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
       setPosts(response.data);
     }
   };
@@ -81,8 +86,12 @@ const StandUps = () => {
   const deletePost = async (postId) => {
     await removePost(postId);
     const updatedPosts = posts.filter((post) => post._id !== postId);
-    setPosts(updatedPosts);
-    setShowOptions(!showOptions);
+    setIsLoading(true);
+    if (updatedPosts) {
+      setIsLoading(false);
+      setPosts(updatedPosts);
+      setShowOptions(!showOptions);
+    }
   };
 
   const setUpdateData = async (post) => {
@@ -97,7 +106,9 @@ const StandUps = () => {
 
   const updatePost = async (updatedPost) => {
     const response = await editPost(updatedPost);
+    setIsLoading(true);
     if (response) {
+      setIsLoading(false);
       console.log(`Successfully updated post`, response);
     }
   };
@@ -152,6 +163,7 @@ const StandUps = () => {
     Comments,
     insertNewComment,
     fetchPosts,
+    isLoading,
   };
 
   useEffect(() => {

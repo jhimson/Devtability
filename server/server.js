@@ -9,14 +9,14 @@ require('./config/database');
 const { postChecker } = require('./utils/index');
 
 const corsOptions = {
-	origin: "http://localhost:3000"
+	origin: "https://devtability.netlify.app"
 };
 
 //! Middlewares
 app.use(fileUpload());
 app.use(logger('dev'));
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 // app.use(function (req, res, next) {
 //   res.setHeader('Access-Control-Allow-Origin', '*');
 //   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');

@@ -28,7 +28,7 @@ const Sidenav = () => {
           <h5 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">
             {user?.name}
           </h5>
-          <span className="hidden text-gray-400 lg:block">Software Engineer</span>
+          <span className="hidden text-gray-400 lg:block">{user?.title}</span>
         </div>
         <ul>
           <li className="flex space-x-2 mt-10 cursor-pointer hover:text-[#EC5252] duration-150">

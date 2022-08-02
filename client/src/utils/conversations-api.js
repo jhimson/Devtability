@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const BASE_URL = `https://devtability.herokuapp.com/api/conversations`;
+const BASE_URL = `http://localhost:8000/api/conversations`;
 
 const token = JSON.parse(localStorage.getItem('token')) || null;
 

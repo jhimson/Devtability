@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { format } from 'timeago.js';
+import { useNavigate } from 'react-router-dom';
 
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -28,6 +29,8 @@ const Reply = ({
   const [replyComment, setReplyComment] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
   const [updatingReply, setUpdatingReply] = useState(false);
+
+  const navigate = useNavigate();
 
   //! FUNCTIONS
   const getUser = async (userId) => {
@@ -72,12 +75,11 @@ const Reply = ({
     <>
       <div>
         <div className="flex items-center space-x-4 mb-2">
-          <div className="">
-            <img
-              className="w-8 h-8 rounded-full"
-              src={user?.image}
-              alt=""
-            />
+          <div
+            className="cursor-pointer"
+            onClick={() => navigate(`/person-profile/${user?._id}`)}
+          >
+            <img className="w-8 h-8 rounded-full" src={user?.image} alt="" />
           </div>
           <div className="text-sm font-semibold">
             {currentUser?.name} •{' '}

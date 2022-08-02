@@ -16,7 +16,7 @@ const Conversation = ({ currentUser, conversation }) => {
     const getUser = async () => {
       try {
         const res = await Axios.get(
-          `https://devtability.herokuapp.com/api/users/${friendId}`
+          `http://localhost:8000/api/users/${friendId}`
         );
         setUser(res.data);
       } catch (error) {

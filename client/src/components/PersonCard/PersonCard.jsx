@@ -25,7 +25,7 @@ const PersonCard = ({ person, addNewContact, deleteContact }) => {
             />
           </div>
           <h2 className="text-xl font-medium text-gray-700">{person?.name}</h2>
-          <span className="text-blue-500 block mb-5">Front End Developer</span>
+          <span className="text-gray-400 font-semibold block mb-5 text-sm">{person?.title}</span>
 
           {person?.isExist ? (
             <button

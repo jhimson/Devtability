@@ -18,6 +18,7 @@ const PostForm = ({ ...postFormProps }) => {
               onChange={(e) => postFormProps.setTitle(e.target.value)}
               placeholder="Type something here..."
               className="w-full rounded-lg p-2 text-sm bg-gray-100 appearance-none rounded-tg placeholder-gray-400 border-2 border-gray-400 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-300"
+              required
             ></textarea>
           </div>
           <div className="grid grid-cols-3 gap-x-8">
@@ -34,6 +35,7 @@ const PostForm = ({ ...postFormProps }) => {
                 onChange={(e) => postFormProps.setTodayText(e.target.value)}
                 placeholder="Type something here..."
                 className="w-full rounded-lg p-2 text-sm bg-gray-100 appearance-none rounded-tg placeholder-gray-400 border-2 border-gray-400 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-300"
+                required
               ></textarea>
             </div>
             <div className="flex flex-col space-y-2">
@@ -49,6 +51,7 @@ const PostForm = ({ ...postFormProps }) => {
                 onChange={(e) => postFormProps.setTomorrowText(e.target.value)}
                 placeholder="Type something here..."
                 className="w-full rounded-lg p-2 text-sm bg-gray-100 appearance-none rounded-tg placeholder-gray-400 border-2 border-gray-400 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-300"
+                required
               ></textarea>
             </div>
             <div className="flex flex-col space-y-2">
@@ -64,6 +67,7 @@ const PostForm = ({ ...postFormProps }) => {
                 onChange={(e) => postFormProps.setBlockersText(e.target.value)}
                 placeholder="Type something here..."
                 className="w-full rounded-lg p-2 text-sm bg-gray-100 appearance-none rounded-tg placeholder-gray-400 border-2 border-gray-400 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-300"
+                required
               ></textarea>
             </div>
           </div>
@@ -74,6 +78,7 @@ const PostForm = ({ ...postFormProps }) => {
             <input
               type="file"
               onChange={(e) => postFormProps.setFile(e.target.files[0])}
+              required
             />
           </div>
           <footer className="flex justify-between mt-2">

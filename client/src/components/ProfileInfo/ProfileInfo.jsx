@@ -42,6 +42,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
     formData.append('data', file);
     formData.append('userId', `${user?._id}`);
     formData.append('email', `${email}`);
+    formData.append('name', `${name}`);
     formData.append('title', `${title}`);
     formData.append('address', `${address}`);
     formData.append('linkedIn', `${linkedIn}`);
@@ -213,7 +214,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <h2 className="text-lg text-gray-800">{user?.address}</h2>
+                <h2 className="text-lg text-gray-800 font-semibold">{user?.address}</h2>
               </>
             )}
           </div>
@@ -245,7 +246,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
               // <span className="text-gray-400">{user?.email}</span>
               <div class="flex justify-center">
                 <div class="block p-6 rounded-lg shadow-xl bg-gray-300 max-w-sm w-96">
-                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
+                  <h5 class="text-gray-900 font-bold text-xl leading-tight font-medium mb-2">
                     Email Address
                   </h5>
                   <p class="text-gray-700 text-base mb-4">
@@ -270,7 +271,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
               // <span className="text-gray-400">{user?.github}</span>
               <div class="flex justify-center">
                 <div class="block p-6 rounded-lg shadow-xl bg-gray-300 max-w-sm w-96">
-                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
+                  <h5 class="text-gray-900 font-bold text-xl leading-tight font-medium mb-2">
                     Github
                   </h5>
                   <p class="text-gray-700 text-base mb-4">
@@ -295,7 +296,7 @@ const ProfileInfo = ({ user, setUser, userLoggedIn }) => {
               // <span className="text-gray-400">{user?.linkedIn}</span>
               <div class="flex justify-center">
                 <div class="block p-6 rounded-lg shadow-xl bg-gray-300 max-w-sm w-96">
-                  <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">
+                  <h5 class="text-gray-900 font-bold text-xl leading-tight font-medium mb-2">
                     LinkedIn
                   </h5>
                   <p class="text-gray-700 text-base mb-4">

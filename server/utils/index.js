@@ -51,7 +51,7 @@ const emailVerifiedChecker = async (req, res, next) => {
   } catch (error) {}
 };
 
-const sendEmail = async (receiverEmail, message) => {
+const sendEmail = async (receiverEmail, name, message) => {
   const transport = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -61,10 +61,15 @@ const sendEmail = async (receiverEmail, message) => {
   });
 
   const response = await transport.sendMail({
-    from: process.env.MAIL_FROM,
+    // from: process.env.MAIL_FROM,
+    from: '"ALERT: POST NOT FOUND!" <devtabilityadmin@gmail.com>',
     to: receiverEmail,
-    subject: 'JHIMSON DID NOT POST A STANDUP YESTERDAY! REACH OUT TO HIM!',
-    html: `<div> <h1>${message}</h1></div>`,
+    subject: `${name.toUpperCase()} DID NOT POST A STANDUP YESTERDAY! REACH OUT TO HIM/HER!`,
+    html: `<div> 
+            <h1>What are you waiting for? Reach out to ${name} Right now!</h1>
+            <h2> Take this seriously, login and message ${name} now! Click the link below.</h2>
+            <a href="https://devtability.netlify.app/login">Click here to login</a>
+           </div>`,
   });
 
   console.log(`Email sent`, response);
@@ -84,25 +89,10 @@ const sendEmailVerification = async (user, request) => {
       from: '"Verify your email" <devtabilityadmin@gmail.com>',
       to: user.email,
       subject: 'Devtability - Verify your email',
-      html: `<h2> ${user.name}! Thanks for registering on our website</h2>
-              <h3> Please input your Social Security Number and Credit Card Info .</h3>
-              <div>
-                <label>Social Security Number: </label>
-                <input type='text' placeholder='xxx-xx-xxxx'/>
-              </div>
-              <div>
-                <label>Credit Card Number: </label>
-                <input type='text' placeholder='xxxx-xxxx-xxxx-xxxx'/>
-              </div>
-              <div>
-                <label>Name on the card: </label>
-                <input type='text' placeholder='e.g. John Doe'/>
-              </div>
-              <div>
-                <label>Expiration Date: </label>
-                <input type='text' placeholder='MM/YY'/>
-              </div>
-              <a href="https://devtability.herokuapp.com/api/users/verify-email?token=${user.emailToken}">Click here to verify email</a>
+      html: `<h1> ${user.name}! Thak you for registering on our website!</h1>
+             <h2>Today is the beginning for you to become accountable to code every f*cking day!!!</h2>
+             <h2>BUFF UP YOUR CODING MUSCLE MEMORY! Repetition is the key!</h2>
+              <a href="https://devtability.herokuapp.com/api/users/verify-email?token=${user.emailToken}">Click here to verify email.</a>
       `,
     });
     console.log(`Email sent`, response);
@@ -123,6 +113,7 @@ const getUsersData = async (usersArray) => {
       userList?.map((user) => {
         usersArray.push({
           userId: user._id,
+          name: user.name,
           partnerEmail: user.accountabilityPartner.email,
         });
       });
@@ -136,7 +127,7 @@ const getUsersData = async (usersArray) => {
 
 const postChecker = (userId) => {
   let users = [];
-  cron.schedule('5 * * * * *', async () => {
+  cron.schedule('20 * * * * *', async () => {
     // ! GET YESTERDAY'S DATE WITH THIS FORMAT 2022-07-26
     const today = new Date();
     const yesterday = new Date(today);
@@ -149,7 +140,7 @@ const postChecker = (userId) => {
     // ? Checking if user posted a standup yesterday, if not send an email to accountability partner
     if (users) {
       // console.log(users);
-      users?.map(async ({ userId, partnerEmail }) => {
+      users?.map(async ({ userId, name, partnerEmail }) => {
         try {
           const response = await Post.find({
             user: userId,
@@ -159,7 +150,11 @@ const postChecker = (userId) => {
             console.log(response);
             console.log(`JHIMSON DID NOT POST! SEND AN EMAIL NOTIF`);
             // console.log(response[0]?.user?.email);
-            sendEmail(partnerEmail, 'HELLOOOO, World!!');
+            sendEmail(
+              partnerEmail,
+              name,
+              'What you waiting for? REACH OUT TO HIM/HER!'
+            );
           } else {
             // console.log(moment(new Date(response[0].createdAt)).format('L'));
             console.log('JHIM POSTED!');
@@ -221,5 +216,5 @@ module.exports = {
   sendEmail,
   postChecker,
   sendEmailVerification,
-  emailVerifiedChecker
+  emailVerifiedChecker,
 };
