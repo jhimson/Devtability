@@ -25,7 +25,7 @@ app.use(cors());
 //   next();
 // });
 
-// postChecker();
+postChecker();
 
 app.get('/', (req, res) => {
   res.status(200).json({ Message: 'Hello, World!' });

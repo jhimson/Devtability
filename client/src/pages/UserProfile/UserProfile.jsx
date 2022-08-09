@@ -87,10 +87,10 @@ const UserProfile = () => {
 
   const fetchPosts = async () => {
     const response = await getUserPosts(user._id);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
       setTimeout(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
       }, 3000);
       setPosts(response.data);
     }
@@ -99,9 +99,9 @@ const UserProfile = () => {
   const deletePost = async (postId) => {
     await removePost(postId);
     const updatedPosts = posts.filter((post) => post._id !== postId);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (updatedPosts) {
-      setIsLoading(false);
+      // setIsLoading(false);
       setPosts(updatedPosts);
       setShowOptions(!showOptions);
     }
@@ -119,9 +119,9 @@ const UserProfile = () => {
 
   const updatePost = async (updatedPost) => {
     const response = await editPost(updatedPost);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
-      setIsLoading(false);
+      // setIsLoading(false);
       console.log(`Successfully updated post`, response);
     }
   };
@@ -145,9 +145,9 @@ const UserProfile = () => {
 
   const deleteContact = async (userId, contactId) => {
     const response = await removeContact(userId, contactId);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
-      setIsLoading(false);
+      // setIsLoading(false);
       if (contactId === partner?._id) {
         // 62e12168650f328749d4713c
         //! If the current partner is being deleted from the contact, automatically set admin as the partner.
@@ -171,9 +171,9 @@ const UserProfile = () => {
 
   const setUserPartner = async (userId, contactId) => {
     const response = await setAccountabilityPartner(userId, contactId);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
-      setIsLoading(false);
+      // setIsLoading(false);
       getPartner(userId);
       console.log(`Successfully set accountability partner`);
     }

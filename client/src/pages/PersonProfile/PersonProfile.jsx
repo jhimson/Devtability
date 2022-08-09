@@ -91,10 +91,10 @@ const PersonProfile = () => {
 
   const fetchPosts = async () => {
     const response = await getUserPosts(personId);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
       setTimeout(() => {
-        setIsLoading(false);
+        // setIsLoading(false);
       }, 3000);
       setPosts(response.data);
     }
@@ -103,9 +103,9 @@ const PersonProfile = () => {
   const deletePost = async (postId) => {
     await removePost(postId);
     const updatedPosts = posts.filter((post) => post._id !== postId);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (updatedPosts) {
-      setIsLoading(false);
+      // setIsLoading(false);
       setPosts(updatedPosts);
       setShowOptions(!showOptions);
     }
@@ -123,9 +123,9 @@ const PersonProfile = () => {
 
   const updatePost = async (updatedPost) => {
     const response = await editPost(updatedPost);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
-      setIsLoading(false);
+      // setIsLoading(false);
       console.log(`Successfully updated post`, response);
     }
   };
@@ -149,9 +149,9 @@ const PersonProfile = () => {
 
   const deleteContact = async (userId, contactId) => {
     const response = await removeContact(userId, contactId);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
-      setIsLoading(false);
+      // setIsLoading(false);
       console.log(`Successfully deleted contact`, response);
     }
     let updatedContacts = contacts?.filter(
@@ -162,9 +162,9 @@ const PersonProfile = () => {
 
   const setUserPartner = async (userId, contactId) => {
     const response = await setAccountabilityPartner(userId, contactId);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
-      setIsLoading(false);
+      // setIsLoading(false);
       console.log(`Successfully set accountability partner`);
     }
   };

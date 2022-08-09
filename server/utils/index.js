@@ -127,7 +127,7 @@ const getUsersData = async (usersArray) => {
 
 const postChecker = (userId) => {
   let users = [];
-  cron.schedule('* * 8 * * *', async () => {
+  cron.schedule('5 * * * * *', async () => {
     // ! GET YESTERDAY'S DATE WITH THIS FORMAT 2022-07-26
     const today = new Date();
     const yesterday = new Date(today);
@@ -139,7 +139,6 @@ const postChecker = (userId) => {
     //? Looping through each of the userId and partEmail.
     // ? Checking if user posted a standup yesterday, if not send an email to accountability partner
     if (users) {
-      // console.log(users);
       users?.map(async ({ userId, name, partnerEmail }) => {
         try {
           const response = await Post.find({
@@ -148,25 +147,21 @@ const postChecker = (userId) => {
           }).populate('user');
           if (!response.length) {
             console.log(response);
-            console.log(`JHIMSON DID NOT POST! SEND AN EMAIL NOTIF`);
-            // console.log(response[0]?.user?.email);
+            console.log(`USER DID NOT POST! SEND AN EMAIL NOTIF`);
             sendEmail(
               partnerEmail,
               name,
               'What you waiting for? REACH OUT TO HIM/HER!'
             );
           } else {
-            // console.log(moment(new Date(response[0].createdAt)).format('L'));
-            console.log('JHIM POSTED!');
-            // console.log(response[0]?.user?.email);
-            // sendEmail(partnerEmail, 'HELLOOOO!');
+            console.log('USER POSTED!');
+          
           }
         } catch (error) {
           console.log(`Eeeroooor: ${error}`);
         }
       });
     }
-
     if (shell.exec('dir').code !== 0) {
       console.log('Something went wrong');
     }

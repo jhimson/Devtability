@@ -90,12 +90,6 @@ export default function SignUpForm() {
       >
         {(props) => (
           <animated.div style={props}>
-            <Alert
-              message={
-                'Signup is disabled! Will be enabled during presentation day! NO PEEKING'
-              }
-              type={'error'}
-            />
             <div className="bg-none flex items-center justify-center w-full rounded overflow-hidden my-20">
               <div
                 className="flex justify-center bg-gray-900 h-full w-1/2 rounded"

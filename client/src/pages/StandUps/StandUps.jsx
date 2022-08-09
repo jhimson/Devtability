@@ -74,11 +74,11 @@ const StandUps = () => {
 
   const fetchPosts = async () => {
     const response = await getAllPosts();
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
+      // setTimeout(() => {
+      //   setIsLoading(false);
+      // }, 3000);
       setPosts(response.data);
     }
   };
@@ -86,9 +86,9 @@ const StandUps = () => {
   const deletePost = async (postId) => {
     await removePost(postId);
     const updatedPosts = posts.filter((post) => post._id !== postId);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (updatedPosts) {
-      setIsLoading(false);
+      // setIsLoading(false);
       setPosts(updatedPosts);
       setShowOptions(!showOptions);
     }
@@ -106,9 +106,9 @@ const StandUps = () => {
 
   const updatePost = async (updatedPost) => {
     const response = await editPost(updatedPost);
-    setIsLoading(true);
+    // setIsLoading(true);
     if (response) {
-      setIsLoading(false);
+      // setIsLoading(false);
       console.log(`Successfully updated post`, response);
     }
   };
