@@ -17,7 +17,7 @@ import { getUserContacts, removeContact } from '../../utils/contacts-api';
 import { addComment } from '../../utils/comments-api';
 // ! ICONS
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaLastfmSquare } from 'react-icons/fa';
 
 import {
   getAccountabilityPartner,
@@ -58,7 +58,7 @@ const UserProfile = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(FaLastfmSquare);
 
   //   ! FUNCTIONS
   const clearFields = () => {

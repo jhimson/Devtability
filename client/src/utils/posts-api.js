@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
-const BASE_URL = `https://devtability.herokuapp.com/api/posts`;
+// const BASE_URL = `https://devtability.herokuapp.com/api/posts`;
+const BASE_URL = `https://devtability-api.onrender.com/api/posts`;
 
 const token = JSON.parse(localStorage.getItem('token')) || null;
 

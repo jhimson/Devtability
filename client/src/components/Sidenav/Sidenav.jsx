@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { FaUsers } from 'react-icons/fa';
+
 // ! CONTEXTS IMPORTS
 import { UserContext } from '../../contexts/UserContext';
 
@@ -71,7 +73,8 @@ const Sidenav = () => {
           </li>
           <li className="flex space-x-2 mt-10 cursor-pointer hover:text-[#EC5252] duration-150">
             <Link to="/people" className="flex space-x-2">
-              <svg
+              <FaUsers />
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
                 fill="none"
@@ -84,7 +87,7 @@ const Sidenav = () => {
                   strokeWidth="2"
                   d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
-              </svg>
+              </svg> */}
               <span className="font-semibold">People</span>
             </Link>
           </li>
