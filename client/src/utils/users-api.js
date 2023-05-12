@@ -1,7 +1,10 @@
 import Axios from 'axios';
 
 // const BASE_URL = `https://devtability.herokuapp.com/api/users`;
-const BASE_URL = `https://devtability-api.onrender.com/api/users`;
+// const BASE_URL = `https://devtability-api.onrender.com/api/users`;
+const BASE_URL = `https://devtability-api.up.railway.app/api/users`;
+
+
 
 const token = JSON.parse(localStorage.getItem('token')) || null;
 
@@ -12,6 +15,11 @@ export const Signup = async ({ name, address, email, password }) => {
     email,
     password,
   });
+  if(response){
+    console.log("ASS")
+  }else{
+    console.log("STUPOID")
+  }
   return response;
 };
 

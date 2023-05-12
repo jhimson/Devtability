@@ -41,36 +41,44 @@ export default function SignUpForm() {
   //! FUNCTIONS!
   const handleFormSubmit = async (data) => {
     // evt.preventDefault();
+    // console.log(data)
     try {
       const formData = { ...data };
       delete formData.error;
       delete formData.confirm;
+      console.log(formData);
       //   const user = await signUp(formData);
-      const response = await Signup(formData);
+      console.log('WTF BOBO')
+      let response = await Signup(formData);
+
       if (response) {
+        console.log('OI BOBO')
         console.log(response.data);
         setAlertMessage({
           message: `Please verify your email to login using your account.`,
           type: 'info',
         });
         navigate('/login', { replace: true });
+      } else {
+        console.log('Please');
       }
-      // console.log('wtf',response);
-      // setUser(user);
-      // if (response.data.value === 1) {
-      //   const token = JSON.parse(
-      //     window.atob(response.data.accessToken.split('.')[1])
-      //   );
-      //   console.log(token.user);
-      //   localStorage.setItem(
-      //     'token',
-      //     JSON.stringify(response.data.accessToken)
-      //   );
-      //   setUser(token.user);
-      // }
-      // if (user) navigate('/login', { replace: true });
+      console.log('wtf',response);
+      setUser(user);
+      if (response.data.value === 1) {
+        const token = JSON.parse(
+          window.atob(response.data.accessToken.split('.')[1])
+        );
+        console.log(token.user);
+        localStorage.setItem(
+          'token',
+          JSON.stringify(response.data.accessToken)
+        );
+        setUser(token.user);
+      }
+      if (user) navigate('/login', { replace: true });
     } catch (error) {
       // An error occurred
+      console.log('FUCKER');
       console.log(`Invalid Email/Password!`);
       console.log(`Failed to Signup. ErrorMessage:${error}`);
       setData({ ...data, error: 'Sign Up Failed - Try Again!' });
