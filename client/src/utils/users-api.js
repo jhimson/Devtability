@@ -2,13 +2,16 @@ import Axios from 'axios';
 
 // const BASE_URL = `https://devtability.herokuapp.com/api/users`;
 // const BASE_URL = `https://devtability-api.onrender.com/api/users`;
-const BASE_URL = `https://devtability-api.up.railway.app/api/users`;
+// const BASE_URL = `https://devtability-api.up.railway.app/api/users`;
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/api/users`;
+
 
 
 
 const token = JSON.parse(localStorage.getItem('token')) || null;
 
 export const Signup = async ({ name, address, email, password }) => {
+  console.log("TESTING->>", BASE_URL)
   const response = await Axios.post(`${BASE_URL}/signup`, {
     name,
     address,

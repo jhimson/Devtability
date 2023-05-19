@@ -228,7 +228,9 @@ const Signup = async (req, res) => {
     } else {
       try {
         //! Insert new user to DB
-        const user = await User.create({
+        console.log('Trying to insert new user...')
+        let tempToken = crypto.randomBytes(64).toString('hex');
+        const newUser = await User.create({
           name,
           address,
           email,
@@ -236,11 +238,12 @@ const Signup = async (req, res) => {
           emailToken: crypto.randomBytes(64).toString('hex'),
         });
         //! Generate an access token
-        const accessToken = generateAccessToken(user);
-        const refreshToken = generateRefreshToken(user);
+        const accessToken = generateAccessToken(newUser);
+        const refreshToken = generateRefreshToken(newUser);
         refreshTokens.push(refreshToken);
-        if (user) {
-          sendEmailVerification(user, req);
+        if (newUser) {
+          console.log('NEW UZER', newUser)
+          sendEmailVerification(newUser, req);
           res.status(200).json({
             Message: `Successfully created account`,
             accessToken,

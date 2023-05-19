@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 // const BASE_URL = `https://devtability.herokuapp.com/api/contacts`;
 // const BASE_URL = `https://devtability-api.onrender.com/api/contacts`;
-const BASE_URL = `https://devtability-api.up.railway.app/api/contacts`;
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/api/contacts`;
 
 
 

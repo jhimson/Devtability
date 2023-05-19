@@ -28,7 +28,7 @@ const userSchema = new Schema(
     accountabilityPartner: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      default: '62e5d02994bd214f8966cdec',
+      default: '6466ce404be09d96a4c3c89f',
     },
     linkedIn: { type: String, default: null },
     github: { type: String, default: null },
