@@ -19,10 +19,12 @@ export const Signup = async ({ name, address, email, password }) => {
     password,
   });
   if(response){
-    console.log("ASS")
+    console.log("ASS")   
   }else{
     console.log("STUPOID")
   }
+
+  console.log("FUUCK")
   return response;
 };
 
@@ -94,6 +96,9 @@ export const setUserProfile = async (userData) => {
 
 export const fetchUsers = async (userId) => {
   const response = await Axios.get(`${BASE_URL}/except/${userId}`);
+  if(response){
+    console.log(response)
+  }
   return response;
 };
 

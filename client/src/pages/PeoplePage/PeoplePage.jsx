@@ -14,6 +14,8 @@ import { UserContext } from '../../contexts/UserContext';
 import PeopleList from '../../components/PeopleList/PeopleList';
 import Search from '../../components/Search/Search';
 
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/api`;
+
 const PeoplePage = () => {
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
@@ -51,7 +53,7 @@ const PeoplePage = () => {
     setFilteredPeople(updatedZest);
     localStorage.setItem('filteredPeople', JSON.stringify(updatedZest));
     const res = await Axios.post(
-      `https://devtability.herokuapp.com/api/contacts/`,
+      `${BASE_URL}/contacts/`,
       {
         userId: user._id,
         contactId,
@@ -101,7 +103,7 @@ const PeoplePage = () => {
   useEffect(() => {
     const fetchPeople = async () => {
       const res = await Axios.get(
-        `https://devtability.herokuapp.com/api/users/except/${user?._id}`
+        `${BASE_URL}/users/except/${user?._id}`
       );
 
       if (res) {
@@ -116,7 +118,7 @@ const PeoplePage = () => {
 
     const getContacts = async () => {
       const res = await Axios.get(
-        `https://devtability.herokuapp.com/api/contacts/${user?._id}`
+        `${BASE_URL}/contacts/${user?._id}`
       );
 
       if (res) {

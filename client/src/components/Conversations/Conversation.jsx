@@ -4,6 +4,8 @@ import img1 from '../../assets/images/img.jpg';
 import noAvatar from '../../assets/images/noAvatar.png';
 import Axios from 'axios';
 
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/api/users`;
+
 const Conversation = ({ currentUser, conversation }) => {
   const [user, setUser] = useState(null);
 
@@ -16,7 +18,7 @@ const Conversation = ({ currentUser, conversation }) => {
     const getUser = async () => {
       try {
         const res = await Axios.get(
-          `https://devtability.herokuapp.com/api/users/${friendId}`
+          `${BASE_URL}/${friendId}`
         );
         setUser(res.data);
       } catch (error) {

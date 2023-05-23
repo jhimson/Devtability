@@ -60,6 +60,7 @@ export default function SignUpForm() {
         });
         navigate('/login', { replace: true });
       } else {
+        console.log('sttttuuu', response)
         console.log('Please');
       }
       console.log('wtf',response);
@@ -79,7 +80,6 @@ export default function SignUpForm() {
     } catch (error) {
       // An error occurred
       console.log('FUCKER');
-      console.log(`Invalid Email/Password!`);
       console.log(`Failed to Signup. ErrorMessage:${error}`);
       setData({ ...data, error: 'Sign Up Failed - Try Again!' });
     }

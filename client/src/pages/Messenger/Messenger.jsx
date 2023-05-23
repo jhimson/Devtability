@@ -5,6 +5,7 @@ import Axios from 'axios';
 import io from 'socket.io-client';
 import Main from '../../components/Main/Main';
 
+
 // ! API
 import { removeContact } from '../../utils/contacts-api';
 import { createMessage, fetchMessages } from '../../utils/messages-api';
@@ -23,8 +24,11 @@ import './messenger.css';
 import { UserContext } from '../../contexts/UserContext';
 import PeopleList from '../../components/PeopleList/PeopleList';
 
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/api`;
+
 const Messenger = () => {
-  const ENDPOINT = 'https://devtability-socket.herokuapp.com'; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+  // const ENDPOINT = 'https://devtability-socket.herokuapp.com'; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+  const ENDPOINT = `${BASE_URL}`;
   // ! CONTEXTS
   const { user, setUser } = useContext(UserContext);
 
