@@ -92,7 +92,7 @@ const sendEmailVerification = async (user, request) => {
       html: `<h1> ${user.name}! Thank you for registering on our website!</h1>
              <h2>Today is the beginning for you to become accountable to code every f*cking day!!!</h2>
              <h2>BUFF UP YOUR CODING MUSCLE MEMORY! Repetition is the key!</h2>
-              <a href="https://devtability-api.up.railway.app/api/users/verify-email?token=${user.emailToken}">Click here to verify email.</a>
+              <a href="https://devtability-api.onrender.com/api/users/verify-email?token=${user.emailToken}">Click here to verify email.</a>
       `,
     });
     console.log(`Email sent`, response);
